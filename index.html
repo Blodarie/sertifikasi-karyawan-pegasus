@@ -205,7 +205,6 @@
                 </div>
             </div>
 
-            <!-- Tombol Toggle Mode Terang / Gelap -->
             <!-- Tombol Toggle Mode Terang / Gelap (Icon-Only) -->
             <button type="button" id="btn-toggle-dark" aria-label="Ganti Mode Terang atau Gelap" title="Ganti Mode Terang / Gelap" class="shrink-0 w-9 h-9 rounded-xl border theme-border theme-soft flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
                 <!-- Icon Sun (muncul saat dark mode untuk pindah ke terang) -->
@@ -240,6 +239,7 @@
                             <option value="Chatting 5 Untan">Chatting 5 Untan</option>
                             <option value="Chatting 6 Tanray II">Chatting 6 Tanray II</option>
                             <option value="Chatting 7 Sumatra">Chatting 7 Sumatra</option>
+                            <option value="Chatting 8 Karet">Chatting 8 Karet</option>
                             <option value="Jolie Sumatra">Jolie Sumatra</option>
                             <option value="Zola Sulawesi">Zola Sulawesi</option>
                         </select>
@@ -282,16 +282,34 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Indikator Role Karyawan Aktif (Reguler vs Leader Bar) -->
+                <div id="active-employee-role-bar" class="pt-2.5 border-t theme-border flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span id="active-emp-name-display" class="text-xs font-bold truncate">-</span>
+                        <span id="active-emp-leader-badge" class="hidden shrink-0 inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 border border-amber-500/30">
+                            ★ Leader Bar
+                        </span>
+                    </div>
+                    <span id="active-criteria-mode-label" class="text-[11px] font-semibold theme-muted-text shrink-0">
+                        Kriteria Reguler
+                    </span>
+                </div>
             </div>
 
             <!-- Kartu Poin Penilaian -->
             <div class="theme-surface border rounded-2xl p-4 shadow-xs">
                 <div class="flex items-center justify-between mb-3">
                     <div>
-                        <h2 class="text-sm font-bold">Poin Penilaian</h2>
-                        <p class="text-xs theme-muted-text">Ketuk kriteria yang lulus / terpenuhi</p>
+                        <div class="flex items-center gap-2">
+                            <h2 id="checklist-card-title" class="text-sm font-bold">Poin Penilaian</h2>
+                            <span id="checklist-leader-pill" class="hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-600 border border-amber-500/30">
+                                Leader Bar
+                            </span>
+                        </div>
+                        <p id="checklist-card-subtitle" class="text-xs theme-muted-text">Ketuk kriteria yang lulus / terpenuhi</p>
                     </div>
-                    <button type="button" id="btn-check-all" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg theme-primary-light cursor-pointer">
+                    <button type="button" id="btn-check-all" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg theme-primary-light cursor-pointer shrink-0">
                         Pilih Semua
                     </button>
                 </div>
@@ -374,11 +392,21 @@
         <!-- ==================== TAB 3: SETTING (PENGATURAN) ==================== -->
         <section id="tab-setting" class="hidden space-y-4">
             
-            <!-- Kelola Poin Penilaian -->
+            <!-- Kelola Poin Penilaian (Reguler & Leader Bar) -->
             <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
                 <div>
                     <h2 class="text-sm font-bold">1. Kelola Poin Penilaian</h2>
-                    <p class="text-xs theme-muted-text">Tambah, ubah, atau hapus kriteria tes sertifikasi</p>
+                    <p class="text-xs theme-muted-text">Atur kriteria terpisah untuk Karyawan Reguler dan Leader Bar</p>
+                </div>
+
+                <!-- Sub-Tab Tipe Kriteria -->
+                <div class="grid grid-cols-2 gap-1.5 p-1 rounded-xl theme-soft border theme-border">
+                    <button type="button" id="btn-crit-tab-regular" class="py-2 px-3 rounded-lg text-xs font-bold theme-primary-bg transition-all cursor-pointer">
+                        Karyawan Reguler
+                    </button>
+                    <button type="button" id="btn-crit-tab-leader" class="py-2 px-3 rounded-lg text-xs font-bold theme-muted-text transition-all cursor-pointer flex items-center justify-center gap-1">
+                        <span>★ Leader Bar</span>
+                    </button>
                 </div>
 
                 <form id="form-add-criteria" class="flex gap-2">
@@ -397,7 +425,7 @@
             <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
                 <div>
                     <h2 class="text-sm font-bold">2. Kelola Daftar Karyawan</h2>
-                    <p class="text-xs theme-muted-text">Atur daftar nama karyawan untuk tiap outlet</p>
+                    <p class="text-xs theme-muted-text">Atur daftar nama karyawan & status Leader Bar tiap outlet</p>
                 </div>
 
                 <div>
@@ -411,16 +439,23 @@
                         <option value="Chatting 5 Untan">Chatting 5 Untan</option>
                         <option value="Chatting 6 Tanray II">Chatting 6 Tanray II</option>
                         <option value="Chatting 7 Sumatra">Chatting 7 Sumatra</option>
+                        <option value="Chatting 8 Karet">Chatting 8 Karet</option>
                         <option value="Jolie Sumatra">Jolie Sumatra</option>
                         <option value="Zola Sulawesi">Zola Sulawesi</option>
                     </select>
                 </div>
 
-                <form id="form-add-employee" class="flex gap-2">
-                    <input type="text" id="input-new-employee" placeholder="Nama karyawan baru..." class="theme-input flex-1 rounded-xl px-3.5 py-2.5 text-sm" required>
-                    <button type="submit" class="theme-primary-bg px-4 py-2.5 rounded-xl font-bold text-sm shrink-0 cursor-pointer">
-                        + Tambah
-                    </button>
+                <form id="form-add-employee" class="space-y-2.5">
+                    <div class="flex gap-2">
+                        <input type="text" id="input-new-employee" placeholder="Nama karyawan baru..." class="theme-input flex-1 rounded-xl px-3.5 py-2.5 text-sm" required>
+                        <button type="submit" class="theme-primary-bg px-4 py-2.5 rounded-xl font-bold text-sm shrink-0 cursor-pointer">
+                            + Tambah
+                        </button>
+                    </div>
+                    <label class="flex items-center gap-2 text-xs font-semibold cursor-pointer select-none px-1">
+                        <input type="checkbox" id="checkbox-new-emp-leader" class="w-4 h-4 rounded accent-amber-500 cursor-pointer">
+                        <span>Tandai sebagai <span class="text-amber-600 font-bold">★ Leader Bar</span> (Penilaian khusus Leader Bar)</span>
+                    </label>
                 </form>
 
                 <div id="setting-employee-list" class="space-y-2 pt-1">
@@ -536,7 +571,7 @@
 
     <script>
         /**
-         * KONFIGURASI OUTLET & TEMA WARNA (LIGHT & DARK MODE)
+         * KONFIGURASI OUTLET, LEADER BAR & TEMA WARNA (LIGHT & DARK MODE)
          */
         const OUTLETS = [
             "Chatting 2 S.Parman",
@@ -545,9 +580,18 @@
             "Chatting 5 Untan",
             "Chatting 6 Tanray II",
             "Chatting 7 Sumatra",
+            "Chatting 8 Karet",
             "Jolie Sumatra",
             "Zola Sulawesi"
         ];
+
+        const DEFAULT_LEADER_BAR_NAMES = [
+            "Alip", "Kamira", "Mayang", "Farhan", "Fatur", "Hesti",
+            "Fajar", "Rafli", "Zeka", "Subhan", "Lan", "Lisa",
+            "Irham", "Selvira", "Umi", "Haru", "Rito", "Vivi"
+        ];
+
+        const DEFAULT_LEADER_SET = new Set(DEFAULT_LEADER_BAR_NAMES.map(n => n.toLowerCase()));
 
         const BRAND_THEMES = {
             chatting: {
@@ -577,7 +621,7 @@
                     rowBg: '#302420',
                     border: '#3D2E29',
                     pillBg: '#3D2821',
-                    pillText: '#F09A82',
+                    pillText: '#F4A28C',
                     textMain: '#F6EFEA',
                     textMuted: '#B8A59C'
                 }
@@ -663,13 +707,14 @@
          * DATA DEFAULT & LOCALSTORAGE MANAGEMENT
          */
         const STORAGE_KEYS = {
-            CRITERIA: 'sertifikasi_criteria_v1',
-            EMPLOYEES: 'sertifikasi_employees_v1',
-            RESULTS: 'sertifikasi_results_v1',
+            CRITERIA_REGULAR: 'sertifikasi_criteria_reg_v2',
+            CRITERIA_LEADER: 'sertifikasi_criteria_ldr_v2',
+            EMPLOYEES: 'sertifikasi_employees_v2',
+            RESULTS: 'sertifikasi_results_v2',
             DARK_MODE: 'sertifikasi_dark_mode_v1'
         };
 
-        const DEFAULT_CRITERIA = [
+        const DEFAULT_CRITERIA_REGULAR = [
             "Grooming & Kerapian Seragam",
             "Salam, Senyum & SOP Pelayanan",
             "Pengetahuan Produk & Menu",
@@ -677,28 +722,102 @@
             "Kebersihan Area Kerja (Clean as You Go)"
         ];
 
+        const DEFAULT_CRITERIA_LEADER = [
+            "Briefing",
+            "Bebas K.O.M.I.B.A",
+            "Penanganan Kebakaran",
+            "Memberikan Teguran",
+            "Problem Solving"
+        ];
+
         const DEFAULT_EMPLOYEES = {
-            "Chatting 2 S.Parman": ["Dina", "Fajar"],
-            "Chatting 3 Ampera": ["Agus", "Sari"],
-            "Chatting 4 Paris II": ["Bella", "Rizky"],
-            "Chatting 5 Untan": ["Putri", "Dimas"],
-            "Chatting 6 Tanray II": ["Nadia", "Reza"],
-            "Chatting 7 Sumatra": ["Tia", "Galih"],
-            "Jolie Sumatra": ["Clara", "Kevin"],
-            "Zola Sulawesi": ["Rito", "Maya"]
+            "Chatting 2 S.Parman": [
+                { name: "Fajar", isLeader: true },
+                { name: "Alip", isLeader: true },
+                { name: "Dina", isLeader: false }
+            ],
+            "Chatting 3 Ampera": [
+                { name: "Kamira", isLeader: true },
+                { name: "Mayang", isLeader: true },
+                { name: "Agus", isLeader: false }
+            ],
+            "Chatting 4 Paris II": [
+                { name: "Farhan", isLeader: true },
+                { name: "Fatur", isLeader: true },
+                { name: "Bella", isLeader: false }
+            ],
+            "Chatting 5 Untan": [
+                { name: "Hesti", isLeader: true },
+                { name: "Rafli", isLeader: true },
+                { name: "Putri", isLeader: false }
+            ],
+            "Chatting 6 Tanray II": [
+                { name: "Zeka", isLeader: true },
+                { name: "Subhan", isLeader: true },
+                { name: "Nadia", isLeader: false }
+            ],
+            "Chatting 7 Sumatra": [
+                { name: "Lan", isLeader: true },
+                { name: "Lisa", isLeader: true },
+                { name: "Tia", isLeader: false }
+            ],
+            "Chatting 8 Karet": [
+                { name: "Irham", isLeader: true },
+                { name: "Selvira", isLeader: true },
+                { name: "Umi", isLeader: true }
+            ],
+            "Jolie Sumatra": [
+                { name: "Haru", isLeader: true },
+                { name: "Vivi", isLeader: true },
+                { name: "Clara", isLeader: false }
+            ],
+            "Zola Sulawesi": [
+                { name: "Rito", isLeader: true },
+                { name: "Maya", isLeader: false }
+            ]
         };
 
         let state = {
-            criteria: [],
+            criteriaRegular: [],
+            criteriaLeader: [],
             employees: {},
             results: [],
             checkedCriteria: new Set(),
             isManualEmployee: false,
             isDarkMode: false,
             activeTab: 'penilaian',
+            settingCriteriaType: 'regular',
             generatedDataUrl: '',
             editingCriteriaIndex: null
         };
+
+        function isDefaultLeaderName(name) {
+            if (!name) return false;
+            return DEFAULT_LEADER_SET.has(String(name).trim().toLowerCase());
+        }
+
+        function normalizeEmployeeEntry(entry) {
+            if (typeof entry === 'string') {
+                return { name: entry, isLeader: isDefaultLeaderName(entry) };
+            }
+            return {
+                name: entry.name,
+                isLeader: typeof entry.isLeader === 'boolean' ? entry.isLeader : isDefaultLeaderName(entry.name)
+            };
+        }
+
+        function isEmployeeLeader(outletName, empName) {
+            if (!empName) return false;
+            const cleanName = empName.trim().toLowerCase();
+            const outletList = state.employees[outletName] || [];
+            const found = outletList.find(e => e.name.trim().toLowerCase() === cleanName);
+            if (found) return Boolean(found.isLeader);
+            return isDefaultLeaderName(empName);
+        }
+
+        function getActiveCriteriaList(isLeader) {
+            return isLeader ? state.criteriaLeader : state.criteriaRegular;
+        }
 
         function getTodayStr() {
             const now = new Date();
@@ -740,28 +859,35 @@
                     state.isDarkMode = true;
                 }
 
-                const savedCriteria = localStorage.getItem(STORAGE_KEYS.CRITERIA);
-                state.criteria = savedCriteria ? JSON.parse(savedCriteria) : [...DEFAULT_CRITERIA];
+                const savedReg = localStorage.getItem(STORAGE_KEYS.CRITERIA_REGULAR);
+                state.criteriaRegular = savedReg ? JSON.parse(savedReg) : [...DEFAULT_CRITERIA_REGULAR];
+
+                const savedLdr = localStorage.getItem(STORAGE_KEYS.CRITERIA_LEADER);
+                state.criteriaLeader = savedLdr ? JSON.parse(savedLdr) : [...DEFAULT_CRITERIA_LEADER];
 
                 const savedEmployees = localStorage.getItem(STORAGE_KEYS.EMPLOYEES);
-                state.employees = savedEmployees ? JSON.parse(savedEmployees) : JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES));
+                const rawEmployees = savedEmployees ? JSON.parse(savedEmployees) : JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES));
 
+                state.employees = {};
                 OUTLETS.forEach(o => {
-                    if (!Array.isArray(state.employees[o])) state.employees[o] = [];
+                    const list = Array.isArray(rawEmployees[o]) ? rawEmployees[o] : (DEFAULT_EMPLOYEES[o] || []);
+                    state.employees[o] = list.map(normalizeEmployeeEntry);
                 });
 
                 const savedResults = localStorage.getItem(STORAGE_KEYS.RESULTS);
                 state.results = savedResults ? JSON.parse(savedResults) : [];
             } catch (e) {
                 console.error("Gagal memuat data:", e);
-                state.criteria = [...DEFAULT_CRITERIA];
+                state.criteriaRegular = [...DEFAULT_CRITERIA_REGULAR];
+                state.criteriaLeader = [...DEFAULT_CRITERIA_LEADER];
                 state.employees = JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES));
                 state.results = [];
             }
         }
 
         function saveCriteria() {
-            localStorage.setItem(STORAGE_KEYS.CRITERIA, JSON.stringify(state.criteria));
+            localStorage.setItem(STORAGE_KEYS.CRITERIA_REGULAR, JSON.stringify(state.criteriaRegular));
+            localStorage.setItem(STORAGE_KEYS.CRITERIA_LEADER, JSON.stringify(state.criteriaLeader));
         }
 
         function saveEmployees() {
@@ -777,135 +903,130 @@
         }
 
         /**
-         * UI HELPERS & NOTIFIKASI
-         */
-        let toastTimeout;
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-text').textContent = msg;
-            toast.classList.remove('opacity-0');
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.classList.add('opacity-0');
-            }, 2400);
-        }
-
-        function showConfirmModal(title, message, onConfirm) {
-            const modal = document.getElementById('modal-confirm');
-            document.getElementById('confirm-title').textContent = title;
-            document.getElementById('confirm-message').textContent = message;
-            modal.classList.remove('hidden');
-
-            const btnOk = document.getElementById('btn-confirm-ok');
-            const btnCancel = document.getElementById('btn-confirm-cancel');
-
-            const cleanup = () => {
-                modal.classList.add('hidden');
-                btnOk.onclick = null;
-                btnCancel.onclick = null;
-            };
-
-            btnCancel.onclick = cleanup;
-            btnOk.onclick = () => {
-                cleanup();
-                onConfirm();
-            };
-        }
-
-        /**
-         * PERUBAHAN TEMA DINAMIS (OUTLET + LIGHT/DARK MODE)
+         * MENERAPKAN TEMA WARNA OUTLET + LIGHT/DARK MODE
          */
         function applyOutletTheme(outletName) {
             const theme = getBrandTheme(outletName, state.isDarkMode);
             document.body.className = `min-h-screen pb-24 select-none ${theme.bodyClass}`;
             document.getElementById('header-brand-pill').textContent = theme.label;
 
-            // Update tombol toggle mode
-            const btnToggle = document.getElementById('btn-toggle-dark');
-            const iconSun = document.getElementById('icon-sun');
-            const iconMoon = document.getElementById('icon-moon');
-
+            const sunIcon = document.getElementById('icon-sun');
+            const moonIcon = document.getElementById('icon-moon');
             if (state.isDarkMode) {
-                iconSun.classList.remove('hidden');
-                iconMoon.classList.add('hidden');
-                btnToggle.title = 'Ganti ke Mode Terang';
-                btnToggle.setAttribute('aria-label', 'Ganti ke Mode Terang');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
             } else {
-                iconSun.classList.add('hidden');
-                iconMoon.classList.remove('hidden');
-                btnToggle.title = 'Ganti ke Mode Gelap';
-                btnToggle.setAttribute('aria-label', 'Ganti ke Mode Gelap');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
             }
-
-            // Re-render daftar rekap jika tab rekap sedang terbuka agar warna kartu sinkron
-            if (state.activeTab === 'rekap') {
-                renderRekapList();
-            }
-        }
-
-        function toggleDarkMode() {
-            state.isDarkMode = !state.isDarkMode;
-            saveDarkMode();
-            const currentOutlet = document.getElementById('select-outlet').value;
-            applyOutletTheme(currentOutlet);
-            showToast(state.isDarkMode ? 'Mode Gelap aktif' : 'Mode Terang aktif');
         }
 
         /**
          * RENDER TAB 1: FORM PENILAIAN
          */
-        function renderEmployeeDropdown() {
+        function getSelectedEmployeeInfo() {
             const outlet = document.getElementById('select-outlet').value;
-            const selectEmp = document.getElementById('select-karyawan');
-            const list = state.employees[outlet] || [];
-
-            selectEmp.innerHTML = '';
-            if (list.length === 0) {
-                const opt = document.createElement('option');
-                opt.value = '';
-                opt.textContent = '-- Belum ada data (Gunakan Manual) --';
-                selectEmp.appendChild(opt);
+            let empName = '';
+            if (state.isManualEmployee) {
+                empName = document.getElementById('input-manual-karyawan').value.trim();
             } else {
-                list.forEach(name => {
-                    const opt = document.createElement('option');
-                    opt.value = name;
-                    opt.textContent = name;
-                    selectEmp.appendChild(opt);
-                });
+                empName = document.getElementById('select-karyawan').value || '';
+            }
+            const isLeader = isEmployeeLeader(outlet, empName);
+            return { outlet, empName, isLeader };
+        }
+
+        function updateActiveEmployeeRoleIndicator() {
+            const { empName, isLeader } = getSelectedEmployeeInfo();
+            const nameDisplay = document.getElementById('active-emp-name-display');
+            const leaderBadge = document.getElementById('active-emp-leader-badge');
+            const modeLabel = document.getElementById('active-criteria-mode-label');
+            const checklistLeaderPill = document.getElementById('checklist-leader-pill');
+            const checklistSubtitle = document.getElementById('checklist-card-subtitle');
+
+            nameDisplay.textContent = empName || 'Belum pilih karyawan';
+
+            if (isLeader) {
+                leaderBadge.classList.remove('hidden');
+                checklistLeaderPill.classList.remove('hidden');
+                modeLabel.textContent = 'Kriteria Leader Bar';
+                modeLabel.className = 'text-[11px] font-bold text-amber-600 shrink-0';
+                checklistSubtitle.textContent = 'Penilaian khusus Leader Bar (5 poin)';
+            } else {
+                leaderBadge.classList.add('hidden');
+                checklistLeaderPill.classList.add('hidden');
+                modeLabel.textContent = 'Kriteria Reguler';
+                modeLabel.className = 'text-[11px] font-semibold theme-muted-text shrink-0';
+                checklistSubtitle.textContent = 'Ketuk kriteria yang lulus / terpenuhi';
             }
         }
 
+        function renderEmployeeDropdown() {
+            const outlet = document.getElementById('select-outlet').value;
+            const selectEl = document.getElementById('select-karyawan');
+            const list = state.employees[outlet] || [];
+
+            selectEl.innerHTML = '';
+
+            if (list.length === 0) {
+                const opt = document.createElement('option');
+                opt.value = '';
+                opt.textContent = '-- Belum ada karyawan --';
+                selectEl.appendChild(opt);
+            } else {
+                list.forEach(emp => {
+                    const opt = document.createElement('option');
+                    opt.value = emp.name;
+                    opt.textContent = emp.isLeader ? `${emp.name} ★ (Leader Bar)` : emp.name;
+                    selectEl.appendChild(opt);
+                });
+            }
+
+            updateActiveEmployeeRoleIndicator();
+        }
+
         function renderChecklist() {
+            const { isLeader } = getSelectedEmployeeInfo();
+            const criteriaList = getActiveCriteriaList(isLeader);
             const container = document.getElementById('checklist-container');
             container.innerHTML = '';
 
-            if (state.criteria.length === 0) {
+            updateActiveEmployeeRoleIndicator();
+
+            if (criteriaList.length === 0) {
                 container.innerHTML = `
-                    <div class="text-center py-6 px-3 rounded-xl border border-dashed theme-border">
-                        <p class="text-xs theme-muted-text">Belum ada poin penilaian. Tambahkan di menu <b>Setting</b>.</p>
+                    <div class="text-center py-6 px-3 rounded-xl theme-soft border theme-border">
+                        <p class="text-xs theme-muted-text">Belum ada poin penilaian (${isLeader ? 'Leader Bar' : 'Reguler'}). Tambahkan di menu <b>Setting</b>.</p>
                     </div>
                 `;
                 updateLiveScore();
                 return;
             }
 
-            state.criteria.forEach((item, index) => {
+            criteriaList.forEach((item, index) => {
                 const isChecked = state.checkedCriteria.has(index);
                 const btn = document.createElement('button');
                 btn.type = 'button';
                 btn.className = `w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between gap-3 cursor-pointer ${
-                    isChecked ? 'theme-soft border-current theme-primary-text shadow-xs' : 'theme-surface theme-border'
+                    isChecked
+                        ? 'theme-primary-light border-current font-semibold shadow-2xs'
+                        : 'theme-soft theme-border hover:opacity-90'
                 }`;
-                
+
                 btn.innerHTML = `
-                    <span class="text-sm font-medium leading-snug ${isChecked ? 'font-semibold' : ''}" style="color: var(--text-main)">
-                        ${index + 1}. ${escapeHtml(item)}
-                    </span>
-                    <div class="w-6 h-6 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
-                        isChecked ? 'theme-primary-bg' : 'border-2 theme-border bg-transparent'
+                    <div class="flex items-center gap-3 min-w-0">
+                        <span class="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${
+                            isChecked ? 'theme-primary-bg' : 'theme-surface theme-muted-text border theme-border'
+                        }">
+                            ${index + 1}
+                        </span>
+                        <span class="text-sm leading-snug break-words">${escapeHtml(item)}</span>
+                    </div>
+                    <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                        isChecked ? 'theme-primary-bg' : 'border-2 theme-border theme-surface'
                     }">
                         ${isChecked ? `
-                            <svg class="w-4 h-4" style="color: var(--badge-text)" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                             </svg>
                         ` : ''}
@@ -928,16 +1049,27 @@
         }
 
         function updateLiveScore() {
-            const total = state.criteria.length;
-            const score = state.checkedCriteria.size;
+            const { isLeader } = getSelectedEmployeeInfo();
+            const criteriaList = getActiveCriteriaList(isLeader);
+            const total = criteriaList.length;
+            const score = Array.from(state.checkedCriteria).filter(idx => idx < total).length;
+
             document.getElementById('live-score-text').textContent = `${score}/${total}`;
 
             const badge = document.getElementById('live-status-badge');
+            const btnCheckAll = document.getElementById('btn-check-all');
+
             if (total > 0 && score === total) {
-                badge.textContent = 'Lulus Sempurna';
-                badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-500';
-            } else if (total > 0 && score >= Math.ceil(total * 0.8)) {
-                badge.textContent = 'Lulus';
+                btnCheckAll.textContent = 'Batal Semua';
+            } else {
+                btnCheckAll.textContent = 'Pilih Semua';
+            }
+
+            if (total === 0) {
+                badge.textContent = '-';
+                badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md theme-soft theme-muted-text';
+            } else if (score >= Math.ceil(total * 0.8)) {
+                badge.textContent = 'Lulus Sertifikasi';
                 badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-500';
             } else {
                 badge.textContent = 'Perlu Evaluasi';
@@ -946,31 +1078,26 @@
         }
 
         function handleSaveTestResult() {
-            const outlet = document.getElementById('select-outlet').value;
+            const { outlet, empName, isLeader } = getSelectedEmployeeInfo();
             const date = document.getElementById('input-tanggal').value || getTodayStr();
             const note = document.getElementById('input-catatan').value.trim();
 
-            let empName = '';
-            if (state.isManualEmployee) {
-                empName = document.getElementById('input-manual-karyawan').value.trim();
-            } else {
-                empName = document.getElementById('select-karyawan').value.trim();
-            }
-
             if (!empName) {
-                showToast('Pilih atau ketik nama karyawan dulu!');
+                showToast('Pilih atau isi nama karyawan terlebih dahulu!');
                 return;
             }
 
-            const total = state.criteria.length;
+            const criteriaList = getActiveCriteriaList(isLeader);
+            const total = criteriaList.length;
             if (total === 0) {
-                showToast('Tambahkan poin penilaian di Setting dulu!');
+                showToast('Tambahkan poin penilaian di menu Setting!');
                 return;
             }
 
-            const score = state.checkedCriteria.size;
-            const passedCriteria = state.criteria.filter((_, idx) => state.checkedCriteria.has(idx));
+            const validChecked = Array.from(state.checkedCriteria).filter(idx => idx < total);
+            const score = validChecked.length;
 
+            // Cek jika karyawan sudah dites di outlet & tanggal yang sama -> timpa/update
             const existingIndex = state.results.findIndex(
                 r => r.date === date && r.outlet === outlet && r.employee.toLowerCase() === empName.toLowerCase()
             );
@@ -980,16 +1107,17 @@
                 date,
                 outlet,
                 employee: empName,
+                isLeader,
                 score,
                 total,
-                passedCriteria,
+                passedCriteria: validChecked.map(i => criteriaList[i]),
                 note,
-                updatedAt: new Date().toISOString()
+                timestamp: Date.now()
             };
 
             if (existingIndex >= 0) {
                 state.results[existingIndex] = record;
-                showToast(`Data ${empName} (${score}/${total}) diperbarui!`);
+                showToast(`Nilai ${empName} (${score}/${total}) diperbarui!`);
             } else {
                 state.results.push(record);
                 showToast(`Tersimpan: ${empName} (${score}/${total})`);
@@ -997,6 +1125,7 @@
 
             saveResults();
 
+            // Reset checklist & catatan untuk peserta berikutnya
             state.checkedCriteria.clear();
             document.getElementById('input-catatan').value = '';
             if (state.isManualEmployee) {
@@ -1012,51 +1141,62 @@
             const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
             const container = document.getElementById('rekap-list-container');
             const clearWrapper = document.getElementById('wrapper-clear-day');
-            const dailyResults = state.results.filter(r => r.date === selectedDate);
 
+            const dailyResults = state.results.filter(r => r.date === selectedDate);
             document.getElementById('rekap-total-count').textContent = `${dailyResults.length} Peserta`;
-            container.innerHTML = '';
 
             if (dailyResults.length === 0) {
                 clearWrapper.classList.add('hidden');
                 container.innerHTML = `
                     <div class="theme-surface border rounded-2xl p-8 text-center space-y-2">
-                        <div class="w-12 h-12 rounded-full theme-soft mx-auto flex items-center justify-center theme-primary-text">
+                        <div class="w-12 h-12 rounded-2xl theme-soft mx-auto flex items-center justify-center theme-muted-text">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                         </div>
-                        <p class="text-sm font-bold">Belum Ada Hasil Tes</p>
-                        <p class="text-xs theme-muted-text">Belum ada data sertifikasi pada tanggal ${formatTanggalIndo(selectedDate)}.</p>
+                        <p class="text-sm font-bold">Belum Ada Data Sertifikasi</p>
+                        <p class="text-xs theme-muted-text">Belum ada tes karyawan yang disimpan untuk tanggal ${formatTanggalSingkat(selectedDate)}.</p>
                     </div>
                 `;
                 return;
             }
 
             clearWrapper.classList.remove('hidden');
+            container.innerHTML = '';
 
+            // Kelompokkan sesuai urutan outlet
             OUTLETS.forEach(outletName => {
                 const items = dailyResults.filter(r => r.outlet === outletName);
                 if (items.length === 0) return;
 
                 const theme = getBrandTheme(outletName, state.isDarkMode);
                 const card = document.createElement('div');
-                card.className = 'rounded-2xl overflow-hidden shadow-xs border';
-                card.style.backgroundColor = theme.bgCard;
+                card.className = 'rounded-2xl overflow-hidden border shadow-xs';
                 card.style.borderColor = theme.border;
+                card.style.backgroundColor = theme.bgCard;
 
                 let rowsHtml = items.map(item => {
                     const isPass = item.total > 0 && item.score >= Math.ceil(item.total * 0.8);
+                    const isLeader = typeof item.isLeader === 'boolean' ? item.isLeader : isEmployeeLeader(outletName, item.employee);
                     const passBadgeStyle = state.isDarkMode
                         ? (isPass ? 'background-color: rgba(16, 185, 129, 0.18); color: #6EE7B7;' : 'background-color: rgba(245, 158, 11, 0.18); color: #FCD34D;')
                         : (isPass ? 'background-color: #DCFCE7; color: #166534;' : 'background-color: #FEF3C7; color: #92400E;');
 
+                    const leaderBadgeStyle = state.isDarkMode
+                        ? 'background-color: rgba(245, 158, 11, 0.22); color: #FBBF24; border: 1px solid rgba(251, 191, 36, 0.35);'
+                        : 'background-color: #FEF3C7; color: #B45309; border: 1px solid #FDE68A;';
+
                     return `
                         <div class="px-4 py-3 flex items-center justify-between gap-3 border-t" style="border-color: ${theme.border}">
                             <div class="min-w-0 flex-1">
-                                <div class="flex items-center gap-2">
+                                <div class="flex items-center flex-wrap gap-1.5">
                                     <span class="font-bold text-sm truncate" style="color: ${theme.textMain}">${escapeHtml(item.employee)}</span>
-                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full" style="${passBadgeStyle}">
+                                    ${isLeader ? `
+                                        <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full shrink-0" style="${leaderBadgeStyle}">
+                                            ★ Leader Bar
+                                        </span>
+                                    ` : ''}
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0" style="${passBadgeStyle}">
                                         ${isPass ? 'LULUS' : 'EVALUASI'}
                                     </span>
                                 </div>
@@ -1087,67 +1227,69 @@
                 container.appendChild(card);
             });
 
+            // Pasang event listener tombol hapus item
             container.querySelectorAll('.btn-del-result').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const id = btn.getAttribute('data-delete-id');
-                    showConfirmModal('Hapus Hasil Tes', 'Yakin ingin menghapus data penilaian ini?', () => {
-                        state.results = state.results.filter(r => r.id !== id);
-                        saveResults();
-                        renderRekapList();
-                        showToast('Data dihapus');
-                    });
+                    showConfirmModal(
+                        'Hapus Hasil Tes',
+                        'Hapus data nilai karyawan ini dari laporan hari ini?',
+                        () => {
+                            state.results = state.results.filter(r => r.id !== id);
+                            saveResults();
+                            renderRekapList();
+                            showToast('Data dihapus');
+                        }
+                    );
                 });
             });
         }
 
         /**
-         * GENERATOR GAMBAR LAPORAN 1 HARI (HTML5 CANVAS HIGH-DPI)
-         * Mendukung Mode Terang & Mode Gelap sesuai tema masing-masing outlet
+         * GENERATOR GAMBAR LAPORAN 1 HARI (HTML5 CANVAS HIGH-DPI, LIGHT & DARK AWARE)
          */
         function generateDailyReportImage() {
             const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
             const dailyResults = state.results.filter(r => r.date === selectedDate);
 
             if (dailyResults.length === 0) {
-                showToast('Tidak ada data sertifikasi di tanggal ini!');
+                showToast('Belum ada data tes di tanggal ini!');
                 return;
             }
 
-            const isDark = state.isDarkMode;
-            const groupedOutlets = [];
+            const grouped = [];
             OUTLETS.forEach(outletName => {
                 const items = dailyResults.filter(r => r.outlet === outletName);
                 if (items.length > 0) {
-                    groupedOutlets.push({
+                    grouped.push({
                         outletName,
-                        theme: getBrandTheme(outletName, isDark),
+                        theme: getBrandTheme(outletName, state.isDarkMode),
                         items
                     });
                 }
             });
 
+            const canvas = document.getElementById('export-canvas');
+            const ctx = canvas.getContext('2d');
+            const isDark = state.isDarkMode;
+
             const scale = 2;
             const width = 720;
-            const padding = 36;
-            const cardGap = 24;
-            const headerHeight = 148;
-            const footerHeight = 64;
-            const cardHeaderH = 54;
+            const padding = 32;
+            const headerHeight = 135;
+            const cardHeaderH = 48;
             const rowHeight = 62;
+            const cardGap = 20;
+            const footerHeight = 56;
 
-            let totalCardsHeight = 0;
-            groupedOutlets.forEach((group, idx) => {
-                const cardH = cardHeaderH + (group.items.length * rowHeight) + 12;
-                totalCardsHeight += cardH;
-                if (idx < groupedOutlets.length - 1) totalCardsHeight += cardGap;
+            let totalHeight = padding + headerHeight;
+            grouped.forEach(group => {
+                totalHeight += cardHeaderH + (group.items.length * rowHeight) + 12 + cardGap;
             });
+            totalHeight += footerHeight;
 
-            const height = headerHeight + totalCardsHeight + footerHeight;
-
-            const canvas = document.getElementById('export-canvas');
             canvas.width = width * scale;
-            canvas.height = height * scale;
-            const ctx = canvas.getContext('2d');
+            canvas.height = totalHeight * scale;
             ctx.scale(scale, scale);
 
             function roundRect(x, y, w, h, r) {
@@ -1164,76 +1306,64 @@
                 ctx.closePath();
             }
 
-            function topRoundRect(x, y, w, h, r) {
-                ctx.beginPath();
-                ctx.moveTo(x + r, y);
-                ctx.lineTo(x + w - r, y);
-                ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-                ctx.lineTo(x + w, y + h);
-                ctx.lineTo(x, y + h);
-                ctx.lineTo(x, y + r);
-                ctx.quadraticCurveTo(x, y, x + r, y);
-                ctx.closePath();
+            // 1. Background Utama
+            ctx.fillStyle = isDark ? '#12100F' : '#F8FAFC';
+            ctx.fillRect(0, 0, width, totalHeight);
+
+            // 2. Banner Judul Atas
+            roundRect(padding, padding, width - padding * 2, 105, 20);
+            ctx.fillStyle = isDark ? '#1F1B1A' : '#1E293B';
+            ctx.fill();
+
+            if (isDark) {
+                ctx.lineWidth = 1.5;
+                ctx.strokeStyle = '#332C2A';
+                ctx.stroke();
             }
 
-            // 1. Latar Belakang Utama Kanvas (Light atau Dark)
-            ctx.fillStyle = isDark ? '#120F0E' : '#F4F4F5';
-            ctx.fillRect(0, 0, width, height);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = '800 22px Inter, sans-serif';
+            ctx.fillText('HASIL TES SERTIFIKASI KARYAWAN', padding + 24, padding + 42);
 
-            // 2. Header Laporan
-            ctx.fillStyle = isDark ? '#F6EFEA' : '#18181B';
-            ctx.font = '800 26px Inter, sans-serif';
-            ctx.fillText('HASIL TES SERTIFIKASI KARYAWAN', padding, 56);
+            ctx.fillStyle = isDark ? '#A89F9C' : '#CBD5E1';
+            ctx.font = '500 15px Inter, sans-serif';
+            ctx.fillText(`${formatTanggalIndo(selectedDate)}  •  Total ${dailyResults.length} Karyawan`, padding + 24, padding + 72);
 
-            ctx.fillStyle = isDark ? '#A89E99' : '#52525B';
-            ctx.font = '500 17px Inter, sans-serif';
-            ctx.fillText(formatTanggalIndo(selectedDate), padding, 86);
+            // 3. Render Kartu Per Outlet sesuai Warna Temanya Sendiri
+            let currentY = padding + headerHeight;
 
-            ctx.fillStyle = isDark ? '#2E2724' : '#E4E4E7';
-            ctx.fillRect(padding, 108, width - padding * 2, 1.5);
-
-            ctx.fillStyle = isDark ? '#9E938E' : '#71717A';
-            ctx.font = '600 14px Inter, sans-serif';
-            ctx.fillText(`Total: ${groupedOutlets.length} Outlet  •  ${dailyResults.length} Karyawan Dinilai`, padding, 132);
-
-            // 3. Render Tiap Blok Outlet dengan Warna Temanya Sendiri
-            let currentY = headerHeight;
-
-            groupedOutlets.forEach(group => {
+            grouped.forEach(group => {
                 const { outletName, theme, items } = group;
                 const cardW = width - padding * 2;
-                const cardH = cardHeaderH + (items.length * rowHeight) + 8;
+                const cardH = cardHeaderH + (items.length * rowHeight) + 12;
 
-                ctx.save();
-                ctx.shadowColor = isDark ? 'rgba(0, 0, 0, 0.35)' : 'rgba(0, 0, 0, 0.06)';
-                ctx.shadowBlur = 14;
-                ctx.shadowOffsetY = 4;
-
+                // Card Outer Container
                 roundRect(padding, currentY, cardW, cardH, 18);
-                ctx.fillStyle = isDark ? theme.bgCard : theme.bgSoft;
+                ctx.fillStyle = theme.bgSoft;
                 ctx.fill();
-                ctx.restore();
-
-                roundRect(padding, currentY, cardW, cardH, 18);
                 ctx.lineWidth = 2;
                 ctx.strokeStyle = theme.border;
                 ctx.stroke();
 
-                // Header Blok Outlet
-                topRoundRect(padding, currentY, cardW, cardHeaderH, 16);
+                // Header Outlet (Rounded Top)
+                ctx.save();
+                roundRect(padding, currentY, cardW, cardH, 18);
+                ctx.clip();
                 ctx.fillStyle = theme.primary;
-                ctx.fill();
+                ctx.fillRect(padding, currentY, cardW, cardHeaderH);
+                ctx.restore();
 
+                // Nama Outlet di Header Card
                 ctx.fillStyle = theme.headerText;
-                ctx.font = '700 19px Inter, sans-serif';
-                ctx.fillText(outletName, padding + 22, currentY + 34);
+                ctx.font = '800 16px Inter, sans-serif';
+                ctx.fillText(outletName.toUpperCase(), padding + 20, currentY + 30);
 
-                ctx.font = '700 13px Inter, sans-serif';
-                ctx.globalAlpha = 0.88;
-                const brandText = `${theme.label.toUpperCase()}  •  ${items.length} ORANG`;
-                const brandMetrics = ctx.measureText(brandText);
-                ctx.fillText(brandText, padding + cardW - 22 - brandMetrics.width, currentY + 33);
-                ctx.globalAlpha = 1;
+                // Badge Jumlah Peserta di kanan header card
+                const countLabel = `${items.length} Peserta`;
+                ctx.font = '600 13px Inter, sans-serif';
+                const countMetrics = ctx.measureText(countLabel);
+                ctx.fillStyle = isDark && theme.key === 'jolie' ? 'rgba(27, 16, 10, 0.75)' : 'rgba(255, 255, 255, 0.88)';
+                ctx.fillText(countLabel, padding + cardW - countMetrics.width - 20, currentY + 29);
 
                 // Baris Karyawan
                 let rowY = currentY + cardHeaderH + 4;
@@ -1241,14 +1371,46 @@
                     const itemMarginX = 12;
                     const itemW = cardW - itemMarginX * 2;
                     const itemH = rowHeight - 8;
+                    const isLeader = typeof emp.isLeader === 'boolean' ? emp.isLeader : isEmployeeLeader(outletName, emp.employee);
 
                     roundRect(padding + itemMarginX, rowY + 4, itemW, itemH, 12);
                     ctx.fillStyle = theme.rowBg;
                     ctx.fill();
 
+                    // Nama Karyawan
                     ctx.fillStyle = theme.textMain;
                     ctx.font = '700 18px Inter, sans-serif';
-                    ctx.fillText(emp.employee, padding + itemMarginX + 18, rowY + 36);
+                    const nameStartX = padding + itemMarginX + 18;
+                    ctx.fillText(emp.employee, nameStartX, rowY + 36);
+                    const nameWidth = ctx.measureText(emp.employee).width;
+
+                    // Badge "Leader Bar" jika termasuk Leader Bar
+                    if (isLeader) {
+                        const ldrLabel = '★ Leader Bar';
+                        ctx.font = '800 11px Inter, sans-serif';
+                        const ldrW = ctx.measureText(ldrLabel).width + 18;
+                        const ldrH = 24;
+                        const ldrX = nameStartX + nameWidth + 10;
+                        const ldrY = rowY + 19;
+
+                        roundRect(ldrX, ldrY, ldrW, ldrH, 8);
+                        if (isDark) {
+                            ctx.fillStyle = 'rgba(245, 158, 11, 0.24)';
+                            ctx.fill();
+                            ctx.lineWidth = 1;
+                            ctx.strokeStyle = 'rgba(251, 191, 36, 0.45)';
+                            ctx.stroke();
+                            ctx.fillStyle = '#FBBF24';
+                        } else {
+                            ctx.fillStyle = '#FEF3C7';
+                            ctx.fill();
+                            ctx.lineWidth = 1;
+                            ctx.strokeStyle = '#FCD34D';
+                            ctx.stroke();
+                            ctx.fillStyle = '#B45309';
+                        }
+                        ctx.fillText(ldrLabel, ldrX + 9, ldrY + 16);
+                    }
 
                     // Badge Skor (contoh: 5/5)
                     const scoreText = `${emp.score}/${emp.total}`;
@@ -1291,19 +1453,20 @@
                 currentY += cardH + cardGap;
             });
 
-            // 4. Footer Gambar
-            ctx.fillStyle = isDark ? '#78716C' : '#A1A1AA';
-            ctx.font = '500 13px Inter, sans-serif';
-            const footerText = 'Dicetak otomatis dari Sistem Tes Sertifikasi Karyawan';
+            // 4. Footer Watermark Kecil
+            ctx.fillStyle = isDark ? '#78716C' : '#94A3B8';
+            ctx.font = '500 12px Inter, sans-serif';
+            const footerText = 'Laporan Otomatis • Sistem Tes Sertifikasi Karyawan';
             const footerW = ctx.measureText(footerText).width;
-            ctx.fillText(footerText, (width - footerW) / 2, height - 24);
+            ctx.fillText(footerText, (width - footerW) / 2, totalHeight - 22);
 
+            // Tampilkan di Modal Preview
             state.generatedDataUrl = canvas.toDataURL('image/png');
             document.getElementById('preview-img-result').src = state.generatedDataUrl;
             document.getElementById('modal-preview').classList.remove('hidden');
         }
 
-        function downloadGeneratedPng() {
+        function downloadGeneratedImage() {
             if (!state.generatedDataUrl) return;
             const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
             const link = document.createElement('a');
@@ -1320,27 +1483,45 @@
          */
         function renderSettingCriteria() {
             const container = document.getElementById('setting-criteria-list');
+            const btnReg = document.getElementById('btn-crit-tab-regular');
+            const btnLdr = document.getElementById('btn-crit-tab-leader');
+            const isLeaderTab = state.settingCriteriaType === 'leader';
+
+            if (isLeaderTab) {
+                btnLdr.className = 'py-2 px-3 rounded-lg text-xs font-bold theme-primary-bg transition-all cursor-pointer flex items-center justify-center gap-1';
+                btnReg.className = 'py-2 px-3 rounded-lg text-xs font-bold theme-muted-text transition-all cursor-pointer';
+            } else {
+                btnReg.className = 'py-2 px-3 rounded-lg text-xs font-bold theme-primary-bg transition-all cursor-pointer';
+                btnLdr.className = 'py-2 px-3 rounded-lg text-xs font-bold theme-muted-text transition-all cursor-pointer flex items-center justify-center gap-1';
+            }
+
+            const targetList = isLeaderTab ? state.criteriaLeader : state.criteriaRegular;
             container.innerHTML = '';
 
-            if (state.criteria.length === 0) {
-                container.innerHTML = `<p class="text-xs theme-muted-text italic py-2">Belum ada kriteria penilaian.</p>`;
+            if (targetList.length === 0) {
+                container.innerHTML = `<p class="text-xs theme-muted-text text-center py-4">Belum ada poin penilaian untuk kategori ini.</p>`;
                 return;
             }
 
-            state.criteria.forEach((item, index) => {
+            targetList.forEach((crit, index) => {
                 const row = document.createElement('div');
-                row.className = 'flex items-center justify-between gap-2 p-2.5 rounded-xl border theme-border theme-soft';
+                row.className = 'flex items-center justify-between gap-2 p-2.5 rounded-xl theme-soft border theme-border';
                 row.innerHTML = `
-                    <span class="text-xs font-semibold flex-1 leading-snug">${index + 1}. ${escapeHtml(item)}</span>
+                    <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                        <span class="w-6 h-6 rounded-lg theme-primary-light text-xs font-bold flex items-center justify-center shrink-0">
+                            ${index + 1}
+                        </span>
+                        <span class="text-xs font-semibold truncate">${escapeHtml(crit)}</span>
+                    </div>
                     <div class="flex items-center gap-1 shrink-0">
-                        <button type="button" data-idx="${index}" class="btn-edit-crit p-1.5 rounded-lg theme-primary-text hover:opacity-80 cursor-pointer" title="Edit Poin">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <button type="button" data-edit-crit="${index}" class="p-1.5 rounded-lg theme-muted-text hover:opacity-80 cursor-pointer" title="Edit">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
                         </button>
-                        <button type="button" data-idx="${index}" class="btn-del-crit p-1.5 rounded-lg text-red-500 hover:bg-red-500/10 cursor-pointer" title="Hapus Poin">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        <button type="button" data-del-crit="${index}" class="p-1.5 rounded-lg text-red-500 hover:opacity-80 cursor-pointer" title="Hapus">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
                         </button>
                     </div>
@@ -1348,24 +1529,22 @@
                 container.appendChild(row);
             });
 
-            container.querySelectorAll('.btn-edit-crit').forEach(btn => {
+            container.querySelectorAll('[data-edit-crit]').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    const idx = Number(btn.getAttribute('data-idx'));
+                    const idx = Number(btn.getAttribute('data-edit-crit'));
                     state.editingCriteriaIndex = idx;
-                    const inputEdit = document.getElementById('input-edit-criteria');
-                    inputEdit.value = state.criteria[idx];
+                    document.getElementById('input-edit-criteria').value = targetList[idx];
                     document.getElementById('modal-edit-criteria').classList.remove('hidden');
-                    inputEdit.focus();
                 });
             });
 
-            container.querySelectorAll('.btn-del-crit').forEach(btn => {
+            container.querySelectorAll('[data-del-crit]').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    const idx = Number(btn.getAttribute('data-idx'));
-                    state.criteria.splice(idx, 1);
-                    state.checkedCriteria.clear();
+                    const idx = Number(btn.getAttribute('data-del-crit'));
+                    targetList.splice(idx, 1);
                     saveCriteria();
                     renderSettingCriteria();
+                    state.checkedCriteria.clear();
                     renderChecklist();
                     showToast('Poin penilaian dihapus');
                 });
@@ -1373,38 +1552,65 @@
         }
 
         function renderSettingEmployees() {
-            const outlet = document.getElementById('setting-select-outlet').value;
-            const list = state.employees[outlet] || [];
+            const targetOutlet = document.getElementById('setting-select-outlet').value;
             const container = document.getElementById('setting-employee-list');
+            const list = state.employees[targetOutlet] || [];
             container.innerHTML = '';
 
             if (list.length === 0) {
-                container.innerHTML = `<p class="text-xs theme-muted-text italic py-2">Belum ada nama karyawan di outlet ini.</p>`;
+                container.innerHTML = `<p class="text-xs theme-muted-text text-center py-4">Belum ada daftar karyawan untuk outlet ini.</p>`;
                 return;
             }
 
-            list.forEach((name, index) => {
+            list.forEach((emp, index) => {
                 const row = document.createElement('div');
-                row.className = 'flex items-center justify-between gap-2 p-2.5 rounded-xl border theme-border theme-soft';
+                row.className = 'flex items-center justify-between gap-2 p-2.5 rounded-xl theme-soft border theme-border';
                 row.innerHTML = `
-                    <span class="text-xs font-semibold flex-1">${escapeHtml(name)}</span>
-                    <button type="button" data-idx="${index}" class="btn-del-emp p-1.5 rounded-lg text-red-500 hover:bg-red-500/10 cursor-pointer" title="Hapus Karyawan">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
+                    <div class="flex items-center gap-2 min-w-0 flex-1">
+                        <span class="text-xs font-bold truncate">${escapeHtml(emp.name)}</span>
+                        ${emp.isLeader ? `
+                            <span class="shrink-0 text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 border border-amber-500/30">
+                                ★ Leader Bar
+                            </span>
+                        ` : ''}
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button type="button" data-toggle-ldr="${index}" class="text-[11px] font-semibold px-2 py-1 rounded-lg border theme-border theme-surface cursor-pointer" title="Ubah status Leader Bar">
+                            ${emp.isLeader ? 'Set Reguler' : 'Set Leader'}
+                        </button>
+                        <button type="button" data-del-emp="${index}" class="p-1.5 rounded-lg text-red-500 hover:opacity-80 cursor-pointer" title="Hapus">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
+                    </div>
                 `;
                 container.appendChild(row);
             });
 
-            container.querySelectorAll('.btn-del-emp').forEach(btn => {
+            container.querySelectorAll('[data-toggle-ldr]').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    const idx = Number(btn.getAttribute('data-idx'));
-                    state.employees[outlet].splice(idx, 1);
+                    const idx = Number(btn.getAttribute('data-toggle-ldr'));
+                    list[idx].isLeader = !list[idx].isLeader;
                     saveEmployees();
                     renderSettingEmployees();
                     renderEmployeeDropdown();
-                    showToast('Nama karyawan dihapus');
+                    state.checkedCriteria.clear();
+                    renderChecklist();
+                    showToast(`Status ${list[idx].name} diubah`);
+                });
+            });
+
+            container.querySelectorAll('[data-del-emp]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = Number(btn.getAttribute('data-del-emp'));
+                    const removedName = list[idx].name;
+                    list.splice(idx, 1);
+                    saveEmployees();
+                    renderSettingEmployees();
+                    renderEmployeeDropdown();
+                    renderChecklist();
+                    showToast(`${removedName} dihapus`);
                 });
             });
         }
@@ -1414,6 +1620,7 @@
          */
         function switchTab(tabName) {
             state.activeTab = tabName;
+
             ['penilaian', 'rekap', 'setting'].forEach(t => {
                 const sec = document.getElementById(`tab-${t}`);
                 if (t === tabName) {
@@ -1424,8 +1631,8 @@
             });
 
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                const isTarget = btn.getAttribute('data-tab') === tabName;
-                if (isTarget) {
+                const t = btn.getAttribute('data-tab');
+                if (t === tabName) {
                     btn.classList.remove('theme-muted-text', 'font-medium');
                     btn.classList.add('theme-primary-text', 'font-bold');
                 } else {
@@ -1442,18 +1649,40 @@
             }
         }
 
+        /**
+         * UTILITAS UI (TOAST, MODAL CONFIRM, ESCAPE HTML)
+         */
+        let toastTimer = null;
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-text').textContent = msg;
+            toast.classList.remove('opacity-0');
+            toast.classList.add('opacity-100');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0');
+            }, 2400);
+        }
+
+        let confirmCallback = null;
+        function showConfirmModal(title, message, onConfirm) {
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-message').textContent = message;
+            confirmCallback = onConfirm;
+            document.getElementById('modal-confirm').classList.remove('hidden');
+        }
+
         function escapeHtml(str) {
-            return String(str)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;');
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
         }
 
         /**
-         * INISIALISASI EVENT & APLIKASI
+         * INISIALISASI EVENT LISTENERS
          */
-        document.addEventListener('DOMContentLoaded', () => {
+        function initApp() {
             loadState();
 
             const today = getTodayStr();
@@ -1461,54 +1690,83 @@
             document.getElementById('rekap-tanggal').value = today;
             document.getElementById('header-date-badge').textContent = formatTanggalSingkat(today);
 
-            // Terapkan tema awal (outlet + light/dark mode)
+            // Terapkan tema outlet awal + light/dark mode
             const initialOutlet = document.getElementById('select-outlet').value;
             applyOutletTheme(initialOutlet);
             renderEmployeeDropdown();
             renderChecklist();
 
-            // Event: Toggle Light / Dark Mode
-            document.getElementById('btn-toggle-dark').addEventListener('click', toggleDarkMode);
+            // Event: Toggle Mode Terang / Gelap
+            document.getElementById('btn-toggle-dark').addEventListener('click', () => {
+                state.isDarkMode = !state.isDarkMode;
+                saveDarkMode();
+                const currentOutlet = document.getElementById('select-outlet').value;
+                applyOutletTheme(currentOutlet);
+                if (state.activeTab === 'rekap') {
+                    renderRekapList();
+                }
+                showToast(state.isDarkMode ? 'Mode Gelap aktif' : 'Mode Terang aktif');
+            });
 
             // Event: Ganti Outlet pada Form Penilaian
             document.getElementById('select-outlet').addEventListener('change', (e) => {
-                const selected = e.target.value;
-                applyOutletTheme(selected);
+                const newOutlet = e.target.value;
+                applyOutletTheme(newOutlet);
+                state.checkedCriteria.clear();
                 renderEmployeeDropdown();
-                document.getElementById('setting-select-outlet').value = selected;
+                renderChecklist();
+            });
+
+            // Event: Ganti Karyawan pada Dropdown atau Input Manual
+            document.getElementById('select-karyawan').addEventListener('change', () => {
+                state.checkedCriteria.clear();
+                renderChecklist();
+            });
+
+            document.getElementById('input-manual-karyawan').addEventListener('input', () => {
+                state.checkedCriteria.clear();
+                renderChecklist();
             });
 
             // Event: Update tanggal header jika user mengganti tanggal tes
             document.getElementById('input-tanggal').addEventListener('change', (e) => {
-                if (e.target.value) {
-                    document.getElementById('header-date-badge').textContent = formatTanggalSingkat(e.target.value);
-                }
+                document.getElementById('header-date-badge').textContent = formatTanggalSingkat(e.target.value);
             });
 
             // Event: Toggle Input Karyawan Manual vs Dropdown
-            document.getElementById('btn-toggle-manual-emp').addEventListener('click', (e) => {
+            document.getElementById('btn-toggle-manual-emp').addEventListener('click', () => {
                 state.isManualEmployee = !state.isManualEmployee;
-                const wrapSelect = document.getElementById('wrapper-select-emp');
-                const wrapManual = document.getElementById('wrapper-manual-emp');
+                const selectWrapper = document.getElementById('wrapper-select-emp');
+                const manualWrapper = document.getElementById('wrapper-manual-emp');
+                const toggleBtn = document.getElementById('btn-toggle-manual-emp');
 
                 if (state.isManualEmployee) {
-                    wrapSelect.classList.add('hidden');
-                    wrapManual.classList.remove('hidden');
-                    e.target.textContent = 'Pilih dari Daftar';
+                    selectWrapper.classList.add('hidden');
+                    manualWrapper.classList.remove('hidden');
+                    toggleBtn.textContent = 'Pilih dari Daftar';
                     document.getElementById('input-manual-karyawan').focus();
                 } else {
-                    wrapManual.classList.add('hidden');
-                    wrapSelect.classList.remove('hidden');
-                    e.target.textContent = '+ Input Manual';
+                    manualWrapper.classList.add('hidden');
+                    selectWrapper.classList.remove('hidden');
+                    toggleBtn.textContent = '+ Input Manual';
                 }
+                state.checkedCriteria.clear();
+                renderChecklist();
             });
 
-            // Event: Pilih Semua / Reset Checklist
+            // Event: Pilih Semua / Batal Semua Poin Penilaian
             document.getElementById('btn-check-all').addEventListener('click', () => {
-                if (state.checkedCriteria.size === state.criteria.length) {
+                const { isLeader } = getSelectedEmployeeInfo();
+                const criteriaList = getActiveCriteriaList(isLeader);
+                const total = criteriaList.length;
+                if (total === 0) return;
+
+                if (state.checkedCriteria.size === total) {
                     state.checkedCriteria.clear();
                 } else {
-                    state.criteria.forEach((_, idx) => state.checkedCriteria.add(idx));
+                    for (let i = 0; i < total; i++) {
+                        state.checkedCriteria.add(i);
+                    }
                 }
                 renderChecklist();
             });
@@ -1516,13 +1774,26 @@
             // Event: Simpan Hasil Tes
             document.getElementById('btn-simpan-tes').addEventListener('click', handleSaveTestResult);
 
-            // Event: Filter Tanggal & Hapus Log Harian di Tab Rekap
+            // Event: Navigasi Bawah
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    switchTab(btn.getAttribute('data-tab'));
+                });
+            });
+
+            // Event: Tab Rekap
             document.getElementById('rekap-tanggal').addEventListener('change', renderRekapList);
+            document.getElementById('btn-generate-image').addEventListener('click', generateDailyReportImage);
+            document.getElementById('btn-close-modal').addEventListener('click', () => {
+                document.getElementById('modal-preview').classList.add('hidden');
+            });
+            document.getElementById('btn-download-png').addEventListener('click', downloadGeneratedImage);
+
             document.getElementById('btn-clear-day').addEventListener('click', () => {
                 const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
                 showConfirmModal(
-                    'Hapus Semua Data Hari Ini',
-                    `Seluruh hasil tes pada tanggal ${formatTanggalIndo(selectedDate)} akan dihapus. Lanjutkan?`,
+                    'Hapus Data Harian',
+                    `Hapus semua hasil tes pada tanggal ${formatTanggalSingkat(selectedDate)}?`,
                     () => {
                         state.results = state.results.filter(r => r.date !== selectedDate);
                         saveResults();
@@ -1532,20 +1803,28 @@
                 );
             });
 
-            // Event: Generate & Download Gambar
-            document.getElementById('btn-generate-image').addEventListener('click', generateDailyReportImage);
-            document.getElementById('btn-download-png').addEventListener('click', downloadGeneratedPng);
-            document.getElementById('btn-close-modal').addEventListener('click', () => {
-                document.getElementById('modal-preview').classList.add('hidden');
+            // Event: Setting - Sub-tab Kriteria Reguler vs Leader Bar
+            document.getElementById('btn-crit-tab-regular').addEventListener('click', () => {
+                state.settingCriteriaType = 'regular';
+                renderSettingCriteria();
+            });
+            document.getElementById('btn-crit-tab-leader').addEventListener('click', () => {
+                state.settingCriteriaType = 'leader';
+                renderSettingCriteria();
             });
 
-            // Event: Setting - Tambah & Edit Kriteria
+            // Event: Setting - Tambah Kriteria Baru
             document.getElementById('form-add-criteria').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const input = document.getElementById('input-new-criteria');
                 const val = input.value.trim();
                 if (!val) return;
-                state.criteria.push(val);
+
+                if (state.settingCriteriaType === 'leader') {
+                    state.criteriaLeader.push(val);
+                } else {
+                    state.criteriaRegular.push(val);
+                }
                 saveCriteria();
                 input.value = '';
                 renderSettingCriteria();
@@ -1553,58 +1832,66 @@
                 showToast('Poin penilaian ditambahkan');
             });
 
+            // Event: Setting - Modal Edit Kriteria
             document.getElementById('btn-edit-crit-cancel').addEventListener('click', () => {
                 document.getElementById('modal-edit-criteria').classList.add('hidden');
                 state.editingCriteriaIndex = null;
             });
-
             document.getElementById('btn-edit-crit-save').addEventListener('click', () => {
-                const newVal = document.getElementById('input-edit-criteria').value.trim();
-                if (newVal && state.editingCriteriaIndex !== null) {
-                    state.criteria[state.editingCriteriaIndex] = newVal;
-                    saveCriteria();
-                    renderSettingCriteria();
-                    renderChecklist();
-                    showToast('Poin penilaian diperbarui');
-                }
+                const val = document.getElementById('input-edit-criteria').value.trim();
+                if (!val || state.editingCriteriaIndex === null) return;
+
+                const targetList = state.settingCriteriaType === 'leader' ? state.criteriaLeader : state.criteriaRegular;
+                targetList[state.editingCriteriaIndex] = val;
+                saveCriteria();
                 document.getElementById('modal-edit-criteria').classList.add('hidden');
                 state.editingCriteriaIndex = null;
+                renderSettingCriteria();
+                renderChecklist();
+                showToast('Poin penilaian diperbarui');
             });
 
-            // Event: Setting - Ganti Outlet & Tambah Karyawan
+            // Event: Setting - Kelola Karyawan
             document.getElementById('setting-select-outlet').addEventListener('change', renderSettingEmployees);
+
             document.getElementById('form-add-employee').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const outlet = document.getElementById('setting-select-outlet').value;
                 const input = document.getElementById('input-new-employee');
-                const val = input.value.trim();
-                if (!val) return;
+                const isLeaderCheckbox = document.getElementById('checkbox-new-emp-leader');
+                const empName = input.value.trim();
+                if (!empName) return;
 
                 if (!state.employees[outlet]) state.employees[outlet] = [];
-                if (state.employees[outlet].some(n => n.toLowerCase() === val.toLowerCase())) {
-                    showToast('Nama karyawan sudah ada di outlet ini');
+                const exists = state.employees[outlet].some(emp => emp.name.toLowerCase() === empName.toLowerCase());
+                if (exists) {
+                    showToast('Nama karyawan sudah ada di outlet ini!');
                     return;
                 }
 
-                state.employees[outlet].push(val);
+                const isLeader = isLeaderCheckbox.checked || isDefaultLeaderName(empName);
+                state.employees[outlet].push({ name: empName, isLeader });
                 saveEmployees();
                 input.value = '';
+                isLeaderCheckbox.checked = false;
                 renderSettingEmployees();
                 renderEmployeeDropdown();
-                showToast(`${val} ditambahkan ke ${outlet}`);
+                renderChecklist();
+                showToast(`${empName} ditambahkan ke ${outlet}`);
             });
 
             // Event: Setting - Reset Default
             document.getElementById('btn-reset-default').addEventListener('click', () => {
                 showConfirmModal(
-                    'Reset Pengaturan Awal',
-                    'Poin penilaian dan daftar nama karyawan akan dikembalikan ke contoh awal. Riwayat hasil tes tetap aman. Lanjutkan?',
+                    'Reset Pengaturan Default',
+                    'Kembalikan poin penilaian (Reguler & Leader Bar) serta daftar karyawan awal? Hasil rekap tes tetap aman.',
                     () => {
-                        state.criteria = [...DEFAULT_CRITERIA];
+                        state.criteriaRegular = [...DEFAULT_CRITERIA_REGULAR];
+                        state.criteriaLeader = [...DEFAULT_CRITERIA_LEADER];
                         state.employees = JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES));
-                        state.checkedCriteria.clear();
                         saveCriteria();
                         saveEmployees();
+                        state.checkedCriteria.clear();
                         renderSettingCriteria();
                         renderSettingEmployees();
                         renderEmployeeDropdown();
@@ -1614,13 +1901,21 @@
                 );
             });
 
-            // Event: Navigasi Bawah
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    switchTab(btn.getAttribute('data-tab'));
-                });
+            // Event: Modal Konfirmasi
+            document.getElementById('btn-confirm-cancel').addEventListener('click', () => {
+                document.getElementById('modal-confirm').classList.add('hidden');
+                confirmCallback = null;
             });
-        });
+            document.getElementById('btn-confirm-ok').addEventListener('click', () => {
+                document.getElementById('modal-confirm').classList.add('hidden');
+                if (typeof confirmCallback === 'function') {
+                    confirmCallback();
+                }
+                confirmCallback = null;
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
