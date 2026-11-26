@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sertifikasi Karyawan</title>
+    <title>Tes Sertifikasi Karyawan</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Inter -->
@@ -12,76 +12,123 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* Variabel Tema Dinamis Default (Chatting - Oranye Koral Claude) */
-        :root {
-            --bg-page: #FDF6F3;
+        /* ==================== LIGHT MODE PALETTES ==================== */
+        /* 1. Chatting Light (Oranye Koral Claude) */
+        :root,
+        body.theme-chatting-light {
+            --bg-page: #FBF6F3;
             --bg-surface: #FFFFFF;
-            --bg-soft: #FAF0EC;
+            --bg-soft: #F9EDE6;
             --primary: #D97757;
-            --primary-hover: #C26344;
-            --primary-light: #FCEAE3;
-            --text-main: #2D1E18;
-            --text-muted: #786259;
-            --border-color: #F0D5C8;
+            --primary-hover: #C6613F;
+            --primary-light: #FCE8DF;
+            --text-main: #1F1A17;
+            --text-muted: #75635A;
+            --border-color: #EFD7CB;
             --badge-text: #FFFFFF;
             --ring-color: rgba(217, 119, 87, 0.25);
         }
 
-        /* Tema Jolie (Coklat Tua & Putih) */
-        body.theme-jolie {
-            --bg-page: #F9F6F4;
-            --bg-surface: #FFFFFF;
-            --bg-soft: #F3ECE8;
+        /* 2. Jolie Light (Coklat Tua & Putih) */
+        body.theme-jolie-light {
+            --bg-page: #FFFFFF;
+            --bg-surface: #FAF6F3;
+            --bg-soft: #F2EAE4;
             --primary: #4A2C2A;
-            --primary-hover: #361F1E;
-            --primary-light: #EFE6E4;
-            --text-main: #2B1917;
-            --text-muted: #6E5855;
-            --border-color: #DFD3CC;
+            --primary-hover: #3B2314;
+            --primary-light: #EBE0D8;
+            --text-main: #2A1810;
+            --text-muted: #6E584F;
+            --border-color: #DFD2C8;
             --badge-text: #FFFFFF;
-            --ring-color: rgba(74, 44, 42, 0.2);
+            --ring-color: rgba(74, 44, 42, 0.22);
         }
 
-        /* Tema Zola (Merah Burgundy) */
-        body.theme-zola {
+        /* 3. Zola Light (Merah Burgundy) */
+        body.theme-zola-light {
             --bg-page: #FDF5F6;
             --bg-surface: #FFFFFF;
-            --bg-soft: #F9EAEC;
-            --primary: #722F37;
-            --primary-hover: #592229;
-            --primary-light: #F7E1E4;
-            --text-main: #2C1216;
-            --text-muted: #755358;
-            --border-color: #E8CDD1;
+            --bg-soft: #F9E8EB;
+            --primary: #721C24;
+            --primary-hover: #800020;
+            --primary-light: #F6DCE0;
+            --text-main: #2B0B10;
+            --text-muted: #785258;
+            --border-color: #E8C9CE;
             --badge-text: #FFFFFF;
-            --ring-color: rgba(114, 47, 55, 0.22);
+            --ring-color: rgba(114, 28, 36, 0.22);
+        }
+
+        /* ==================== DARK MODE PALETTES ==================== */
+        /* 4. Chatting Dark (Oranye Koral Claude Gelap) */
+        body.theme-chatting-dark {
+            --bg-page: #191311;
+            --bg-surface: #241B18;
+            --bg-soft: #302420;
+            --primary: #E07A5F;
+            --primary-hover: #D97757;
+            --primary-light: #3D2821;
+            --text-main: #F6EFEA;
+            --text-muted: #B8A59C;
+            --border-color: #3D2E29;
+            --badge-text: #FFFFFF;
+            --ring-color: rgba(224, 122, 95, 0.3);
+        }
+
+        /* 5. Jolie Dark (Coklat Gelap & Karamel/Krim) */
+        body.theme-jolie-dark {
+            --bg-page: #160E0A;
+            --bg-surface: #231711;
+            --bg-soft: #2F1F17;
+            --primary: #C69C72;
+            --primary-hover: #B3885E;
+            --primary-light: #38251B;
+            --text-main: #F5EDE6;
+            --text-muted: #B8A394;
+            --border-color: #3D291F;
+            --badge-text: #1B100A;
+            --ring-color: rgba(198, 156, 114, 0.3);
+        }
+
+        /* 6. Zola Dark (Merah Burgundy Gelap) */
+        body.theme-zola-dark {
+            --bg-page: #170A0D;
+            --bg-surface: #251116;
+            --bg-soft: #33171E;
+            --primary: #B83246;
+            --primary-hover: #9E1B32;
+            --primary-light: #421822;
+            --text-main: #F7ECEE;
+            --text-muted: #C29FA6;
+            --border-color: #452029;
+            --badge-text: #FFFFFF;
+            --ring-color: rgba(184, 50, 70, 0.32);
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-page);
             color: var(--text-main);
-            transition: background-color 0.35s ease, color 0.35s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Utilitas Berbasis CSS Variables dengan Transisi Halus */
         .theme-surface {
             background-color: var(--bg-surface);
             border-color: var(--border-color);
-            transition: background-color 0.35s ease, border-color 0.35s ease;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .theme-soft {
             background-color: var(--bg-soft);
             border-color: var(--border-color);
-            transition: background-color 0.35s ease, border-color 0.35s ease;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .theme-primary-bg {
             background-color: var(--primary);
             color: var(--badge-text);
-            transition: background-color 0.35s ease, transform 0.1s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.1s ease;
         }
         .theme-primary-bg:active {
             transform: scale(0.98);
@@ -90,29 +137,29 @@
         .theme-primary-light {
             background-color: var(--primary-light);
             color: var(--primary);
-            transition: background-color 0.35s ease, color 0.35s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .theme-primary-text {
             color: var(--primary);
-            transition: color 0.35s ease;
+            transition: color 0.3s ease;
         }
 
         .theme-muted-text {
             color: var(--text-muted);
-            transition: color 0.35s ease;
+            transition: color 0.3s ease;
         }
 
         .theme-border {
             border-color: var(--border-color);
-            transition: border-color 0.35s ease;
+            transition: border-color 0.3s ease;
         }
 
         .theme-input {
             background-color: var(--bg-surface);
             border: 1.5px solid var(--border-color);
             color: var(--text-main);
-            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            transition: background-color 0.3s ease, border-color 0.25s ease, box-shadow 0.25s ease, color 0.3s ease;
         }
         .theme-input:focus {
             outline: none;
@@ -120,7 +167,11 @@
             box-shadow: 0 0 0 3px var(--ring-color);
         }
 
-        /* Custom Scrollbar untuk mobile */
+        /* Perbaiki ikon kalender pada input date saat dark mode */
+        body.is-dark input[type="date"] {
+            color-scheme: dark;
+        }
+
         ::-webkit-scrollbar {
             width: 4px;
             height: 4px;
@@ -131,37 +182,52 @@
         }
     </style>
 </head>
-<body class="min-h-screen pb-24 select-none">
+<body class="min-h-screen pb-24 select-none theme-chatting-light">
 
     <!-- Header Aplikasi -->
-    <header class="sticky top-0 z-30 theme-surface border-b px-4 py-3.5 shadow-sm">
-        <div class="max-w-md mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-                <div id="header-icon-box" class="w-9 h-9 rounded-xl theme-primary-bg flex items-center justify-center shadow-sm">
-                    <!-- Icon Sertifikat SVG -->
+    <header class="sticky top-0 z-30 theme-surface border-b px-4 py-3 shadow-xs">
+        <div class="max-w-md mx-auto flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-9 h-9 rounded-xl theme-primary-bg flex items-center justify-center shadow-xs shrink-0">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </div>
-                <div>
-                    <h1 class="text-base font-bold leading-tight tracking-tight">Sertifikasi Karyawan</h1>
-                    <p id="header-outlet-badge" class="text-xs font-medium theme-primary-text">Chatting 2 S.Parman</p>
+                <div class="min-w-0">
+                    <h1 class="text-sm sm:text-base font-bold leading-tight tracking-tight truncate">Tes Sertifikasi Karyawan</h1>
+                    <div class="flex items-center gap-1.5 mt-0.5">
+                        <span id="header-date-badge" class="text-[11px] font-medium theme-muted-text truncate">Hari Ini</span>
+                        <span class="text-[10px] theme-muted-text">•</span>
+                        <span id="header-brand-pill" class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded theme-primary-light">
+                            Chatting
+                        </span>
+                    </div>
                 </div>
             </div>
-            <span id="header-brand-pill" class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full theme-primary-light">
-                Chatting
-            </span>
+
+            <!-- Tombol Toggle Mode Terang / Gelap -->
+            <!-- Tombol Toggle Mode Terang / Gelap (Icon-Only) -->
+            <button type="button" id="btn-toggle-dark" aria-label="Ganti Mode Terang atau Gelap" title="Ganti Mode Terang / Gelap" class="shrink-0 w-9 h-9 rounded-xl border theme-border theme-soft flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
+                <!-- Icon Sun (muncul saat dark mode untuk pindah ke terang) -->
+                <svg id="icon-sun" class="w-4 h-4 hidden text-amber-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <!-- Icon Moon (muncul saat light mode untuk pindah ke gelap) -->
+                <svg id="icon-moon" class="w-4 h-4 theme-primary-text" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </button>
         </div>
     </header>
 
-    <!-- Kontainer Utama (Mobile First Max Width) -->
+    <!-- Kontainer Utama -->
     <main class="max-w-md mx-auto px-4 pt-4">
 
-        <!-- ==================== TAB 1: FORM TES SERTIFIKASI ==================== -->
+        <!-- ==================== TAB 1: PENILAIAN ==================== -->
         <section id="tab-penilaian" class="space-y-4">
             
-            <!-- Kartu Pemilihan Outlet & Tanggal -->
-            <div class="theme-surface border rounded-2xl p-4 shadow-sm space-y-3.5">
+            <!-- Kartu Pemilihan Outlet, Tanggal & Karyawan -->
+            <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3.5">
                 <div>
                     <label for="select-outlet" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text mb-1.5">
                         Pilih Outlet
@@ -197,7 +263,7 @@
                             <label for="select-karyawan" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text">
                                 Nama Karyawan
                             </label>
-                            <button type="button" id="btn-toggle-manual-emp" class="text-[11px] font-semibold theme-primary-text underline">
+                            <button type="button" id="btn-toggle-manual-emp" class="text-[11px] font-semibold theme-primary-text underline cursor-pointer">
                                 + Input Manual
                             </button>
                         </div>
@@ -219,13 +285,13 @@
             </div>
 
             <!-- Kartu Poin Penilaian -->
-            <div class="theme-surface border rounded-2xl p-4 shadow-sm">
+            <div class="theme-surface border rounded-2xl p-4 shadow-xs">
                 <div class="flex items-center justify-between mb-3">
                     <div>
                         <h2 class="text-sm font-bold">Poin Penilaian</h2>
                         <p class="text-xs theme-muted-text">Ketuk kriteria yang lulus / terpenuhi</p>
                     </div>
-                    <button type="button" id="btn-check-all" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg theme-primary-light">
+                    <button type="button" id="btn-check-all" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg theme-primary-light cursor-pointer">
                         Pilih Semua
                     </button>
                 </div>
@@ -245,13 +311,13 @@
             </div>
 
             <!-- Ringkasan Skor Real-Time & Tombol Simpan -->
-            <div class="theme-surface border rounded-2xl p-4 shadow-sm flex items-center justify-between gap-3">
+            <div class="theme-surface border rounded-2xl p-4 shadow-xs flex items-center justify-between gap-3">
                 <div>
                     <span class="text-xs font-medium theme-muted-text block">Skor Sertifikasi</span>
                     <div class="flex items-baseline gap-2">
                         <span id="live-score-text" class="text-2xl font-extrabold theme-primary-text">0/5</span>
-                        <span id="live-status-badge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-800">
-                            Belum Lulus
+                        <span id="live-status-badge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-500">
+                            Perlu Evaluasi
                         </span>
                     </div>
                 </div>
@@ -259,16 +325,16 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
-                    Simpan Hasil
+                    Simpan Hasil Tes
                 </button>
             </div>
         </section>
 
-        <!-- ==================== TAB 2: REKAP HARIAN & DOWNLOAD GAMBAR ==================== -->
+        <!-- ==================== TAB 2: REKAP & UNDUH ==================== -->
         <section id="tab-rekap" class="hidden space-y-4">
             
-            <!-- Filter Tanggal Rekap -->
-            <div class="theme-surface border rounded-2xl p-4 shadow-sm">
+            <!-- Filter Tanggal Rekap & Tombol Aksi -->
+            <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3.5">
                 <div class="flex items-center justify-between gap-3">
                     <div class="flex-1">
                         <label for="rekap-tanggal" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text mb-1">
@@ -276,7 +342,7 @@
                         </label>
                         <input type="date" id="rekap-tanggal" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold">
                     </div>
-                    <div class="text-right pt-4">
+                    <div class="text-right pt-4 flex flex-col items-end gap-1">
                         <span id="rekap-total-count" class="text-xs font-bold px-3 py-2 rounded-xl theme-primary-light inline-block">
                             0 Peserta
                         </span>
@@ -284,12 +350,19 @@
                 </div>
 
                 <!-- Tombol Generate & Download Gambar -->
-                <button type="button" id="btn-generate-image" class="mt-3.5 w-full theme-primary-bg py-3.5 px-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                <button type="button" id="btn-generate-image" class="w-full theme-primary-bg py-3.5 px-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
                     Buat & Download Gambar (1 Hari)
                 </button>
+
+                <!-- Tombol Bersihkan Log Hari Ini -->
+                <div id="wrapper-clear-day" class="hidden pt-1 border-t theme-border flex justify-end">
+                    <button type="button" id="btn-clear-day" class="text-xs font-semibold text-red-500 hover:underline py-1 cursor-pointer">
+                        Hapus Semua Data Tanggal Ini
+                    </button>
+                </div>
             </div>
 
             <!-- Daftar Hasil Per Outlet pada Tanggal Terpilih -->
@@ -298,14 +371,14 @@
             </div>
         </section>
 
-        <!-- ==================== TAB 3: PENGATURAN (SETTING) ==================== -->
+        <!-- ==================== TAB 3: SETTING (PENGATURAN) ==================== -->
         <section id="tab-setting" class="hidden space-y-4">
             
             <!-- Kelola Poin Penilaian -->
-            <div class="theme-surface border rounded-2xl p-4 shadow-sm space-y-3">
+            <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
                 <div>
                     <h2 class="text-sm font-bold">1. Kelola Poin Penilaian</h2>
-                    <p class="text-xs theme-muted-text">Tambah atau hapus kriteria tes sertifikasi</p>
+                    <p class="text-xs theme-muted-text">Tambah, ubah, atau hapus kriteria tes sertifikasi</p>
                 </div>
 
                 <form id="form-add-criteria" class="flex gap-2">
@@ -321,7 +394,7 @@
             </div>
 
             <!-- Kelola Daftar Karyawan per Outlet -->
-            <div class="theme-surface border rounded-2xl p-4 shadow-sm space-y-3">
+            <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
                 <div>
                     <h2 class="text-sm font-bold">2. Kelola Daftar Karyawan</h2>
                     <p class="text-xs theme-muted-text">Atur daftar nama karyawan untuk tiap outlet</p>
@@ -356,12 +429,12 @@
             </div>
 
             <!-- Reset Data Default -->
-            <div class="theme-surface border rounded-2xl p-4 shadow-sm flex items-center justify-between">
+            <div class="theme-surface border rounded-2xl p-4 shadow-xs flex items-center justify-between gap-3">
                 <div>
                     <h3 class="text-xs font-bold">Reset Pengaturan Awal</h3>
                     <p class="text-[11px] theme-muted-text">Kembalikan poin & contoh karyawan default</p>
                 </div>
-                <button type="button" id="btn-reset-default" class="text-xs font-semibold px-3 py-2 rounded-xl border border-red-200 text-red-600 bg-red-50 active:scale-95">
+                <button type="button" id="btn-reset-default" class="text-xs font-semibold px-3 py-2 rounded-xl border border-red-500/30 text-red-500 bg-red-500/10 active:scale-95 cursor-pointer shrink-0">
                     Reset Default
                 </button>
             </div>
@@ -369,7 +442,7 @@
 
     </main>
 
-    <!-- Navigasi Bawah (Bottom Navigation Bar) -->
+    <!-- Navigasi Bawah -->
     <nav class="fixed bottom-0 inset-x-0 z-30 theme-surface border-t shadow-lg">
         <div class="max-w-md mx-auto grid grid-cols-3 h-16">
             <button type="button" data-tab="penilaian" class="nav-btn flex flex-col items-center justify-center gap-1 theme-primary-text font-bold text-xs cursor-pointer">
@@ -395,20 +468,20 @@
     </nav>
 
     <!-- Modal Preview Gambar & Download -->
-    <div id="modal-preview" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
-            <div class="px-4 py-3 border-b flex items-center justify-between">
-                <h3 class="font-bold text-sm text-gray-900">Preview Laporan Gambar</h3>
-                <button type="button" id="btn-close-modal" class="p-1.5 rounded-lg text-gray-500 hover:bg-gray-100">
+    <div id="modal-preview" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="theme-surface border rounded-2xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+            <div class="px-4 py-3 border-b theme-border flex items-center justify-between">
+                <h3 class="font-bold text-sm">Preview Laporan Gambar</h3>
+                <button type="button" id="btn-close-modal" class="p-1.5 rounded-lg theme-muted-text hover:opacity-80 cursor-pointer">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
-            <div class="p-4 overflow-y-auto bg-gray-100 flex-1 flex justify-center">
-                <img id="preview-img-result" src="" alt="Preview Laporan Sertifikasi" class="max-w-full h-auto rounded-xl shadow-md border border-gray-200">
+            <div class="p-4 overflow-y-auto theme-soft flex-1 flex justify-center">
+                <img id="preview-img-result" src="" alt="Preview Laporan Sertifikasi" class="max-w-full h-auto rounded-xl shadow-md border theme-border">
             </div>
-            <div class="p-4 border-t bg-white flex gap-2.5">
+            <div class="p-4 border-t theme-border theme-surface flex gap-2.5">
                 <button type="button" id="btn-download-png" class="flex-1 theme-primary-bg py-3 px-4 rounded-xl font-bold text-sm shadow flex items-center justify-center gap-2 cursor-pointer">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -419,25 +492,41 @@
         </div>
     </div>
 
-    <!-- Modal Konfirmasi Custom (Pengganti confirm()) -->
-    <div id="modal-confirm" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-xs w-full p-5 shadow-xl space-y-4">
-            <h3 id="confirm-title" class="font-bold text-base text-gray-900">Konfirmasi</h3>
-            <p id="confirm-message" class="text-sm text-gray-600">Apakah Anda yakin?</p>
+    <!-- Modal Konfirmasi Custom -->
+    <div id="modal-confirm" class="fixed inset-0 z-50 hidden bg-black/65 flex items-center justify-center p-4">
+        <div class="theme-surface border rounded-2xl max-w-xs w-full p-5 shadow-xl space-y-4">
+            <h3 id="confirm-title" class="font-bold text-base">Konfirmasi</h3>
+            <p id="confirm-message" class="text-sm theme-muted-text">Apakah Anda yakin?</p>
             <div class="flex gap-2.5 pt-1">
-                <button type="button" id="btn-confirm-cancel" class="flex-1 py-2.5 rounded-xl font-semibold text-sm bg-gray-100 text-gray-700">
+                <button type="button" id="btn-confirm-cancel" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-soft border theme-border cursor-pointer">
                     Batal
                 </button>
-                <button type="button" id="btn-confirm-ok" class="flex-1 py-2.5 rounded-xl font-semibold text-sm bg-red-600 text-white">
+                <button type="button" id="btn-confirm-ok" class="flex-1 py-2.5 rounded-xl font-semibold text-sm bg-red-600 text-white cursor-pointer">
                     Ya, Lanjutkan
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Toast Notifikasi Ringan -->
+    <!-- Modal Edit Kriteria -->
+    <div id="modal-edit-criteria" class="fixed inset-0 z-50 hidden bg-black/65 flex items-center justify-center p-4">
+        <div class="theme-surface border rounded-2xl max-w-xs w-full p-5 shadow-xl space-y-4">
+            <h3 class="font-bold text-base">Edit Poin Penilaian</h3>
+            <input type="text" id="input-edit-criteria" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-medium" placeholder="Nama kriteria...">
+            <div class="flex gap-2.5 pt-1">
+                <button type="button" id="btn-edit-crit-cancel" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-soft border theme-border cursor-pointer">
+                    Batal
+                </button>
+                <button type="button" id="btn-edit-crit-save" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-primary-bg cursor-pointer">
+                    Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifikasi -->
     <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-opacity duration-300">
-        <div id="toast-box" class="bg-gray-900 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-lg flex items-center gap-2">
+        <div class="bg-neutral-900 text-white border border-white/15 text-xs font-semibold px-4 py-2.5 rounded-full shadow-lg flex items-center gap-2">
             <span id="toast-text">Tersimpan!</span>
         </div>
     </div>
@@ -447,7 +536,7 @@
 
     <script>
         /**
-         * KONFIGURASI OUTLET & TEMA WARNA
+         * KONFIGURASI OUTLET & TEMA WARNA (LIGHT & DARK MODE)
          */
         const OUTLETS = [
             "Chatting 2 S.Parman",
@@ -460,56 +549,114 @@
             "Zola Sulawesi"
         ];
 
-        // Palet Warna Tema untuk UI dan Generator Gambar Canvas
         const BRAND_THEMES = {
             chatting: {
-                key: 'chatting',
-                label: 'Chatting',
-                bodyClass: '',
-                primary: '#D97757',
-                primaryDark: '#B85A3B',
-                bgSoft: '#FDF6F3',
-                bgCard: '#FFFFFF',
-                border: '#F0D5C8',
-                pillBg: '#FCEAE3',
-                pillText: '#B85A3B',
-                textMain: '#2D1E18',
-                textMuted: '#786259'
+                light: {
+                    key: 'chatting',
+                    label: 'Chatting',
+                    bodyClass: 'theme-chatting-light',
+                    primary: '#D97757',
+                    headerText: '#FFFFFF',
+                    bgSoft: '#FBF6F3',
+                    bgCard: '#FFFFFF',
+                    rowBg: '#FFFFFF',
+                    border: '#EFD7CB',
+                    pillBg: '#FCE8DF',
+                    pillText: '#C6613F',
+                    textMain: '#1F1A17',
+                    textMuted: '#75635A'
+                },
+                dark: {
+                    key: 'chatting',
+                    label: 'Chatting',
+                    bodyClass: 'theme-chatting-dark is-dark',
+                    primary: '#E07A5F',
+                    headerText: '#FFFFFF',
+                    bgSoft: '#191311',
+                    bgCard: '#241B18',
+                    rowBg: '#302420',
+                    border: '#3D2E29',
+                    pillBg: '#3D2821',
+                    pillText: '#F09A82',
+                    textMain: '#F6EFEA',
+                    textMuted: '#B8A59C'
+                }
             },
             jolie: {
-                key: 'jolie',
-                label: 'Jolie',
-                bodyClass: 'theme-jolie',
-                primary: '#4A2C2A',
-                primaryDark: '#2E1A19',
-                bgSoft: '#F9F6F4',
-                bgCard: '#FFFFFF',
-                border: '#DFD3CC',
-                pillBg: '#EFE6E4',
-                pillText: '#4A2C2A',
-                textMain: '#2B1917',
-                textMuted: '#6E5855'
+                light: {
+                    key: 'jolie',
+                    label: 'Jolie',
+                    bodyClass: 'theme-jolie-light',
+                    primary: '#4A2C2A',
+                    headerText: '#FFFFFF',
+                    bgSoft: '#FAF6F3',
+                    bgCard: '#FFFFFF',
+                    rowBg: '#FFFFFF',
+                    border: '#DFD2C8',
+                    pillBg: '#EBE0D8',
+                    pillText: '#3B2314',
+                    textMain: '#2A1810',
+                    textMuted: '#6E584F'
+                },
+                dark: {
+                    key: 'jolie',
+                    label: 'Jolie',
+                    bodyClass: 'theme-jolie-dark is-dark',
+                    primary: '#C69C72',
+                    headerText: '#1B100A',
+                    bgSoft: '#160E0A',
+                    bgCard: '#231711',
+                    rowBg: '#2F1F17',
+                    border: '#3D291F',
+                    pillBg: '#38251B',
+                    pillText: '#EAD7C3',
+                    textMain: '#F5EDE6',
+                    textMuted: '#B8A394'
+                }
             },
             zola: {
-                key: 'zola',
-                label: 'Zola',
-                bodyClass: 'theme-zola',
-                primary: '#722F37',
-                primaryDark: '#521E24',
-                bgSoft: '#FDF5F6',
-                bgCard: '#FFFFFF',
-                border: '#E8CDD1',
-                pillBg: '#F7E1E4',
-                pillText: '#722F37',
-                textMain: '#2C1216',
-                textMuted: '#755358'
+                light: {
+                    key: 'zola',
+                    label: 'Zola',
+                    bodyClass: 'theme-zola-light',
+                    primary: '#721C24',
+                    headerText: '#FFFFFF',
+                    bgSoft: '#FDF5F6',
+                    bgCard: '#FFFFFF',
+                    rowBg: '#FFFFFF',
+                    border: '#E8C9CE',
+                    pillBg: '#F6DCE0',
+                    pillText: '#800020',
+                    textMain: '#2B0B10',
+                    textMuted: '#785258'
+                },
+                dark: {
+                    key: 'zola',
+                    label: 'Zola',
+                    bodyClass: 'theme-zola-dark is-dark',
+                    primary: '#B83246',
+                    headerText: '#FFFFFF',
+                    bgSoft: '#170A0D',
+                    bgCard: '#251116',
+                    rowBg: '#33171E',
+                    border: '#452029',
+                    pillBg: '#421822',
+                    pillText: '#F59AA8',
+                    textMain: '#F7ECEE',
+                    textMuted: '#C29FA6'
+                }
             }
         };
 
-        function getBrandTheme(outletName) {
-            if (outletName.toLowerCase().startsWith('jolie')) return BRAND_THEMES.jolie;
-            if (outletName.toLowerCase().startsWith('zola')) return BRAND_THEMES.zola;
-            return BRAND_THEMES.chatting;
+        function getBrandKey(outletName) {
+            if (outletName.toLowerCase().startsWith('jolie')) return 'jolie';
+            if (outletName.toLowerCase().startsWith('zola')) return 'zola';
+            return 'chatting';
+        }
+
+        function getBrandTheme(outletName, isDark = state.isDarkMode) {
+            const brandKey = getBrandKey(outletName);
+            return BRAND_THEMES[brandKey][isDark ? 'dark' : 'light'];
         }
 
         /**
@@ -518,7 +665,8 @@
         const STORAGE_KEYS = {
             CRITERIA: 'sertifikasi_criteria_v1',
             EMPLOYEES: 'sertifikasi_employees_v1',
-            RESULTS: 'sertifikasi_results_v1'
+            RESULTS: 'sertifikasi_results_v1',
+            DARK_MODE: 'sertifikasi_dark_mode_v1'
         };
 
         const DEFAULT_CRITERIA = [
@@ -546,8 +694,10 @@
             results: [],
             checkedCriteria: new Set(),
             isManualEmployee: false,
+            isDarkMode: false,
             activeTab: 'penilaian',
-            generatedDataUrl: ''
+            generatedDataUrl: '',
+            editingCriteriaIndex: null
         };
 
         function getTodayStr() {
@@ -570,15 +720,32 @@
             });
         }
 
+        function formatTanggalSingkat(dateStr) {
+            if (!dateStr) return '-';
+            const [y, m, d] = dateStr.split('-').map(Number);
+            const dateObj = new Date(y, m - 1, d);
+            return dateObj.toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            });
+        }
+
         function loadState() {
             try {
+                const savedDark = localStorage.getItem(STORAGE_KEYS.DARK_MODE);
+                if (savedDark !== null) {
+                    state.isDarkMode = savedDark === 'true';
+                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    state.isDarkMode = true;
+                }
+
                 const savedCriteria = localStorage.getItem(STORAGE_KEYS.CRITERIA);
                 state.criteria = savedCriteria ? JSON.parse(savedCriteria) : [...DEFAULT_CRITERIA];
 
                 const savedEmployees = localStorage.getItem(STORAGE_KEYS.EMPLOYEES);
                 state.employees = savedEmployees ? JSON.parse(savedEmployees) : JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES));
 
-                // Pastikan semua outlet ada di object employees
                 OUTLETS.forEach(o => {
                     if (!Array.isArray(state.employees[o])) state.employees[o] = [];
                 });
@@ -603,6 +770,10 @@
 
         function saveResults() {
             localStorage.setItem(STORAGE_KEYS.RESULTS, JSON.stringify(state.results));
+        }
+
+        function saveDarkMode() {
+            localStorage.setItem(STORAGE_KEYS.DARK_MODE, String(state.isDarkMode));
         }
 
         /**
@@ -642,13 +813,42 @@
         }
 
         /**
-         * PERUBAHAN TEMA DINAMIS BERDASARKAN OUTLET
+         * PERUBAHAN TEMA DINAMIS (OUTLET + LIGHT/DARK MODE)
          */
         function applyOutletTheme(outletName) {
-            const theme = getBrandTheme(outletName);
+            const theme = getBrandTheme(outletName, state.isDarkMode);
             document.body.className = `min-h-screen pb-24 select-none ${theme.bodyClass}`;
-            document.getElementById('header-outlet-badge').textContent = outletName;
             document.getElementById('header-brand-pill').textContent = theme.label;
+
+            // Update tombol toggle mode
+            const btnToggle = document.getElementById('btn-toggle-dark');
+            const iconSun = document.getElementById('icon-sun');
+            const iconMoon = document.getElementById('icon-moon');
+
+            if (state.isDarkMode) {
+                iconSun.classList.remove('hidden');
+                iconMoon.classList.add('hidden');
+                btnToggle.title = 'Ganti ke Mode Terang';
+                btnToggle.setAttribute('aria-label', 'Ganti ke Mode Terang');
+            } else {
+                iconSun.classList.add('hidden');
+                iconMoon.classList.remove('hidden');
+                btnToggle.title = 'Ganti ke Mode Gelap';
+                btnToggle.setAttribute('aria-label', 'Ganti ke Mode Gelap');
+            }
+
+            // Re-render daftar rekap jika tab rekap sedang terbuka agar warna kartu sinkron
+            if (state.activeTab === 'rekap') {
+                renderRekapList();
+            }
+        }
+
+        function toggleDarkMode() {
+            state.isDarkMode = !state.isDarkMode;
+            saveDarkMode();
+            const currentOutlet = document.getElementById('select-outlet').value;
+            applyOutletTheme(currentOutlet);
+            showToast(state.isDarkMode ? 'Mode Gelap aktif' : 'Mode Terang aktif');
         }
 
         /**
@@ -705,7 +905,7 @@
                         isChecked ? 'theme-primary-bg' : 'border-2 theme-border bg-transparent'
                     }">
                         ${isChecked ? `
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4" style="color: var(--badge-text)" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                             </svg>
                         ` : ''}
@@ -735,13 +935,13 @@
             const badge = document.getElementById('live-status-badge');
             if (total > 0 && score === total) {
                 badge.textContent = 'Lulus Sempurna';
-                badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800';
+                badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-500';
             } else if (total > 0 && score >= Math.ceil(total * 0.8)) {
                 badge.textContent = 'Lulus';
-                badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800';
+                badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-500';
             } else {
                 badge.textContent = 'Perlu Evaluasi';
-                badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-800';
+                badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-500';
             }
         }
 
@@ -771,7 +971,6 @@
             const score = state.checkedCriteria.size;
             const passedCriteria = state.criteria.filter((_, idx) => state.checkedCriteria.has(idx));
 
-            // Cek apakah karyawan & outlet di tanggal sama sudah pernah dinilai (timpa jika sama)
             const existingIndex = state.results.findIndex(
                 r => r.date === date && r.outlet === outlet && r.employee.toLowerCase() === empName.toLowerCase()
             );
@@ -798,7 +997,6 @@
 
             saveResults();
 
-            // Reset form checklist & catatan
             state.checkedCriteria.clear();
             document.getElementById('input-catatan').value = '';
             if (state.isManualEmployee) {
@@ -813,12 +1011,14 @@
         function renderRekapList() {
             const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
             const container = document.getElementById('rekap-list-container');
+            const clearWrapper = document.getElementById('wrapper-clear-day');
             const dailyResults = state.results.filter(r => r.date === selectedDate);
 
             document.getElementById('rekap-total-count').textContent = `${dailyResults.length} Peserta`;
             container.innerHTML = '';
 
             if (dailyResults.length === 0) {
+                clearWrapper.classList.add('hidden');
                 container.innerHTML = `
                     <div class="theme-surface border rounded-2xl p-8 text-center space-y-2">
                         <div class="w-12 h-12 rounded-full theme-soft mx-auto flex items-center justify-center theme-primary-text">
@@ -833,25 +1033,30 @@
                 return;
             }
 
-            // Kelompokkan berdasarkan urutan OUTLETS
+            clearWrapper.classList.remove('hidden');
+
             OUTLETS.forEach(outletName => {
                 const items = dailyResults.filter(r => r.outlet === outletName);
                 if (items.length === 0) return;
 
-                const theme = getBrandTheme(outletName);
+                const theme = getBrandTheme(outletName, state.isDarkMode);
                 const card = document.createElement('div');
-                card.className = 'rounded-2xl overflow-hidden shadow-sm border';
+                card.className = 'rounded-2xl overflow-hidden shadow-xs border';
                 card.style.backgroundColor = theme.bgCard;
                 card.style.borderColor = theme.border;
 
                 let rowsHtml = items.map(item => {
                     const isPass = item.total > 0 && item.score >= Math.ceil(item.total * 0.8);
+                    const passBadgeStyle = state.isDarkMode
+                        ? (isPass ? 'background-color: rgba(16, 185, 129, 0.18); color: #6EE7B7;' : 'background-color: rgba(245, 158, 11, 0.18); color: #FCD34D;')
+                        : (isPass ? 'background-color: #DCFCE7; color: #166534;' : 'background-color: #FEF3C7; color: #92400E;');
+
                     return `
                         <div class="px-4 py-3 flex items-center justify-between gap-3 border-t" style="border-color: ${theme.border}">
                             <div class="min-w-0 flex-1">
                                 <div class="flex items-center gap-2">
                                     <span class="font-bold text-sm truncate" style="color: ${theme.textMain}">${escapeHtml(item.employee)}</span>
-                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${isPass ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full" style="${passBadgeStyle}">
                                         ${isPass ? 'LULUS' : 'EVALUASI'}
                                     </span>
                                 </div>
@@ -861,7 +1066,7 @@
                                 <span class="text-base font-extrabold px-2.5 py-1 rounded-lg" style="background-color: ${theme.pillBg}; color: ${theme.pillText}">
                                     ${item.score}/${item.total}
                                 </span>
-                                <button type="button" data-delete-id="${item.id}" class="btn-del-result p-1.5 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50" title="Hapus">
+                                <button type="button" data-delete-id="${item.id}" class="btn-del-result p-1.5 rounded-lg opacity-60 hover:opacity-100 hover:text-red-500 cursor-pointer" style="color: ${theme.textMuted}" title="Hapus">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
@@ -872,7 +1077,7 @@
                 }).join('');
 
                 card.innerHTML = `
-                    <div class="px-4 py-2.5 flex items-center justify-between" style="background-color: ${theme.primary}; color: #FFFFFF;">
+                    <div class="px-4 py-2.5 flex items-center justify-between" style="background-color: ${theme.primary}; color: ${theme.headerText};">
                         <span class="font-bold text-xs tracking-wide uppercase">${escapeHtml(outletName)}</span>
                         <span class="text-[11px] font-semibold opacity-90">${items.length} Karyawan</span>
                     </div>
@@ -882,7 +1087,6 @@
                 container.appendChild(card);
             });
 
-            // Event listener hapus item
             container.querySelectorAll('.btn-del-result').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const id = btn.getAttribute('data-delete-id');
@@ -898,7 +1102,7 @@
 
         /**
          * GENERATOR GAMBAR LAPORAN 1 HARI (HTML5 CANVAS HIGH-DPI)
-         * Tiap outlet dipisah dalam blok kartunya sendiri dengan warna tema masing-masing
+         * Mendukung Mode Terang & Mode Gelap sesuai tema masing-masing outlet
          */
         function generateDailyReportImage() {
             const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
@@ -909,20 +1113,19 @@
                 return;
             }
 
-            // Kelompokkan data per outlet sesuai urutan resmi
+            const isDark = state.isDarkMode;
             const groupedOutlets = [];
             OUTLETS.forEach(outletName => {
                 const items = dailyResults.filter(r => r.outlet === outletName);
                 if (items.length > 0) {
                     groupedOutlets.push({
                         outletName,
-                        theme: getBrandTheme(outletName),
+                        theme: getBrandTheme(outletName, isDark),
                         items
                     });
                 }
             });
 
-            // Konfigurasi dimensi gambar (Lebar logis 720px, dikali scale 2 untuk ketajaman Retina/HP)
             const scale = 2;
             const width = 720;
             const padding = 36;
@@ -932,7 +1135,6 @@
             const cardHeaderH = 54;
             const rowHeight = 62;
 
-            // Hitung total tinggi kanvas secara dinamis
             let totalCardsHeight = 0;
             groupedOutlets.forEach((group, idx) => {
                 const cardH = cardHeaderH + (group.items.length * rowHeight) + 12;
@@ -948,7 +1150,6 @@
             const ctx = canvas.getContext('2d');
             ctx.scale(scale, scale);
 
-            // Helper Rounded Rectangle
             function roundRect(x, y, w, h, r) {
                 ctx.beginPath();
                 ctx.moveTo(x + r, y);
@@ -963,7 +1164,6 @@
                 ctx.closePath();
             }
 
-            // Helper Top Rounded Rectangle
             function topRoundRect(x, y, w, h, r) {
                 ctx.beginPath();
                 ctx.moveTo(x + r, y);
@@ -976,28 +1176,27 @@
                 ctx.closePath();
             }
 
-            // 1. Latar Belakang Utama Kanvas (Netral bersih agar semua warna blok outlet menonjol)
-            ctx.fillStyle = '#F4F4F5';
+            // 1. Latar Belakang Utama Kanvas (Light atau Dark)
+            ctx.fillStyle = isDark ? '#120F0E' : '#F4F4F5';
             ctx.fillRect(0, 0, width, height);
 
             // 2. Header Laporan
-            ctx.fillStyle = '#18181B';
+            ctx.fillStyle = isDark ? '#F6EFEA' : '#18181B';
             ctx.font = '800 26px Inter, sans-serif';
             ctx.fillText('HASIL TES SERTIFIKASI KARYAWAN', padding, 56);
 
-            ctx.fillStyle = '#52525B';
+            ctx.fillStyle = isDark ? '#A89E99' : '#52525B';
             ctx.font = '500 17px Inter, sans-serif';
             ctx.fillText(formatTanggalIndo(selectedDate), padding, 86);
 
-            // Garis pemisah tipis & ringkasan total
-            ctx.fillStyle = '#E4E4E7';
+            ctx.fillStyle = isDark ? '#2E2724' : '#E4E4E7';
             ctx.fillRect(padding, 108, width - padding * 2, 1.5);
 
-            ctx.fillStyle = '#71717A';
+            ctx.fillStyle = isDark ? '#9E938E' : '#71717A';
             ctx.font = '600 14px Inter, sans-serif';
             ctx.fillText(`Total: ${groupedOutlets.length} Outlet  •  ${dailyResults.length} Karyawan Dinilai`, padding, 132);
 
-            // 3. Render Tiap Blok Outlet dengan Tema Warnanya Masing-Masing
+            // 3. Render Tiap Blok Outlet dengan Warna Temanya Sendiri
             let currentY = headerHeight;
 
             groupedOutlets.forEach(group => {
@@ -1005,59 +1204,53 @@
                 const cardW = width - padding * 2;
                 const cardH = cardHeaderH + (items.length * rowHeight) + 8;
 
-                // Bayangan lembut kartu
                 ctx.save();
-                ctx.shadowColor = 'rgba(0, 0, 0, 0.06)';
+                ctx.shadowColor = isDark ? 'rgba(0, 0, 0, 0.35)' : 'rgba(0, 0, 0, 0.06)';
                 ctx.shadowBlur = 14;
                 ctx.shadowOffsetY = 4;
 
-                // Badan Kartu dengan latar lembut tema outlet
                 roundRect(padding, currentY, cardW, cardH, 18);
-                ctx.fillStyle = theme.bgSoft;
+                ctx.fillStyle = isDark ? theme.bgCard : theme.bgSoft;
                 ctx.fill();
                 ctx.restore();
 
-                // Border kartu sesuai tema outlet
                 roundRect(padding, currentY, cardW, cardH, 18);
                 ctx.lineWidth = 2;
                 ctx.strokeStyle = theme.border;
                 ctx.stroke();
 
-                // Header Blok Outlet (Warna Utama Brand: Oranye Koral / Coklat Tua / Merah Burgundy)
+                // Header Blok Outlet
                 topRoundRect(padding, currentY, cardW, cardHeaderH, 16);
                 ctx.fillStyle = theme.primary;
                 ctx.fill();
 
-                // Nama Outlet di Header Blok
-                ctx.fillStyle = '#FFFFFF';
+                ctx.fillStyle = theme.headerText;
                 ctx.font = '700 19px Inter, sans-serif';
                 ctx.fillText(outletName, padding + 22, currentY + 34);
 
-                // Label Brand di Kanan Header Blok
-                ctx.font = '600 13px Inter, sans-serif';
-                ctx.fillStyle = 'rgba(255,255,255,0.88)';
+                ctx.font = '700 13px Inter, sans-serif';
+                ctx.globalAlpha = 0.88;
                 const brandText = `${theme.label.toUpperCase()}  •  ${items.length} ORANG`;
                 const brandMetrics = ctx.measureText(brandText);
                 ctx.fillText(brandText, padding + cardW - 22 - brandMetrics.width, currentY + 33);
+                ctx.globalAlpha = 1;
 
-                // Baris Daftar Karyawan di dalam Blok Outlet
+                // Baris Karyawan
                 let rowY = currentY + cardHeaderH + 4;
-                items.forEach((emp, idx) => {
-                    // Kartu putih bersih untuk tiap baris karyawan agar sangat terbaca
+                items.forEach(emp => {
                     const itemMarginX = 12;
                     const itemW = cardW - itemMarginX * 2;
                     const itemH = rowHeight - 8;
 
                     roundRect(padding + itemMarginX, rowY + 4, itemW, itemH, 12);
-                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillStyle = theme.rowBg;
                     ctx.fill();
 
-                    // Nama Karyawan
                     ctx.fillStyle = theme.textMain;
                     ctx.font = '700 18px Inter, sans-serif';
                     ctx.fillText(emp.employee, padding + itemMarginX + 18, rowY + 36);
 
-                    // Badge Skor (contoh: 5/5) dengan warna tema outlet
+                    // Badge Skor (contoh: 5/5)
                     const scoreText = `${emp.score}/${emp.total}`;
                     ctx.font = '800 18px Inter, sans-serif';
                     const scoreW = ctx.measureText(scoreText).width + 28;
@@ -1072,7 +1265,7 @@
                     ctx.fillStyle = theme.pillText;
                     ctx.fillText(scoreText, scoreX + 14, scoreY + 23);
 
-                    // Status Lulus kecil di sebelah kiri skor
+                    // Status Lulus
                     const isPass = emp.total > 0 && emp.score >= Math.ceil(emp.total * 0.8);
                     const statusLabel = isPass ? 'LULUS' : 'EVALUASI';
                     ctx.font = '700 12px Inter, sans-serif';
@@ -1081,10 +1274,15 @@
                     const stY = rowY + 18;
 
                     roundRect(stX, stY, stW, 26, 8);
-                    ctx.fillStyle = isPass ? '#DCFCE7' : '#FEF3C7';
-                    ctx.fill();
-
-                    ctx.fillStyle = isPass ? '#166534' : '#92400E';
+                    if (isDark) {
+                        ctx.fillStyle = isPass ? 'rgba(16, 185, 129, 0.2)' : 'rgba(245, 158, 11, 0.2)';
+                        ctx.fill();
+                        ctx.fillStyle = isPass ? '#6EE7B7' : '#FCD34D';
+                    } else {
+                        ctx.fillStyle = isPass ? '#DCFCE7' : '#FEF3C7';
+                        ctx.fill();
+                        ctx.fillStyle = isPass ? '#166534' : '#92400E';
+                    }
                     ctx.fillText(statusLabel, stX + 9, stY + 17);
 
                     rowY += rowHeight;
@@ -1094,13 +1292,12 @@
             });
 
             // 4. Footer Gambar
-            ctx.fillStyle = '#A1A1AA';
+            ctx.fillStyle = isDark ? '#78716C' : '#A1A1AA';
             ctx.font = '500 13px Inter, sans-serif';
-            const footerText = 'Dicetak otomatis dari Sistem Sertifikasi Karyawan';
+            const footerText = 'Dicetak otomatis dari Sistem Tes Sertifikasi Karyawan';
             const footerW = ctx.measureText(footerText).width;
             ctx.fillText(footerText, (width - footerW) / 2, height - 24);
 
-            // Tampilkan ke Modal Preview
             state.generatedDataUrl = canvas.toDataURL('image/png');
             document.getElementById('preview-img-result').src = state.generatedDataUrl;
             document.getElementById('modal-preview').classList.remove('hidden');
@@ -1134,14 +1331,32 @@
                 const row = document.createElement('div');
                 row.className = 'flex items-center justify-between gap-2 p-2.5 rounded-xl border theme-border theme-soft';
                 row.innerHTML = `
-                    <span class="text-xs font-semibold flex-1">${index + 1}. ${escapeHtml(item)}</span>
-                    <button type="button" data-idx="${index}" class="btn-del-crit p-1.5 rounded-lg text-red-600 hover:bg-red-100" title="Hapus Poin">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
+                    <span class="text-xs font-semibold flex-1 leading-snug">${index + 1}. ${escapeHtml(item)}</span>
+                    <div class="flex items-center gap-1 shrink-0">
+                        <button type="button" data-idx="${index}" class="btn-edit-crit p-1.5 rounded-lg theme-primary-text hover:opacity-80 cursor-pointer" title="Edit Poin">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                        </button>
+                        <button type="button" data-idx="${index}" class="btn-del-crit p-1.5 rounded-lg text-red-500 hover:bg-red-500/10 cursor-pointer" title="Hapus Poin">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
                 `;
                 container.appendChild(row);
+            });
+
+            container.querySelectorAll('.btn-edit-crit').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = Number(btn.getAttribute('data-idx'));
+                    state.editingCriteriaIndex = idx;
+                    const inputEdit = document.getElementById('input-edit-criteria');
+                    inputEdit.value = state.criteria[idx];
+                    document.getElementById('modal-edit-criteria').classList.remove('hidden');
+                    inputEdit.focus();
+                });
             });
 
             container.querySelectorAll('.btn-del-crit').forEach(btn => {
@@ -1173,7 +1388,7 @@
                 row.className = 'flex items-center justify-between gap-2 p-2.5 rounded-xl border theme-border theme-soft';
                 row.innerHTML = `
                     <span class="text-xs font-semibold flex-1">${escapeHtml(name)}</span>
-                    <button type="button" data-idx="${index}" class="btn-del-emp p-1.5 rounded-lg text-red-600 hover:bg-red-100" title="Hapus Karyawan">
+                    <button type="button" data-idx="${index}" class="btn-del-emp p-1.5 rounded-lg text-red-500 hover:bg-red-500/10 cursor-pointer" title="Hapus Karyawan">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -1241,24 +1456,33 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadState();
 
-            // Set tanggal default hari ini
             const today = getTodayStr();
             document.getElementById('input-tanggal').value = today;
             document.getElementById('rekap-tanggal').value = today;
+            document.getElementById('header-date-badge').textContent = formatTanggalSingkat(today);
 
-            // Terapkan tema awal
+            // Terapkan tema awal (outlet + light/dark mode)
             const initialOutlet = document.getElementById('select-outlet').value;
             applyOutletTheme(initialOutlet);
             renderEmployeeDropdown();
             renderChecklist();
+
+            // Event: Toggle Light / Dark Mode
+            document.getElementById('btn-toggle-dark').addEventListener('click', toggleDarkMode);
 
             // Event: Ganti Outlet pada Form Penilaian
             document.getElementById('select-outlet').addEventListener('change', (e) => {
                 const selected = e.target.value;
                 applyOutletTheme(selected);
                 renderEmployeeDropdown();
-                // Sinkronkan juga dropdown outlet di setting agar praktis
                 document.getElementById('setting-select-outlet').value = selected;
+            });
+
+            // Event: Update tanggal header jika user mengganti tanggal tes
+            document.getElementById('input-tanggal').addEventListener('change', (e) => {
+                if (e.target.value) {
+                    document.getElementById('header-date-badge').textContent = formatTanggalSingkat(e.target.value);
+                }
             });
 
             // Event: Toggle Input Karyawan Manual vs Dropdown
@@ -1292,8 +1516,21 @@
             // Event: Simpan Hasil Tes
             document.getElementById('btn-simpan-tes').addEventListener('click', handleSaveTestResult);
 
-            // Event: Filter Tanggal di Tab Rekap
+            // Event: Filter Tanggal & Hapus Log Harian di Tab Rekap
             document.getElementById('rekap-tanggal').addEventListener('change', renderRekapList);
+            document.getElementById('btn-clear-day').addEventListener('click', () => {
+                const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
+                showConfirmModal(
+                    'Hapus Semua Data Hari Ini',
+                    `Seluruh hasil tes pada tanggal ${formatTanggalIndo(selectedDate)} akan dihapus. Lanjutkan?`,
+                    () => {
+                        state.results = state.results.filter(r => r.date !== selectedDate);
+                        saveResults();
+                        renderRekapList();
+                        showToast('Semua data tanggal tersebut dihapus');
+                    }
+                );
+            });
 
             // Event: Generate & Download Gambar
             document.getElementById('btn-generate-image').addEventListener('click', generateDailyReportImage);
@@ -1302,7 +1539,7 @@
                 document.getElementById('modal-preview').classList.add('hidden');
             });
 
-            // Event: Setting - Tambah Kriteria
+            // Event: Setting - Tambah & Edit Kriteria
             document.getElementById('form-add-criteria').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const input = document.getElementById('input-new-criteria');
@@ -1314,6 +1551,24 @@
                 renderSettingCriteria();
                 renderChecklist();
                 showToast('Poin penilaian ditambahkan');
+            });
+
+            document.getElementById('btn-edit-crit-cancel').addEventListener('click', () => {
+                document.getElementById('modal-edit-criteria').classList.add('hidden');
+                state.editingCriteriaIndex = null;
+            });
+
+            document.getElementById('btn-edit-crit-save').addEventListener('click', () => {
+                const newVal = document.getElementById('input-edit-criteria').value.trim();
+                if (newVal && state.editingCriteriaIndex !== null) {
+                    state.criteria[state.editingCriteriaIndex] = newVal;
+                    saveCriteria();
+                    renderSettingCriteria();
+                    renderChecklist();
+                    showToast('Poin penilaian diperbarui');
+                }
+                document.getElementById('modal-edit-criteria').classList.add('hidden');
+                state.editingCriteriaIndex = null;
             });
 
             // Event: Setting - Ganti Outlet & Tambah Karyawan
