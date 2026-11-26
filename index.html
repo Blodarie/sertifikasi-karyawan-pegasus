@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tes Sertifikasi Karyawan</title>
+    <title>Sertikasi Karyawan</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts: Inter & Geometric Rounded Sans-Serif (Nunito & Quicksand) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
     
     <style>
         /* ==================== LIGHT MODE PALETTES ==================== */
@@ -113,6 +113,10 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        .font-rounded-geo {
+            font-family: 'Nunito', 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
         .theme-surface {
             background-color: var(--bg-surface);
             border-color: var(--border-color);
@@ -182,57 +186,362 @@
         }
     </style>
 </head>
-<body class="min-h-screen pb-24 select-none theme-chatting-light">
+<body class="min-h-screen select-none theme-chatting-light">
 
-    <!-- Header Aplikasi -->
-    <header class="sticky top-0 z-30 theme-surface border-b px-4 py-3 shadow-xs">
-        <div class="max-w-md mx-auto flex items-center justify-between gap-2">
-            <div class="flex items-center gap-2.5 min-w-0">
-                <div class="w-9 h-9 rounded-xl theme-primary-bg flex items-center justify-center shadow-xs shrink-0">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+    <!-- ==================== HALAMAN LOGIN / DAFTAR ==================== -->
+    <section id="auth-screen" class="min-h-screen flex flex-col items-center justify-center px-4 py-8 font-rounded-geo relative">
+        <!-- Toggle Dark/Light Mode di Pojok Kanan Atas Login -->
+        <button type="button" id="btn-auth-toggle-dark" aria-label="Ganti Mode Terang atau Gelap" title="Ganti Mode Terang / Gelap" class="fixed top-4 right-4 w-10 h-10 rounded-2xl border theme-border theme-surface shadow-xs flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
+            <svg id="auth-icon-sun" class="w-4 h-4 hidden text-amber-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <svg id="auth-icon-moon" class="w-4 h-4 theme-primary-text" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+        </button>
+
+        <div class="w-full max-w-sm space-y-6">
+            <!-- Logo & Judul di Tengah Halaman -->
+            <div class="flex flex-col items-center text-center space-y-3">
+                <div class="w-20 h-20 rounded-3xl theme-primary-bg flex items-center justify-center shadow-lg">
+                    <svg class="w-11 h-11" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </div>
-                <div class="min-w-0">
-                    <h1 class="text-sm sm:text-base font-bold leading-tight tracking-tight truncate">Tes Sertifikasi Karyawan</h1>
-                    <div class="flex items-center gap-1.5 mt-0.5">
-                        <span id="header-date-badge" class="text-[11px] font-medium theme-muted-text truncate">Hari Ini</span>
-                        <span class="text-[10px] theme-muted-text">•</span>
-                        <span id="header-brand-pill" class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded theme-primary-light">
-                            Chatting
-                        </span>
-                    </div>
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-black tracking-tight">Sertikasi Karyawan</h1>
+                    <p id="auth-subtitle" class="text-sm font-semibold theme-muted-text mt-1">Masuk ke akun penguji untuk melanjutkan</p>
                 </div>
             </div>
 
-            <!-- Tombol Toggle Mode Terang / Gelap (Icon-Only) -->
-            <button type="button" id="btn-toggle-dark" aria-label="Ganti Mode Terang atau Gelap" title="Ganti Mode Terang / Gelap" class="shrink-0 w-9 h-9 rounded-xl border theme-border theme-soft flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
-                <!-- Icon Sun (muncul saat dark mode untuk pindah ke terang) -->
-                <svg id="icon-sun" class="w-4 h-4 hidden text-amber-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-                <!-- Icon Moon (muncul saat light mode untuk pindah ke gelap) -->
-                <svg id="icon-moon" class="w-4 h-4 theme-primary-text" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-            </button>
+            <!-- Kartu Form Login / Daftar -->
+            <div class="theme-surface border rounded-3xl p-6 shadow-md space-y-4">
+                <!-- Switcher Masuk / Daftar -->
+                <div class="grid grid-cols-2 gap-1.5 p-1 rounded-2xl theme-soft border theme-border">
+                    <button type="button" id="btn-auth-mode-login" class="py-2 rounded-xl text-sm font-extrabold theme-primary-bg transition-all cursor-pointer">
+                        Masuk
+                    </button>
+                    <button type="button" id="btn-auth-mode-register" class="py-2 rounded-xl text-sm font-extrabold theme-muted-text transition-all cursor-pointer">
+                        Daftar Akun
+                    </button>
+                </div>
+
+                <form id="form-auth" class="space-y-3.5">
+                    <div>
+                        <label for="auth-username" class="block text-xs font-extrabold uppercase tracking-wider theme-muted-text mb-1.5">
+                            Username
+                        </label>
+                        <input type="text" id="auth-username" autocomplete="username" placeholder="Masukkan username..." class="theme-input w-full rounded-2xl px-4 py-3 text-sm font-bold" required>
+                    </div>
+
+                    <div>
+                        <label for="auth-password" class="block text-xs font-extrabold uppercase tracking-wider theme-muted-text mb-1.5">
+                            Password
+                        </label>
+                        <input type="password" id="auth-password" autocomplete="current-password" placeholder="Masukkan password..." class="theme-input w-full rounded-2xl px-4 py-3 text-sm font-bold" required>
+                    </div>
+
+                    <div id="auth-error-box" class="hidden text-xs font-bold text-red-500 bg-red-500/10 border border-red-500/25 rounded-xl px-3.5 py-2.5 text-center">
+                        Username atau password salah.
+                    </div>
+
+                    <button type="submit" id="btn-auth-submit" class="w-full theme-primary-bg py-3.5 rounded-2xl font-extrabold text-base shadow-md cursor-pointer mt-1">
+                        Masuk Sekarang
+                    </button>
+                </form>
+
+                <div class="text-center pt-1">
+                    <button type="button" id="btn-auth-switch-link" class="text-xs font-bold theme-muted-text hover:underline cursor-pointer">
+                        Belum punya akun? <span class="theme-primary-text font-extrabold">Daftar di sini</span>
+                    </button>
+                </div>
+            </div>
         </div>
-    </header>
+    </section>
 
-    <!-- Kontainer Utama -->
-    <main class="max-w-md mx-auto px-4 pt-4">
+    <!-- ==================== APLIKASI UTAMA (SETELAH LOGIN) ==================== -->
+    <div id="app-wrapper" class="hidden pb-24">
+        <!-- Header Aplikasi -->
+        <header class="sticky top-0 z-30 theme-surface border-b px-4 py-3 shadow-xs">
+            <div class="max-w-md mx-auto flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="w-9 h-9 rounded-xl theme-primary-bg flex items-center justify-center shadow-xs shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div class="min-w-0">
+                        <h1 class="text-sm sm:text-base font-bold leading-tight tracking-tight truncate">Tes Sertifikasi Karyawan</h1>
+                        <div class="flex items-center gap-1.5 mt-0.5 flex-wrap">
+                            <span id="header-date-badge" class="text-[11px] font-medium theme-muted-text truncate">Hari Ini</span>
+                            <span class="text-[10px] theme-muted-text">•</span>
+                            <span id="header-brand-pill" class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded theme-primary-light">
+                                Chatting
+                            </span>
+                            <span class="text-[10px] theme-muted-text">•</span>
+                            <span id="header-user-badge" class="text-[10px] font-bold theme-primary-text truncate max-w-[90px]">
+                                @user
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- ==================== TAB 1: PENILAIAN ==================== -->
-        <section id="tab-penilaian" class="space-y-4">
-            
-            <!-- Kartu Pemilihan Outlet, Tanggal & Karyawan -->
-            <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3.5">
-                <div>
-                    <label for="select-outlet" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text mb-1.5">
-                        Pilih Outlet
-                    </label>
-                    <div class="relative">
-                        <select id="select-outlet" class="theme-input w-full rounded-xl px-3.5 py-3 text-sm font-semibold appearance-none pr-10 cursor-pointer">
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <!-- Tombol Toggle Mode Terang / Gelap (Icon-Only) -->
+                    <button type="button" id="btn-toggle-dark" aria-label="Ganti Mode Terang atau Gelap" title="Ganti Mode Terang / Gelap" class="w-9 h-9 rounded-xl border theme-border theme-soft flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
+                        <svg id="icon-sun" class="w-4 h-4 hidden text-amber-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="icon-moon" class="w-4 h-4 theme-primary-text" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <!-- Tombol Keluar / Ganti Akun -->
+                    <button type="button" id="btn-header-logout" aria-label="Keluar Akun" title="Keluar Akun" class="w-9 h-9 rounded-xl border theme-border theme-soft flex items-center justify-center text-red-500 cursor-pointer active:scale-95 transition-transform">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Kontainer Utama -->
+        <main class="max-w-md mx-auto px-4 pt-4">
+
+            <!-- ==================== TAB 1: PENILAIAN ==================== -->
+            <section id="tab-penilaian" class="space-y-4">
+                
+                <!-- Kartu Pemilihan Outlet, Tanggal & Karyawan -->
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3.5">
+                    <div>
+                        <label for="select-outlet" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text mb-1.5">
+                            Pilih Outlet
+                        </label>
+                        <div class="relative">
+                            <select id="select-outlet" class="theme-input w-full rounded-xl px-3.5 py-3 text-sm font-semibold appearance-none pr-10 cursor-pointer">
+                                <option value="Chatting 2 S.Parman">Chatting 2 S.Parman</option>
+                                <option value="Chatting 3 Ampera">Chatting 3 Ampera</option>
+                                <option value="Chatting 4 Paris II">Chatting 4 Paris II</option>
+                                <option value="Chatting 5 Untan">Chatting 5 Untan</option>
+                                <option value="Chatting 6 Tanray II">Chatting 6 Tanray II</option>
+                                <option value="Chatting 7 Sumatra">Chatting 7 Sumatra</option>
+                                <option value="Chatting 8 Karet">Chatting 8 Karet</option>
+                                <option value="Jolie Sumatra">Jolie Sumatra</option>
+                                <option value="Zola Sulawesi">Zola Sulawesi</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 theme-primary-text">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label for="input-tanggal" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text mb-1.5">
+                                Tanggal Tes
+                            </label>
+                            <input type="date" id="input-tanggal" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-medium">
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1.5">
+                                <label for="select-karyawan" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text">
+                                    Nama Karyawan
+                                </label>
+                                <button type="button" id="btn-toggle-manual-emp" class="text-[11px] font-semibold theme-primary-text underline cursor-pointer">
+                                    + Input Manual
+                                </button>
+                            </div>
+                            <div id="wrapper-select-emp" class="relative">
+                                <select id="select-karyawan" class="theme-input w-full rounded-xl pl-3.5 pr-24 py-2.5 text-sm font-semibold appearance-none cursor-pointer">
+                                    <!-- Diisi via JS -->
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center gap-1.5 pr-3">
+                                    <span id="dropdown-leader-badge" class="hidden text-[9px] font-extrabold uppercase tracking-tight px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 border border-amber-500/35 leading-none">
+                                        ★ Leader
+                                    </span>
+                                    <svg class="w-4 h-4 theme-primary-text shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div id="wrapper-manual-emp" class="hidden relative">
+                                <input type="text" id="input-manual-karyawan" placeholder="Ketik nama karyawan..." class="theme-input w-full rounded-xl pl-3.5 pr-20 py-2.5 text-sm font-medium">
+                                <span id="manual-leader-badge" class="pointer-events-none hidden absolute right-3 top-1/2 -translate-y-1/2 text-[9px] font-extrabold uppercase tracking-tight px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 border border-amber-500/35 leading-none">
+                                    ★ Leader
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Indikator Role Karyawan Aktif (Reguler vs Leader Bar) -->
+                    <div id="active-employee-role-bar" class="pt-2.5 border-t theme-border flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span id="active-emp-name-display" class="text-xs font-bold truncate">-</span>
+                        </div>
+                        <span id="active-criteria-mode-label" class="text-[11px] font-semibold theme-muted-text shrink-0">
+                            Kriteria Reguler
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Kartu Poin Penilaian -->
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs">
+                    <div class="flex items-center justify-between mb-3">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 id="checklist-card-title" class="text-sm font-bold">Poin Penilaian</h2>
+                                <span id="checklist-leader-pill" class="hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-600 border border-amber-500/30">
+                                    Leader Bar
+                                </span>
+                            </div>
+                            <p id="checklist-card-subtitle" class="text-xs theme-muted-text">Ketuk kriteria yang lulus / terpenuhi</p>
+                        </div>
+                        <button type="button" id="btn-check-all" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg theme-primary-light cursor-pointer shrink-0">
+                            Pilih Semua
+                        </button>
+                    </div>
+
+                    <!-- List Checklist Poin -->
+                    <div id="checklist-container" class="space-y-2.5">
+                        <!-- Diisi via JS -->
+                    </div>
+
+                    <!-- Catatan Opsional -->
+                    <div class="mt-4 pt-3 border-t theme-border">
+                        <label for="input-catatan" class="block text-xs font-semibold theme-muted-text mb-1">
+                            Catatan Penguji (Opsional)
+                        </label>
+                        <input type="text" id="input-catatan" placeholder="Misal: Perlu tingkatkan kecepatan..." class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm">
+                    </div>
+                </div>
+
+                <!-- Ringkasan Skor Real-Time & Tombol Simpan -->
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs flex items-center justify-between gap-3">
+                    <div>
+                        <span class="text-xs font-medium theme-muted-text block">Skor Sertifikasi</span>
+                        <div class="flex items-baseline gap-2">
+                            <span id="live-score-text" class="text-2xl font-extrabold theme-primary-text">0/5</span>
+                            <span id="live-status-badge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-500">
+                                Perlu Evaluasi
+                            </span>
+                        </div>
+                    </div>
+                    <button type="button" id="btn-simpan-tes" class="theme-primary-bg px-5 py-3.5 rounded-xl font-bold text-sm shadow-md flex items-center gap-2 cursor-pointer">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Simpan Hasil Tes
+                    </button>
+                </div>
+            </section>
+
+            <!-- ==================== TAB 2: REKAP & UNDUH ==================== -->
+            <section id="tab-rekap" class="hidden space-y-4">
+                
+                <!-- Filter Tanggal Rekap & Tombol Aksi -->
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3.5">
+                    <div class="flex items-center justify-between gap-3">
+                        <div class="flex-1">
+                            <label for="rekap-tanggal" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text mb-1">
+                                Tanggal Laporan Harian
+                            </label>
+                            <input type="date" id="rekap-tanggal" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold">
+                        </div>
+                        <div class="text-right pt-4 flex flex-col items-end gap-1">
+                            <span id="rekap-total-count" class="text-xs font-bold px-3 py-2 rounded-xl theme-primary-light inline-block">
+                                0 Peserta
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Tombol Generate & Download Gambar -->
+                    <button type="button" id="btn-generate-image" class="w-full theme-primary-bg py-3.5 px-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Buat & Download Gambar (1 Hari)
+                    </button>
+
+                    <!-- Tombol Bersihkan Log Hari Ini -->
+                    <div id="wrapper-clear-day" class="hidden pt-1 border-t theme-border flex justify-end">
+                        <button type="button" id="btn-clear-day" class="text-xs font-semibold text-red-500 hover:underline py-1 cursor-pointer">
+                            Hapus Semua Data Tanggal Ini
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Daftar Hasil Per Outlet pada Tanggal Terpilih -->
+                <div id="rekap-list-container" class="space-y-3">
+                    <!-- Diisi via JS -->
+                </div>
+            </section>
+
+            <!-- ==================== TAB 3: SETTING (PENGATURAN) ==================== -->
+            <section id="tab-setting" class="hidden space-y-4">
+
+                <!-- Info Akun Penguji Aktif -->
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-10 h-10 rounded-xl theme-primary-light flex items-center justify-center font-extrabold text-sm shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="text-[11px] font-semibold theme-muted-text block">Akun Penguji Aktif</span>
+                            <span id="setting-username-display" class="text-sm font-bold truncate block">-</span>
+                        </div>
+                    </div>
+                    <button type="button" id="btn-setting-logout" class="text-xs font-bold px-3.5 py-2 rounded-xl border border-red-500/30 text-red-500 bg-red-500/10 active:scale-95 cursor-pointer shrink-0">
+                        Keluar Akun
+                    </button>
+                </div>
+                
+                <!-- Kelola Poin Penilaian (Reguler & Leader Bar) -->
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
+                    <div>
+                        <h2 class="text-sm font-bold">1. Kelola Poin Penilaian</h2>
+                        <p class="text-xs theme-muted-text">Atur kriteria terpisah untuk Karyawan Reguler dan Leader Bar</p>
+                    </div>
+
+                    <!-- Sub-Tab Tipe Kriteria -->
+                    <div class="grid grid-cols-2 gap-1.5 p-1 rounded-xl theme-soft border theme-border">
+                        <button type="button" id="btn-crit-tab-regular" class="py-2 px-3 rounded-lg text-xs font-bold theme-primary-bg transition-all cursor-pointer">
+                            Karyawan Reguler
+                        </button>
+                        <button type="button" id="btn-crit-tab-leader" class="py-2 px-3 rounded-lg text-xs font-bold theme-muted-text transition-all cursor-pointer flex items-center justify-center gap-1">
+                            <span>★ Leader Bar</span>
+                        </button>
+                    </div>
+
+                    <form id="form-add-criteria" class="flex gap-2">
+                        <input type="text" id="input-new-criteria" placeholder="Nama kriteria baru..." class="theme-input flex-1 rounded-xl px-3.5 py-2.5 text-sm" required>
+                        <button type="submit" class="theme-primary-bg px-4 py-2.5 rounded-xl font-bold text-sm shrink-0 cursor-pointer">
+                            + Tambah
+                        </button>
+                    </form>
+
+                    <div id="setting-criteria-list" class="space-y-2 pt-1">
+                        <!-- Diisi via JS -->
+                    </div>
+                </div>
+
+                <!-- Kelola Daftar Karyawan per Outlet -->
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
+                    <div>
+                        <h2 class="text-sm font-bold">2. Kelola Daftar Karyawan</h2>
+                        <p class="text-xs theme-muted-text">Atur daftar nama karyawan & status Leader Bar tiap outlet</p>
+                    </div>
+
+                    <div>
+                        <label for="setting-select-outlet" class="block text-xs font-semibold theme-muted-text mb-1">
+                            Pilih Outlet Target
+                        </label>
+                        <select id="setting-select-outlet" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold">
                             <option value="Chatting 2 S.Parman">Chatting 2 S.Parman</option>
                             <option value="Chatting 3 Ampera">Chatting 3 Ampera</option>
                             <option value="Chatting 4 Paris II">Chatting 4 Paris II</option>
@@ -243,267 +552,65 @@
                             <option value="Jolie Sumatra">Jolie Sumatra</option>
                             <option value="Zola Sulawesi">Zola Sulawesi</option>
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 theme-primary-text">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </div>
                     </div>
-                </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                        <label for="input-tanggal" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text mb-1.5">
-                            Tanggal Tes
-                        </label>
-                        <input type="date" id="input-tanggal" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-medium">
-                    </div>
-                    <div>
-                        <div class="flex items-center justify-between mb-1.5">
-                            <label for="select-karyawan" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text">
-                                Nama Karyawan
-                            </label>
-                            <button type="button" id="btn-toggle-manual-emp" class="text-[11px] font-semibold theme-primary-text underline cursor-pointer">
-                                + Input Manual
+                    <form id="form-add-employee" class="space-y-2.5">
+                        <div class="flex gap-2">
+                            <input type="text" id="input-new-employee" placeholder="Nama karyawan baru..." class="theme-input flex-1 rounded-xl px-3.5 py-2.5 text-sm" required>
+                            <button type="submit" class="theme-primary-bg px-4 py-2.5 rounded-xl font-bold text-sm shrink-0 cursor-pointer">
+                                + Tambah
                             </button>
                         </div>
-                        <div id="wrapper-select-emp" class="relative">
-                            <select id="select-karyawan" class="theme-input w-full rounded-xl pl-3.5 pr-24 py-2.5 text-sm font-semibold appearance-none cursor-pointer">
-                                <!-- Diisi via JS -->
-                            </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center gap-1.5 pr-3">
-                                <span id="dropdown-leader-badge" class="hidden text-[9px] font-extrabold uppercase tracking-tight px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 border border-amber-500/35 leading-none">
-                                    ★ Leader
-                                </span>
-                                <svg class="w-4 h-4 theme-primary-text shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </div>
-                        </div>
-                        <div id="wrapper-manual-emp" class="hidden relative">
-                            <input type="text" id="input-manual-karyawan" placeholder="Ketik nama karyawan..." class="theme-input w-full rounded-xl pl-3.5 pr-20 py-2.5 text-sm font-medium">
-                            <span id="manual-leader-badge" class="pointer-events-none hidden absolute right-3 top-1/2 -translate-y-1/2 text-[9px] font-extrabold uppercase tracking-tight px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 border border-amber-500/35 leading-none">
-                                ★ Leader
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Indikator Role Karyawan Aktif (Reguler vs Leader Bar) -->
-                <div id="active-employee-role-bar" class="pt-2.5 border-t theme-border flex items-center justify-between gap-2">
-                    <div class="flex items-center gap-2 min-w-0">
-                        <span id="active-emp-name-display" class="text-xs font-bold truncate">-</span>
-                    </div>
-                    <span id="active-criteria-mode-label" class="text-[11px] font-semibold theme-muted-text shrink-0">
-                        Kriteria Reguler
-                    </span>
-                </div>
-            </div>
-
-            <!-- Kartu Poin Penilaian -->
-            <div class="theme-surface border rounded-2xl p-4 shadow-xs">
-                <div class="flex items-center justify-between mb-3">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h2 id="checklist-card-title" class="text-sm font-bold">Poin Penilaian</h2>
-                            <span id="checklist-leader-pill" class="hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-600 border border-amber-500/30">
-                                Leader Bar
-                            </span>
-                        </div>
-                        <p id="checklist-card-subtitle" class="text-xs theme-muted-text">Ketuk kriteria yang lulus / terpenuhi</p>
-                    </div>
-                    <button type="button" id="btn-check-all" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg theme-primary-light cursor-pointer shrink-0">
-                        Pilih Semua
-                    </button>
-                </div>
-
-                <!-- List Checklist Poin -->
-                <div id="checklist-container" class="space-y-2.5">
-                    <!-- Diisi via JS -->
-                </div>
-
-                <!-- Catatan Opsional -->
-                <div class="mt-4 pt-3 border-t theme-border">
-                    <label for="input-catatan" class="block text-xs font-semibold theme-muted-text mb-1">
-                        Catatan Penguji (Opsional)
-                    </label>
-                    <input type="text" id="input-catatan" placeholder="Misal: Perlu tingkatkan kecepatan..." class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm">
-                </div>
-            </div>
-
-            <!-- Ringkasan Skor Real-Time & Tombol Simpan -->
-            <div class="theme-surface border rounded-2xl p-4 shadow-xs flex items-center justify-between gap-3">
-                <div>
-                    <span class="text-xs font-medium theme-muted-text block">Skor Sertifikasi</span>
-                    <div class="flex items-baseline gap-2">
-                        <span id="live-score-text" class="text-2xl font-extrabold theme-primary-text">0/5</span>
-                        <span id="live-status-badge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-500">
-                            Perlu Evaluasi
-                        </span>
-                    </div>
-                </div>
-                <button type="button" id="btn-simpan-tes" class="theme-primary-bg px-5 py-3.5 rounded-xl font-bold text-sm shadow-md flex items-center gap-2 cursor-pointer">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                    Simpan Hasil Tes
-                </button>
-            </div>
-        </section>
-
-        <!-- ==================== TAB 2: REKAP & UNDUH ==================== -->
-        <section id="tab-rekap" class="hidden space-y-4">
-            
-            <!-- Filter Tanggal Rekap & Tombol Aksi -->
-            <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3.5">
-                <div class="flex items-center justify-between gap-3">
-                    <div class="flex-1">
-                        <label for="rekap-tanggal" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text mb-1">
-                            Tanggal Laporan Harian
+                        <label class="flex items-center gap-2 text-xs font-semibold cursor-pointer select-none px-1">
+                            <input type="checkbox" id="checkbox-new-emp-leader" class="w-4 h-4 rounded accent-amber-500 cursor-pointer">
+                            <span>Tandai sebagai <span class="text-amber-600 font-bold">★ Leader Bar</span> (Penilaian khusus Leader Bar)</span>
                         </label>
-                        <input type="date" id="rekap-tanggal" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold">
-                    </div>
-                    <div class="text-right pt-4 flex flex-col items-end gap-1">
-                        <span id="rekap-total-count" class="text-xs font-bold px-3 py-2 rounded-xl theme-primary-light inline-block">
-                            0 Peserta
-                        </span>
+                    </form>
+
+                    <div id="setting-employee-list" class="space-y-2 pt-1">
+                        <!-- Diisi via JS -->
                     </div>
                 </div>
 
-                <!-- Tombol Generate & Download Gambar -->
-                <button type="button" id="btn-generate-image" class="w-full theme-primary-bg py-3.5 px-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                <!-- Reset Data Default -->
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs flex items-center justify-between gap-3">
+                    <div>
+                        <h3 class="text-xs font-bold">Reset Pengaturan Awal</h3>
+                        <p class="text-[11px] theme-muted-text">Kembalikan poin & contoh karyawan default</p>
+                    </div>
+                    <button type="button" id="btn-reset-default" class="text-xs font-semibold px-3 py-2 rounded-xl border border-red-500/30 text-red-500 bg-red-500/10 active:scale-95 cursor-pointer shrink-0">
+                        Reset Default
+                    </button>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Navigasi Bawah -->
+        <nav class="fixed bottom-0 inset-x-0 z-30 theme-surface border-t shadow-lg">
+            <div class="max-w-md mx-auto grid grid-cols-3 h-16">
+                <button type="button" data-tab="penilaian" class="nav-btn flex flex-col items-center justify-center gap-1 theme-primary-text font-bold text-xs cursor-pointer">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                     </svg>
-                    Buat & Download Gambar (1 Hari)
+                    <span>Penilaian</span>
                 </button>
-
-                <!-- Tombol Bersihkan Log Hari Ini -->
-                <div id="wrapper-clear-day" class="hidden pt-1 border-t theme-border flex justify-end">
-                    <button type="button" id="btn-clear-day" class="text-xs font-semibold text-red-500 hover:underline py-1 cursor-pointer">
-                        Hapus Semua Data Tanggal Ini
-                    </button>
-                </div>
-            </div>
-
-            <!-- Daftar Hasil Per Outlet pada Tanggal Terpilih -->
-            <div id="rekap-list-container" class="space-y-3">
-                <!-- Diisi via JS -->
-            </div>
-        </section>
-
-        <!-- ==================== TAB 3: SETTING (PENGATURAN) ==================== -->
-        <section id="tab-setting" class="hidden space-y-4">
-            
-            <!-- Kelola Poin Penilaian (Reguler & Leader Bar) -->
-            <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
-                <div>
-                    <h2 class="text-sm font-bold">1. Kelola Poin Penilaian</h2>
-                    <p class="text-xs theme-muted-text">Atur kriteria terpisah untuk Karyawan Reguler dan Leader Bar</p>
-                </div>
-
-                <!-- Sub-Tab Tipe Kriteria -->
-                <div class="grid grid-cols-2 gap-1.5 p-1 rounded-xl theme-soft border theme-border">
-                    <button type="button" id="btn-crit-tab-regular" class="py-2 px-3 rounded-lg text-xs font-bold theme-primary-bg transition-all cursor-pointer">
-                        Karyawan Reguler
-                    </button>
-                    <button type="button" id="btn-crit-tab-leader" class="py-2 px-3 rounded-lg text-xs font-bold theme-muted-text transition-all cursor-pointer flex items-center justify-center gap-1">
-                        <span>★ Leader Bar</span>
-                    </button>
-                </div>
-
-                <form id="form-add-criteria" class="flex gap-2">
-                    <input type="text" id="input-new-criteria" placeholder="Nama kriteria baru..." class="theme-input flex-1 rounded-xl px-3.5 py-2.5 text-sm" required>
-                    <button type="submit" class="theme-primary-bg px-4 py-2.5 rounded-xl font-bold text-sm shrink-0 cursor-pointer">
-                        + Tambah
-                    </button>
-                </form>
-
-                <div id="setting-criteria-list" class="space-y-2 pt-1">
-                    <!-- Diisi via JS -->
-                </div>
-            </div>
-
-            <!-- Kelola Daftar Karyawan per Outlet -->
-            <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
-                <div>
-                    <h2 class="text-sm font-bold">2. Kelola Daftar Karyawan</h2>
-                    <p class="text-xs theme-muted-text">Atur daftar nama karyawan & status Leader Bar tiap outlet</p>
-                </div>
-
-                <div>
-                    <label for="setting-select-outlet" class="block text-xs font-semibold theme-muted-text mb-1">
-                        Pilih Outlet Target
-                    </label>
-                    <select id="setting-select-outlet" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold">
-                        <option value="Chatting 2 S.Parman">Chatting 2 S.Parman</option>
-                        <option value="Chatting 3 Ampera">Chatting 3 Ampera</option>
-                        <option value="Chatting 4 Paris II">Chatting 4 Paris II</option>
-                        <option value="Chatting 5 Untan">Chatting 5 Untan</option>
-                        <option value="Chatting 6 Tanray II">Chatting 6 Tanray II</option>
-                        <option value="Chatting 7 Sumatra">Chatting 7 Sumatra</option>
-                        <option value="Chatting 8 Karet">Chatting 8 Karet</option>
-                        <option value="Jolie Sumatra">Jolie Sumatra</option>
-                        <option value="Zola Sulawesi">Zola Sulawesi</option>
-                    </select>
-                </div>
-
-                <form id="form-add-employee" class="space-y-2.5">
-                    <div class="flex gap-2">
-                        <input type="text" id="input-new-employee" placeholder="Nama karyawan baru..." class="theme-input flex-1 rounded-xl px-3.5 py-2.5 text-sm" required>
-                        <button type="submit" class="theme-primary-bg px-4 py-2.5 rounded-xl font-bold text-sm shrink-0 cursor-pointer">
-                            + Tambah
-                        </button>
-                    </div>
-                    <label class="flex items-center gap-2 text-xs font-semibold cursor-pointer select-none px-1">
-                        <input type="checkbox" id="checkbox-new-emp-leader" class="w-4 h-4 rounded accent-amber-500 cursor-pointer">
-                        <span>Tandai sebagai <span class="text-amber-600 font-bold">★ Leader Bar</span> (Penilaian khusus Leader Bar)</span>
-                    </label>
-                </form>
-
-                <div id="setting-employee-list" class="space-y-2 pt-1">
-                    <!-- Diisi via JS -->
-                </div>
-            </div>
-
-            <!-- Reset Data Default -->
-            <div class="theme-surface border rounded-2xl p-4 shadow-xs flex items-center justify-between gap-3">
-                <div>
-                    <h3 class="text-xs font-bold">Reset Pengaturan Awal</h3>
-                    <p class="text-[11px] theme-muted-text">Kembalikan poin & contoh karyawan default</p>
-                </div>
-                <button type="button" id="btn-reset-default" class="text-xs font-semibold px-3 py-2 rounded-xl border border-red-500/30 text-red-500 bg-red-500/10 active:scale-95 cursor-pointer shrink-0">
-                    Reset Default
+                <button type="button" data-tab="rekap" class="nav-btn flex flex-col items-center justify-center gap-1 theme-muted-text font-medium text-xs cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>Rekap & Unduh</span>
+                </button>
+                <button type="button" data-tab="setting" class="nav-btn flex flex-col items-center justify-center gap-1 theme-muted-text font-medium text-xs cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span>Setting</span>
                 </button>
             </div>
-        </section>
-
-    </main>
-
-    <!-- Navigasi Bawah -->
-    <nav class="fixed bottom-0 inset-x-0 z-30 theme-surface border-t shadow-lg">
-        <div class="max-w-md mx-auto grid grid-cols-3 h-16">
-            <button type="button" data-tab="penilaian" class="nav-btn flex flex-col items-center justify-center gap-1 theme-primary-text font-bold text-xs cursor-pointer">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                </svg>
-                <span>Penilaian</span>
-            </button>
-            <button type="button" data-tab="rekap" class="nav-btn flex flex-col items-center justify-center gap-1 theme-muted-text font-medium text-xs cursor-pointer">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <span>Rekap & Unduh</span>
-            </button>
-            <button type="button" data-tab="setting" class="nav-btn flex flex-col items-center justify-center gap-1 theme-muted-text font-medium text-xs cursor-pointer">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span>Setting</span>
-            </button>
-        </div>
-    </nav>
+        </nav>
+    </div>
 
     <!-- Modal Preview Gambar & Download -->
     <div id="modal-preview" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-xs flex items-center justify-center p-4">
@@ -707,15 +814,23 @@
         }
 
         /**
-         * DATA DEFAULT & LOCALSTORAGE MANAGEMENT
+         * MANAJEMEN AKUN & LOCALSTORAGE PER PENGGUNA
          */
-        const STORAGE_KEYS = {
-            CRITERIA_REGULAR: 'sertifikasi_criteria_reg_v2',
-            CRITERIA_LEADER: 'sertifikasi_criteria_ldr_v2',
-            EMPLOYEES: 'sertifikasi_employees_v2',
-            RESULTS: 'sertifikasi_results_v2',
+        const GLOBAL_STORAGE_KEYS = {
+            ACCOUNTS: 'sertifikasi_accounts_v1',
+            CURRENT_SESSION: 'sertifikasi_current_user_v1',
             DARK_MODE: 'sertifikasi_dark_mode_v1'
         };
+
+        function getUserStorageKeys(username) {
+            const safeKey = String(username || 'default').trim().toLowerCase();
+            return {
+                CRITERIA_REGULAR: `sertifikasi_user_${safeKey}_criteria_reg_v2`,
+                CRITERIA_LEADER: `sertifikasi_user_${safeKey}_criteria_ldr_v2`,
+                EMPLOYEES: `sertifikasi_user_${safeKey}_employees_v2`,
+                RESULTS: `sertifikasi_user_${safeKey}_results_v2`
+            };
+        }
 
         const DEFAULT_CRITERIA_REGULAR = [
             "Grooming & Kerapian Seragam",
@@ -781,6 +896,8 @@
         };
 
         let state = {
+            currentUser: null, // { username: string }
+            authMode: 'login', // 'login' | 'register'
             criteriaRegular: [],
             criteriaLeader: [],
             employees: {},
@@ -793,6 +910,19 @@
             generatedDataUrl: '',
             editingCriteriaIndex: null
         };
+
+        function getAccounts() {
+            try {
+                const raw = localStorage.getItem(GLOBAL_STORAGE_KEYS.ACCOUNTS);
+                return raw ? JSON.parse(raw) : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveAccounts(accounts) {
+            localStorage.setItem(GLOBAL_STORAGE_KEYS.ACCOUNTS, JSON.stringify(accounts));
+        }
 
         function isDefaultLeaderName(name) {
             if (!name) return false;
@@ -853,22 +983,25 @@
             });
         }
 
-        function loadState() {
-            try {
-                const savedDark = localStorage.getItem(STORAGE_KEYS.DARK_MODE);
-                if (savedDark !== null) {
-                    state.isDarkMode = savedDark === 'true';
-                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    state.isDarkMode = true;
-                }
+        function loadThemePreference() {
+            const savedDark = localStorage.getItem(GLOBAL_STORAGE_KEYS.DARK_MODE);
+            if (savedDark !== null) {
+                state.isDarkMode = savedDark === 'true';
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                state.isDarkMode = true;
+            }
+        }
 
-                const savedReg = localStorage.getItem(STORAGE_KEYS.CRITERIA_REGULAR);
+        function loadUserState(username) {
+            const keys = getUserStorageKeys(username);
+            try {
+                const savedReg = localStorage.getItem(keys.CRITERIA_REGULAR);
                 state.criteriaRegular = savedReg ? JSON.parse(savedReg) : [...DEFAULT_CRITERIA_REGULAR];
 
-                const savedLdr = localStorage.getItem(STORAGE_KEYS.CRITERIA_LEADER);
+                const savedLdr = localStorage.getItem(keys.CRITERIA_LEADER);
                 state.criteriaLeader = savedLdr ? JSON.parse(savedLdr) : [...DEFAULT_CRITERIA_LEADER];
 
-                const savedEmployees = localStorage.getItem(STORAGE_KEYS.EMPLOYEES);
+                const savedEmployees = localStorage.getItem(keys.EMPLOYEES);
                 const rawEmployees = savedEmployees ? JSON.parse(savedEmployees) : JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES));
 
                 state.employees = {};
@@ -877,10 +1010,10 @@
                     state.employees[o] = list.map(normalizeEmployeeEntry);
                 });
 
-                const savedResults = localStorage.getItem(STORAGE_KEYS.RESULTS);
+                const savedResults = localStorage.getItem(keys.RESULTS);
                 state.results = savedResults ? JSON.parse(savedResults) : [];
             } catch (e) {
-                console.error("Gagal memuat data:", e);
+                console.error("Gagal memuat data akun:", e);
                 state.criteriaRegular = [...DEFAULT_CRITERIA_REGULAR];
                 state.criteriaLeader = [...DEFAULT_CRITERIA_LEADER];
                 state.employees = JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES));
@@ -889,20 +1022,26 @@
         }
 
         function saveCriteria() {
-            localStorage.setItem(STORAGE_KEYS.CRITERIA_REGULAR, JSON.stringify(state.criteriaRegular));
-            localStorage.setItem(STORAGE_KEYS.CRITERIA_LEADER, JSON.stringify(state.criteriaLeader));
+            if (!state.currentUser) return;
+            const keys = getUserStorageKeys(state.currentUser.username);
+            localStorage.setItem(keys.CRITERIA_REGULAR, JSON.stringify(state.criteriaRegular));
+            localStorage.setItem(keys.CRITERIA_LEADER, JSON.stringify(state.criteriaLeader));
         }
 
         function saveEmployees() {
-            localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(state.employees));
+            if (!state.currentUser) return;
+            const keys = getUserStorageKeys(state.currentUser.username);
+            localStorage.setItem(keys.EMPLOYEES, JSON.stringify(state.employees));
         }
 
         function saveResults() {
-            localStorage.setItem(STORAGE_KEYS.RESULTS, JSON.stringify(state.results));
+            if (!state.currentUser) return;
+            const keys = getUserStorageKeys(state.currentUser.username);
+            localStorage.setItem(keys.RESULTS, JSON.stringify(state.results));
         }
 
         function saveDarkMode() {
-            localStorage.setItem(STORAGE_KEYS.DARK_MODE, String(state.isDarkMode));
+            localStorage.setItem(GLOBAL_STORAGE_KEYS.DARK_MODE, String(state.isDarkMode));
         }
 
         /**
@@ -910,17 +1049,162 @@
          */
         function applyOutletTheme(outletName) {
             const theme = getBrandTheme(outletName, state.isDarkMode);
-            document.body.className = `min-h-screen pb-24 select-none ${theme.bodyClass}`;
+            document.body.className = `min-h-screen select-none ${theme.bodyClass}`;
             document.getElementById('header-brand-pill').textContent = theme.label;
 
             const sunIcon = document.getElementById('icon-sun');
             const moonIcon = document.getElementById('icon-moon');
+            const authSunIcon = document.getElementById('auth-icon-sun');
+            const authMoonIcon = document.getElementById('auth-icon-moon');
+
             if (state.isDarkMode) {
                 sunIcon.classList.remove('hidden');
                 moonIcon.classList.add('hidden');
+                authSunIcon.classList.remove('hidden');
+                authMoonIcon.classList.add('hidden');
             } else {
                 sunIcon.classList.add('hidden');
                 moonIcon.classList.remove('hidden');
+                authSunIcon.classList.add('hidden');
+                authMoonIcon.classList.remove('hidden');
+            }
+        }
+
+        /**
+         * LOGIKA HALAMAN LOGIN & DAFTAR AKUN
+         */
+        function setAuthMode(mode) {
+            state.authMode = mode;
+            const btnLogin = document.getElementById('btn-auth-mode-login');
+            const btnRegister = document.getElementById('btn-auth-mode-register');
+            const btnSubmit = document.getElementById('btn-auth-submit');
+            const subtitle = document.getElementById('auth-subtitle');
+            const switchLink = document.getElementById('btn-auth-switch-link');
+            const errBox = document.getElementById('auth-error-box');
+            const passInput = document.getElementById('auth-password');
+
+            errBox.classList.add('hidden');
+
+            if (mode === 'register') {
+                btnRegister.className = 'py-2 rounded-xl text-sm font-extrabold theme-primary-bg transition-all cursor-pointer';
+                btnLogin.className = 'py-2 rounded-xl text-sm font-extrabold theme-muted-text transition-all cursor-pointer';
+                btnSubmit.textContent = 'Daftar & Masuk';
+                subtitle.textContent = 'Buat akun penguji baru untuk mulai';
+                passInput.setAttribute('autocomplete', 'new-password');
+                switchLink.innerHTML = 'Sudah punya akun? <span class="theme-primary-text font-extrabold">Masuk di sini</span>';
+            } else {
+                btnLogin.className = 'py-2 rounded-xl text-sm font-extrabold theme-primary-bg transition-all cursor-pointer';
+                btnRegister.className = 'py-2 rounded-xl text-sm font-extrabold theme-muted-text transition-all cursor-pointer';
+                btnSubmit.textContent = 'Masuk Sekarang';
+                subtitle.textContent = 'Masuk ke akun penguji untuk melanjutkan';
+                passInput.setAttribute('autocomplete', 'current-password');
+                switchLink.innerHTML = 'Belum punya akun? <span class="theme-primary-text font-extrabold">Daftar di sini</span>';
+            }
+        }
+
+        function showAuthError(msg) {
+            const errBox = document.getElementById('auth-error-box');
+            errBox.textContent = msg;
+            errBox.classList.remove('hidden');
+        }
+
+        function enterAppSession(username) {
+            const cleanUsername = username.trim();
+            state.currentUser = { username: cleanUsername };
+            localStorage.setItem(GLOBAL_STORAGE_KEYS.CURRENT_SESSION, cleanUsername);
+
+            // Reset state sementara agar tidak terbawa dari akun sebelumnya
+            state.checkedCriteria.clear();
+            state.isManualEmployee = false;
+            state.activeTab = 'penilaian';
+            document.getElementById('input-catatan').value = '';
+            document.getElementById('input-manual-karyawan').value = '';
+            document.getElementById('wrapper-manual-emp').classList.add('hidden');
+            document.getElementById('wrapper-select-emp').classList.remove('hidden');
+            document.getElementById('btn-toggle-manual-emp').textContent = '+ Input Manual';
+
+            // Muat data khusus milik akun ini
+            loadUserState(cleanUsername);
+
+            // Tampilkan username penguji pada UI
+            document.getElementById('header-user-badge').textContent = cleanUsername;
+            document.getElementById('setting-username-display').textContent = cleanUsername;
+
+            // Tampilkan halaman utama aplikasi
+            document.getElementById('auth-screen').classList.add('hidden');
+            document.getElementById('app-wrapper').classList.remove('hidden');
+
+            const selectOutlet = document.getElementById('select-outlet');
+            applyOutletTheme(selectOutlet.value);
+            renderEmployeeDropdown();
+            renderChecklist();
+            switchTab('penilaian');
+        }
+
+        function logoutSession() {
+            state.currentUser = null;
+            state.results = [];
+            state.checkedCriteria.clear();
+            localStorage.removeItem(GLOBAL_STORAGE_KEYS.CURRENT_SESSION);
+
+            document.getElementById('auth-username').value = '';
+            document.getElementById('auth-password').value = '';
+            document.getElementById('auth-error-box').classList.add('hidden');
+            setAuthMode('login');
+
+            document.getElementById('app-wrapper').classList.add('hidden');
+            document.getElementById('auth-screen').classList.remove('hidden');
+            applyOutletTheme('Chatting 2 S.Parman');
+            showToast('Berhasil keluar akun');
+        }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            const rawUsername = document.getElementById('auth-username').value.trim();
+            const password = document.getElementById('auth-password').value;
+
+            if (!rawUsername || !password) {
+                showAuthError('Username dan password wajib diisi.');
+                return;
+            }
+
+            if (rawUsername.length < 3) {
+                showAuthError('Username minimal 3 karakter.');
+                return;
+            }
+
+            if (password.length < 4) {
+                showAuthError('Password minimal 4 karakter.');
+                return;
+            }
+
+            const accounts = getAccounts();
+            const existingAccount = accounts.find(
+                acc => acc.username.toLowerCase() === rawUsername.toLowerCase()
+            );
+
+            if (state.authMode === 'register') {
+                if (existingAccount) {
+                    showAuthError('Username sudah terdaftar. Silakan gunakan username lain atau masuk.');
+                    return;
+                }
+
+                accounts.push({
+                    username: rawUsername,
+                    password: password,
+                    createdAt: Date.now()
+                });
+                saveAccounts(accounts);
+                enterAppSession(rawUsername);
+                showToast(`Akun "${rawUsername}" berhasil dibuat!`);
+            } else {
+                if (!existingAccount || existingAccount.password !== password) {
+                    showAuthError('Username atau password salah.');
+                    return;
+                }
+
+                enterAppSession(existingAccount.username);
+                showToast(`Selamat datang, ${existingAccount.username}!`);
             }
         }
 
@@ -1123,6 +1407,7 @@
                 total,
                 passedCriteria: validChecked.map(i => criteriaList[i]),
                 note,
+                examiner: state.currentUser ? state.currentUser.username : '-',
                 timestamp: existingIndex >= 0 ? state.results[existingIndex].timestamp : Date.now()
             };
 
@@ -1326,7 +1611,6 @@
                     lines.push(currentLine);
                 }
 
-                // Potong dengan ellipsis jika masih melebihi lebar pada baris ke-2
                 if (lines.length === 2) {
                     let lastLine = lines[1];
                     while (lastLine.length > 3 && ctxRef.measureText(`${lastLine}...`).width > maxWidth) {
@@ -1340,7 +1624,6 @@
                 return lines;
             }
 
-            // Hitung tinggi tiap baris dan total tinggi canvas secara akurat
             ctx.font = '500 13px Inter, sans-serif';
             const noteMaxW = itemW - 36;
 
@@ -1387,7 +1670,7 @@
             ctx.fillStyle = isDark ? '#12100F' : '#F8FAFC';
             ctx.fillRect(0, 0, width, totalHeight);
 
-            // 2. Banner Judul Atas (Menyesuaikan warna tema outlet pertama yang diinput hari itu)
+            // 2. Banner Judul Atas
             const topOutletTheme = groupLayouts[0].theme;
             roundRect(padding, padding, cardW, 105, 20);
             ctx.fillStyle = topOutletTheme.primary;
@@ -1397,15 +1680,27 @@
             ctx.strokeStyle = topOutletTheme.border;
             ctx.stroke();
 
+            // Judul Utama di Kiri Atas
             ctx.fillStyle = topOutletTheme.headerText;
-            ctx.font = '800 22px Inter, sans-serif';
-            ctx.fillText('HASIL TES SERTIFIKASI KARYAWAN', padding + 24, padding + 42);
+            ctx.font = '800 21px Inter, sans-serif';
+            ctx.fillText('HASIL TES SERTIFIKASI KARYAWAN', padding + 24, padding + 44);
 
+            // Nama Penguji di Ujung Kanan Atas (font lebih kecil dari judul)
+            const examinerName = state.currentUser ? state.currentUser.username : '-';
+            const examinerLabel = `Penguji : ${examinerName}`;
+            ctx.font = '600 13px Inter, sans-serif';
+            const examinerW = ctx.measureText(examinerLabel).width;
+            ctx.fillStyle = isDark && topOutletTheme.key === 'jolie'
+                ? 'rgba(27, 16, 10, 0.85)'
+                : 'rgba(255, 255, 255, 0.92)';
+            ctx.fillText(examinerLabel, padding + cardW - examinerW - 22, padding + 32);
+
+            // Subjudul Tanggal & Total Peserta
             ctx.fillStyle = isDark && topOutletTheme.key === 'jolie'
                 ? 'rgba(27, 16, 10, 0.78)'
                 : 'rgba(255, 255, 255, 0.88)';
             ctx.font = '500 15px Inter, sans-serif';
-            ctx.fillText(`${formatTanggalIndo(selectedDate)}  •  Total ${dailyResults.length} Karyawan`, padding + 24, padding + 72);
+            ctx.fillText(`${formatTanggalIndo(selectedDate)}  •  Total ${dailyResults.length} Karyawan`, padding + 24, padding + 74);
 
             // 3. Render Kartu Per Outlet sesuai Warna Temanya Sendiri
             let currentY = padding + headerHeight;
@@ -1413,7 +1708,6 @@
             groupLayouts.forEach(group => {
                 const { outletName, theme, items, itemLayouts, cardH } = group;
 
-                // Card Outer Container
                 roundRect(padding, currentY, cardW, cardH, 18);
                 ctx.fillStyle = theme.bgSoft;
                 ctx.fill();
@@ -1421,7 +1715,6 @@
                 ctx.strokeStyle = theme.border;
                 ctx.stroke();
 
-                // Header Outlet (Rounded Top)
                 ctx.save();
                 roundRect(padding, currentY, cardW, cardH, 18);
                 ctx.clip();
@@ -1429,19 +1722,16 @@
                 ctx.fillRect(padding, currentY, cardW, cardHeaderH);
                 ctx.restore();
 
-                // Nama Outlet di Header Card
                 ctx.fillStyle = theme.headerText;
                 ctx.font = '800 16px Inter, sans-serif';
                 ctx.fillText(outletName.toUpperCase(), padding + 20, currentY + 30);
 
-                // Badge Jumlah Peserta di kanan header card
                 const countLabel = `${items.length} Peserta`;
                 ctx.font = '600 13px Inter, sans-serif';
                 const countMetrics = ctx.measureText(countLabel);
                 ctx.fillStyle = isDark && theme.key === 'jolie' ? 'rgba(27, 16, 10, 0.75)' : 'rgba(255, 255, 255, 0.88)';
                 ctx.fillText(countLabel, padding + cardW - countMetrics.width - 20, currentY + 29);
 
-                // Baris Karyawan
                 let rowY = currentY + cardHeaderH + 4;
                 itemLayouts.forEach(({ emp, hasNote, noteLines, rowH }) => {
                     const itemH = rowH - 8;
@@ -1451,7 +1741,6 @@
                     ctx.fillStyle = theme.rowBg;
                     ctx.fill();
 
-                    // Nama Karyawan
                     ctx.fillStyle = theme.textMain;
                     ctx.font = '700 18px Inter, sans-serif';
                     const nameStartX = padding + itemMarginX + 18;
@@ -1459,7 +1748,6 @@
                     ctx.fillText(emp.employee, nameStartX, nameTopY);
                     const nameWidth = ctx.measureText(emp.employee).width;
 
-                    // Badge "Leader Bar" jika termasuk Leader Bar
                     if (isLeader) {
                         const ldrLabel = '★ Leader Bar';
                         ctx.font = '800 11px Inter, sans-serif';
@@ -1487,7 +1775,6 @@
                         ctx.fillText(ldrLabel, ldrX + 9, ldrY + 16);
                     }
 
-                    // Badge Skor (contoh: 5/5)
                     const scoreText = `${emp.score}/${emp.total}`;
                     ctx.font = '800 18px Inter, sans-serif';
                     const scoreW = ctx.measureText(scoreText).width + 28;
@@ -1502,7 +1789,6 @@
                     ctx.fillStyle = theme.pillText;
                     ctx.fillText(scoreText, scoreX + 14, scoreY + 23);
 
-                    // Status Lulus
                     const isPass = emp.total > 0 && emp.score >= Math.ceil(emp.total * 0.8);
                     const statusLabel = isPass ? 'LULUS' : 'EVALUASI';
                     ctx.font = '700 12px Inter, sans-serif';
@@ -1522,7 +1808,6 @@
                     }
                     ctx.fillText(statusLabel, stX + 9, stY + 17);
 
-                    // Catatan Karyawan (jika ada)
                     if (hasNote && noteLines.length > 0) {
                         ctx.fillStyle = theme.textMuted;
                         ctx.font = '500 13px Inter, sans-serif';
@@ -1800,7 +2085,7 @@
          * INISIALISASI APLIKASI & EVENT LISTENERS
          */
         function initApp() {
-            loadState();
+            loadThemePreference();
 
             const today = getTodayStr();
             const inputTanggal = document.getElementById('input-tanggal');
@@ -1811,10 +2096,33 @@
 
             const selectOutlet = document.getElementById('select-outlet');
             applyOutletTheme(selectOutlet.value);
-            renderEmployeeDropdown();
-            renderChecklist();
 
-            // Toggle Mode Gelap / Terang
+            // Event Listener Halaman Login / Daftar
+            document.getElementById('btn-auth-mode-login').addEventListener('click', () => setAuthMode('login'));
+            document.getElementById('btn-auth-mode-register').addEventListener('click', () => setAuthMode('register'));
+            document.getElementById('btn-auth-switch-link').addEventListener('click', () => {
+                setAuthMode(state.authMode === 'login' ? 'register' : 'login');
+            });
+            document.getElementById('form-auth').addEventListener('submit', handleAuthSubmit);
+
+            document.getElementById('btn-auth-toggle-dark').addEventListener('click', () => {
+                state.isDarkMode = !state.isDarkMode;
+                saveDarkMode();
+                applyOutletTheme('Chatting 2 S.Parman');
+            });
+
+            // Event Listener Logout
+            const handleLogoutPrompt = () => {
+                showConfirmModal(
+                    'Keluar Akun',
+                    `Keluar dari akun "${state.currentUser ? state.currentUser.username : ''}"?`,
+                    logoutSession
+                );
+            };
+            document.getElementById('btn-header-logout').addEventListener('click', handleLogoutPrompt);
+            document.getElementById('btn-setting-logout').addEventListener('click', handleLogoutPrompt);
+
+            // Toggle Mode Gelap / Terang di Dalam Aplikasi
             document.getElementById('btn-toggle-dark').addEventListener('click', () => {
                 state.isDarkMode = !state.isDarkMode;
                 saveDarkMode();
@@ -1999,7 +2307,7 @@
             document.getElementById('btn-reset-default').addEventListener('click', () => {
                 showConfirmModal(
                     'Reset Pengaturan Awal',
-                    'Kembalikan semua poin penilaian dan daftar karyawan ke bawaan awal?',
+                    'Kembalikan semua poin penilaian dan daftar karyawan akun ini ke bawaan awal?',
                     () => {
                         state.criteriaRegular = [...DEFAULT_CRITERIA_REGULAR];
                         state.criteriaLeader = [...DEFAULT_CRITERIA_LEADER];
@@ -2015,6 +2323,20 @@
                     }
                 );
             });
+
+            // Cek apakah ada sesi akun yang sedang login
+            const savedSessionUser = localStorage.getItem(GLOBAL_STORAGE_KEYS.CURRENT_SESSION);
+            if (savedSessionUser) {
+                const accounts = getAccounts();
+                const validAcc = accounts.find(a => a.username.toLowerCase() === savedSessionUser.toLowerCase());
+                if (validAcc) {
+                    enterAppSession(validAcc.username);
+                    return;
+                }
+            }
+
+            // Jika belum login, tampilkan halaman login
+            setAuthMode('login');
         }
 
         window.onload = initApp;
