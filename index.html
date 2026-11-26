@@ -1296,15 +1296,72 @@
             const scale = 2;
             const width = 720;
             const padding = 32;
+            const cardW = width - padding * 2;
+            const itemMarginX = 12;
+            const itemW = cardW - itemMarginX * 2;
             const headerHeight = 135;
             const cardHeaderH = 48;
-            const rowHeight = 62;
+            const baseRowHeight = 62;
             const cardGap = 20;
             const footerHeight = 56;
 
+            function getWrappedNoteLines(ctxRef, noteText, maxWidth) {
+                const fullText = `Catatan: ${String(noteText || '').trim()}`;
+                const words = fullText.split(/\s+/);
+                const lines = [];
+                let currentLine = '';
+
+                for (let i = 0; i < words.length; i++) {
+                    const testLine = currentLine ? `${currentLine} ${words[i]}` : words[i];
+                    if (ctxRef.measureText(testLine).width <= maxWidth) {
+                        currentLine = testLine;
+                    } else {
+                        if (currentLine) lines.push(currentLine);
+                        currentLine = words[i];
+                        if (lines.length === 2) break;
+                    }
+                }
+
+                if (lines.length < 2 && currentLine) {
+                    lines.push(currentLine);
+                }
+
+                // Potong dengan ellipsis jika masih melebihi lebar pada baris ke-2
+                if (lines.length === 2) {
+                    let lastLine = lines[1];
+                    while (lastLine.length > 3 && ctxRef.measureText(`${lastLine}...`).width > maxWidth) {
+                        lastLine = lastLine.slice(0, -1).trimEnd();
+                    }
+                    if (ctxRef.measureText(lines[1]).width > maxWidth) {
+                        lines[1] = `${lastLine}...`;
+                    }
+                }
+
+                return lines;
+            }
+
+            // Hitung tinggi tiap baris dan total tinggi canvas secara akurat
+            ctx.font = '500 13px Inter, sans-serif';
+            const noteMaxW = itemW - 36;
+
+            const groupLayouts = grouped.map(group => {
+                let itemsTotalH = 0;
+                const itemLayouts = group.items.map(emp => {
+                    const hasNote = Boolean(emp.note && String(emp.note).trim());
+                    const noteLines = hasNote ? getWrappedNoteLines(ctx, emp.note, noteMaxW) : [];
+                    const extraH = hasNote ? (10 + noteLines.length * 17) : 0;
+                    const rowH = baseRowHeight + extraH;
+                    itemsTotalH += rowH;
+                    return { emp, hasNote, noteLines, rowH };
+                });
+
+                const cardH = cardHeaderH + itemsTotalH + 12;
+                return { ...group, itemLayouts, cardH };
+            });
+
             let totalHeight = padding + headerHeight;
-            grouped.forEach(group => {
-                totalHeight += cardHeaderH + (group.items.length * rowHeight) + 12 + cardGap;
+            groupLayouts.forEach(gl => {
+                totalHeight += gl.cardH + cardGap;
             });
             totalHeight += footerHeight;
 
@@ -1331,8 +1388,8 @@
             ctx.fillRect(0, 0, width, totalHeight);
 
             // 2. Banner Judul Atas (Menyesuaikan warna tema outlet pertama yang diinput hari itu)
-            const topOutletTheme = grouped[0].theme;
-            roundRect(padding, padding, width - padding * 2, 105, 20);
+            const topOutletTheme = groupLayouts[0].theme;
+            roundRect(padding, padding, cardW, 105, 20);
             ctx.fillStyle = topOutletTheme.primary;
             ctx.fill();
 
@@ -1353,10 +1410,8 @@
             // 3. Render Kartu Per Outlet sesuai Warna Temanya Sendiri
             let currentY = padding + headerHeight;
 
-            grouped.forEach(group => {
-                const { outletName, theme, items } = group;
-                const cardW = width - padding * 2;
-                const cardH = cardHeaderH + (items.length * rowHeight) + 12;
+            groupLayouts.forEach(group => {
+                const { outletName, theme, items, itemLayouts, cardH } = group;
 
                 // Card Outer Container
                 roundRect(padding, currentY, cardW, cardH, 18);
@@ -1388,10 +1443,8 @@
 
                 // Baris Karyawan
                 let rowY = currentY + cardHeaderH + 4;
-                items.forEach(emp => {
-                    const itemMarginX = 12;
-                    const itemW = cardW - itemMarginX * 2;
-                    const itemH = rowHeight - 8;
+                itemLayouts.forEach(({ emp, hasNote, noteLines, rowH }) => {
+                    const itemH = rowH - 8;
                     const isLeader = typeof emp.isLeader === 'boolean' ? emp.isLeader : isEmployeeLeader(outletName, emp.employee);
 
                     roundRect(padding + itemMarginX, rowY + 4, itemW, itemH, 12);
@@ -1402,7 +1455,8 @@
                     ctx.fillStyle = theme.textMain;
                     ctx.font = '700 18px Inter, sans-serif';
                     const nameStartX = padding + itemMarginX + 18;
-                    ctx.fillText(emp.employee, nameStartX, rowY + 36);
+                    const nameTopY = rowY + 35;
+                    ctx.fillText(emp.employee, nameStartX, nameTopY);
                     const nameWidth = ctx.measureText(emp.employee).width;
 
                     // Badge "Leader Bar" jika termasuk Leader Bar
@@ -1412,7 +1466,7 @@
                         const ldrW = ctx.measureText(ldrLabel).width + 18;
                         const ldrH = 24;
                         const ldrX = nameStartX + nameWidth + 10;
-                        const ldrY = rowY + 19;
+                        const ldrY = rowY + 18;
 
                         roundRect(ldrX, ldrY, ldrW, ldrH, 8);
                         if (isDark) {
@@ -1439,7 +1493,7 @@
                     const scoreW = ctx.measureText(scoreText).width + 28;
                     const scoreH = 34;
                     const scoreX = padding + itemMarginX + itemW - scoreW - 14;
-                    const scoreY = rowY + 14;
+                    const scoreY = rowY + 13;
 
                     roundRect(scoreX, scoreY, scoreW, scoreH, 10);
                     ctx.fillStyle = theme.pillBg;
@@ -1454,7 +1508,7 @@
                     ctx.font = '700 12px Inter, sans-serif';
                     const stW = ctx.measureText(statusLabel).width + 18;
                     const stX = scoreX - stW - 10;
-                    const stY = rowY + 18;
+                    const stY = rowY + 17;
 
                     roundRect(stX, stY, stW, 26, 8);
                     if (isDark) {
@@ -1468,7 +1522,18 @@
                     }
                     ctx.fillText(statusLabel, stX + 9, stY + 17);
 
-                    rowY += rowHeight;
+                    // Catatan Karyawan (jika ada)
+                    if (hasNote && noteLines.length > 0) {
+                        ctx.fillStyle = theme.textMuted;
+                        ctx.font = '500 13px Inter, sans-serif';
+                        let noteY = nameTopY + 21;
+                        noteLines.forEach(line => {
+                            ctx.fillText(line, nameStartX, noteY);
+                            noteY += 17;
+                        });
+                    }
+
+                    rowY += rowH;
                 });
 
                 currentY += cardH + cardGap;
@@ -1956,3 +2021,4 @@
     </script>
 </body>
 </html>
+```[cite: 1]
