@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sertifikasi Karyawan</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Variabel Tema Dinamis Default (Chatting - Oranye Koral Claude) */
+        :root {
+            --bg-page: #FDF6F3;
+            --bg-surface: #FFFFFF;
+            --bg-soft: #FAF0EC;
+            --primary: #D97757;
+            --primary-hover: #C26344;
+            --primary-light: #FCEAE3;
+            --text-main: #2D1E18;
+            --text-muted: #786259;
+            --border-color: #F0D5C8;
+            --badge-text: #FFFFFF;
+            --ring-color: rgba(217, 119, 87, 0.25);
+        }
+
+        /* Tema Jolie (Coklat Tua & Putih) */
+        body.theme-jolie {
+            --bg-page: #F9F6F4;
+            --bg-surface: #FFFFFF;
+            --bg-soft: #F3ECE8;
+            --primary: #4A2C2A;
+            --primary-hover: #361F1E;
+            --primary-light: #EFE6E4;
+            --text-main: #2B1917;
+            --text-muted: #6E5855;
+            --border-color: #DFD3CC;
+            --badge-text: #FFFFFF;
+            --ring-color: rgba(74, 44, 42, 0.2);
+        }
+
+        /* Tema Zola (Merah Burgundy) */
+        body.theme-zola {
+            --bg-page: #FDF5F6;
+            --bg-surface: #FFFFFF;
+            --bg-soft: #F9EAEC;
+            --primary: #722F37;
+            --primary-hover: #592229;
+            --primary-light: #F7E1E4;
+            --text-main: #2C1216;
+            --text-muted: #755358;
+            --border-color: #E8CDD1;
+            --badge-text: #FFFFFF;
+            --ring-color: rgba(114, 47, 55, 0.22);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            transition: background-color 0.35s ease, color 0.35s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Utilitas Berbasis CSS Variables dengan Transisi Halus */
+        .theme-surface {
+            background-color: var(--bg-surface);
+            border-color: var(--border-color);
+            transition: background-color 0.35s ease, border-color 0.35s ease;
+        }
+
+        .theme-soft {
+            background-color: var(--bg-soft);
+            border-color: var(--border-color);
+            transition: background-color 0.35s ease, border-color 0.35s ease;
+        }
+
+        .theme-primary-bg {
+            background-color: var(--primary);
+            color: var(--badge-text);
+            transition: background-color 0.35s ease, transform 0.1s ease;
+        }
+        .theme-primary-bg:active {
+            transform: scale(0.98);
+        }
+
+        .theme-primary-light {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transition: background-color 0.35s ease, color 0.35s ease;
+        }
+
+        .theme-primary-text {
+            color: var(--primary);
+            transition: color 0.35s ease;
+        }
+
+        .theme-muted-text {
+            color: var(--text-muted);
+            transition: color 0.35s ease;
+        }
+
+        .theme-border {
+            border-color: var(--border-color);
+            transition: border-color 0.35s ease;
+        }
+
+        .theme-input {
+            background-color: var(--bg-surface);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-main);
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        .theme-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--ring-color);
+        }
+
+        /* Custom Scrollbar untuk mobile */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-24 select-none">
+
+    <!-- Header Aplikasi -->
+    <header class="sticky top-0 z-30 theme-surface border-b px-4 py-3.5 shadow-sm">
+        <div class="max-w-md mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <div id="header-icon-box" class="w-9 h-9 rounded-xl theme-primary-bg flex items-center justify-center shadow-sm">
+                    <!-- Icon Sertifikat SVG -->
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-base font-bold leading-tight tracking-tight">Sertifikasi Karyawan</h1>
+                    <p id="header-outlet-badge" class="text-xs font-medium theme-primary-text">Chatting 2 S.Parman</p>
+                </div>
+            </div>
+            <span id="header-brand-pill" class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full theme-primary-light">
+                Chatting
+            </span>
+        </div>
+    </header>
+
+    <!-- Kontainer Utama (Mobile First Max Width) -->
+    <main class="max-w-md mx-auto px-4 pt-4">
+
+        <!-- ==================== TAB 1: FORM TES SERTIFIKASI ==================== -->
+        <section id="tab-penilaian" class="space-y-4">
+            
+            <!-- Kartu Pemilihan Outlet & Tanggal -->
+            <div class="theme-surface border rounded-2xl p-4 shadow-sm space-y-3.5">
+                <div>
+                    <label for="select-outlet" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text mb-1.5">
+                        Pilih Outlet
+                    </label>
+                    <div class="relative">
+                        <select id="select-outlet" class="theme-input w-full rounded-xl px-3.5 py-3 text-sm font-semibold appearance-none pr-10 cursor-pointer">
+                            <option value="Chatting 2 S.Parman">Chatting 2 S.Parman</option>
+                            <option value="Chatting 3 Ampera">Chatting 3 Ampera</option>
+                            <option value="Chatting 4 Paris II">Chatting 4 Paris II</option>
+                            <option value="Chatting 5 Untan">Chatting 5 Untan</option>
+                            <option value="Chatting 6 Tanray II">Chatting 6 Tanray II</option>
+                            <option value="Chatting 7 Sumatra">Chatting 7 Sumatra</option>
+                            <option value="Jolie Sumatra">Jolie Sumatra</option>
+                            <option value="Zola Sulawesi">Zola Sulawesi</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 theme-primary-text">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label for="input-tanggal" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text mb-1.5">
+                            Tanggal Tes
+                        </label>
+                        <input type="date" id="input-tanggal" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-medium">
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label for="select-karyawan" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text">
+                                Nama Karyawan
+                            </label>
+                            <button type="button" id="btn-toggle-manual-emp" class="text-[11px] font-semibold theme-primary-text underline">
+                                + Input Manual
+                            </button>
+                        </div>
+                        <div id="wrapper-select-emp" class="relative">
+                            <select id="select-karyawan" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold appearance-none pr-9 cursor-pointer">
+                                <!-- Diisi via JS -->
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 theme-primary-text">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div id="wrapper-manual-emp" class="hidden">
+                            <input type="text" id="input-manual-karyawan" placeholder="Ketik nama karyawan..." class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-medium">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kartu Poin Penilaian -->
+            <div class="theme-surface border rounded-2xl p-4 shadow-sm">
+                <div class="flex items-center justify-between mb-3">
+                    <div>
+                        <h2 class="text-sm font-bold">Poin Penilaian</h2>
+                        <p class="text-xs theme-muted-text">Ketuk kriteria yang lulus / terpenuhi</p>
+                    </div>
+                    <button type="button" id="btn-check-all" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg theme-primary-light">
+                        Pilih Semua
+                    </button>
+                </div>
+
+                <!-- List Checklist Poin -->
+                <div id="checklist-container" class="space-y-2.5">
+                    <!-- Diisi via JS -->
+                </div>
+
+                <!-- Catatan Opsional -->
+                <div class="mt-4 pt-3 border-t theme-border">
+                    <label for="input-catatan" class="block text-xs font-semibold theme-muted-text mb-1">
+                        Catatan Penguji (Opsional)
+                    </label>
+                    <input type="text" id="input-catatan" placeholder="Misal: Perlu tingkatkan kecepatan..." class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm">
+                </div>
+            </div>
+
+            <!-- Ringkasan Skor Real-Time & Tombol Simpan -->
+            <div class="theme-surface border rounded-2xl p-4 shadow-sm flex items-center justify-between gap-3">
+                <div>
+                    <span class="text-xs font-medium theme-muted-text block">Skor Sertifikasi</span>
+                    <div class="flex items-baseline gap-2">
+                        <span id="live-score-text" class="text-2xl font-extrabold theme-primary-text">0/5</span>
+                        <span id="live-status-badge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-800">
+                            Belum Lulus
+                        </span>
+                    </div>
+                </div>
+                <button type="button" id="btn-simpan-tes" class="theme-primary-bg px-5 py-3.5 rounded-xl font-bold text-sm shadow-md flex items-center gap-2 cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                    Simpan Hasil
+                </button>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 2: REKAP HARIAN & DOWNLOAD GAMBAR ==================== -->
+        <section id="tab-rekap" class="hidden space-y-4">
+            
+            <!-- Filter Tanggal Rekap -->
+            <div class="theme-surface border rounded-2xl p-4 shadow-sm">
+                <div class="flex items-center justify-between gap-3">
+                    <div class="flex-1">
+                        <label for="rekap-tanggal" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text mb-1">
+                            Tanggal Laporan Harian
+                        </label>
+                        <input type="date" id="rekap-tanggal" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold">
+                    </div>
+                    <div class="text-right pt-4">
+                        <span id="rekap-total-count" class="text-xs font-bold px-3 py-2 rounded-xl theme-primary-light inline-block">
+                            0 Peserta
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Tombol Generate & Download Gambar -->
+                <button type="button" id="btn-generate-image" class="mt-3.5 w-full theme-primary-bg py-3.5 px-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Buat & Download Gambar (1 Hari)
+                </button>
+            </div>
+
+            <!-- Daftar Hasil Per Outlet pada Tanggal Terpilih -->
+            <div id="rekap-list-container" class="space-y-3">
+                <!-- Diisi via JS -->
+            </div>
+        </section>
+
+        <!-- ==================== TAB 3: PENGATURAN (SETTING) ==================== -->
+        <section id="tab-setting" class="hidden space-y-4">
+            
+            <!-- Kelola Poin Penilaian -->
+            <div class="theme-surface border rounded-2xl p-4 shadow-sm space-y-3">
+                <div>
+                    <h2 class="text-sm font-bold">1. Kelola Poin Penilaian</h2>
+                    <p class="text-xs theme-muted-text">Tambah atau hapus kriteria tes sertifikasi</p>
+                </div>
+
+                <form id="form-add-criteria" class="flex gap-2">
+                    <input type="text" id="input-new-criteria" placeholder="Nama kriteria baru..." class="theme-input flex-1 rounded-xl px-3.5 py-2.5 text-sm" required>
+                    <button type="submit" class="theme-primary-bg px-4 py-2.5 rounded-xl font-bold text-sm shrink-0 cursor-pointer">
+                        + Tambah
+                    </button>
+                </form>
+
+                <div id="setting-criteria-list" class="space-y-2 pt-1">
+                    <!-- Diisi via JS -->
+                </div>
+            </div>
+
+            <!-- Kelola Daftar Karyawan per Outlet -->
+            <div class="theme-surface border rounded-2xl p-4 shadow-sm space-y-3">
+                <div>
+                    <h2 class="text-sm font-bold">2. Kelola Daftar Karyawan</h2>
+                    <p class="text-xs theme-muted-text">Atur daftar nama karyawan untuk tiap outlet</p>
+                </div>
+
+                <div>
+                    <label for="setting-select-outlet" class="block text-xs font-semibold theme-muted-text mb-1">
+                        Pilih Outlet Target
+                    </label>
+                    <select id="setting-select-outlet" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold">
+                        <option value="Chatting 2 S.Parman">Chatting 2 S.Parman</option>
+                        <option value="Chatting 3 Ampera">Chatting 3 Ampera</option>
+                        <option value="Chatting 4 Paris II">Chatting 4 Paris II</option>
+                        <option value="Chatting 5 Untan">Chatting 5 Untan</option>
+                        <option value="Chatting 6 Tanray II">Chatting 6 Tanray II</option>
+                        <option value="Chatting 7 Sumatra">Chatting 7 Sumatra</option>
+                        <option value="Jolie Sumatra">Jolie Sumatra</option>
+                        <option value="Zola Sulawesi">Zola Sulawesi</option>
+                    </select>
+                </div>
+
+                <form id="form-add-employee" class="flex gap-2">
+                    <input type="text" id="input-new-employee" placeholder="Nama karyawan baru..." class="theme-input flex-1 rounded-xl px-3.5 py-2.5 text-sm" required>
+                    <button type="submit" class="theme-primary-bg px-4 py-2.5 rounded-xl font-bold text-sm shrink-0 cursor-pointer">
+                        + Tambah
+                    </button>
+                </form>
+
+                <div id="setting-employee-list" class="space-y-2 pt-1">
+                    <!-- Diisi via JS -->
+                </div>
+            </div>
+
+            <!-- Reset Data Default -->
+            <div class="theme-surface border rounded-2xl p-4 shadow-sm flex items-center justify-between">
+                <div>
+                    <h3 class="text-xs font-bold">Reset Pengaturan Awal</h3>
+                    <p class="text-[11px] theme-muted-text">Kembalikan poin & contoh karyawan default</p>
+                </div>
+                <button type="button" id="btn-reset-default" class="text-xs font-semibold px-3 py-2 rounded-xl border border-red-200 text-red-600 bg-red-50 active:scale-95">
+                    Reset Default
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Navigasi Bawah (Bottom Navigation Bar) -->
+    <nav class="fixed bottom-0 inset-x-0 z-30 theme-surface border-t shadow-lg">
+        <div class="max-w-md mx-auto grid grid-cols-3 h-16">
+            <button type="button" data-tab="penilaian" class="nav-btn flex flex-col items-center justify-center gap-1 theme-primary-text font-bold text-xs cursor-pointer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                </svg>
+                <span>Penilaian</span>
+            </button>
+            <button type="button" data-tab="rekap" class="nav-btn flex flex-col items-center justify-center gap-1 theme-muted-text font-medium text-xs cursor-pointer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span>Rekap & Unduh</span>
+            </button>
+            <button type="button" data-tab="setting" class="nav-btn flex flex-col items-center justify-center gap-1 theme-muted-text font-medium text-xs cursor-pointer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>Setting</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Modal Preview Gambar & Download -->
+    <div id="modal-preview" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+            <div class="px-4 py-3 border-b flex items-center justify-between">
+                <h3 class="font-bold text-sm text-gray-900">Preview Laporan Gambar</h3>
+                <button type="button" id="btn-close-modal" class="p-1.5 rounded-lg text-gray-500 hover:bg-gray-100">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="p-4 overflow-y-auto bg-gray-100 flex-1 flex justify-center">
+                <img id="preview-img-result" src="" alt="Preview Laporan Sertifikasi" class="max-w-full h-auto rounded-xl shadow-md border border-gray-200">
+            </div>
+            <div class="p-4 border-t bg-white flex gap-2.5">
+                <button type="button" id="btn-download-png" class="flex-1 theme-primary-bg py-3 px-4 rounded-xl font-bold text-sm shadow flex items-center justify-center gap-2 cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Simpan ke Galeri (PNG)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi Custom (Pengganti confirm()) -->
+    <div id="modal-confirm" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xs w-full p-5 shadow-xl space-y-4">
+            <h3 id="confirm-title" class="font-bold text-base text-gray-900">Konfirmasi</h3>
+            <p id="confirm-message" class="text-sm text-gray-600">Apakah Anda yakin?</p>
+            <div class="flex gap-2.5 pt-1">
+                <button type="button" id="btn-confirm-cancel" class="flex-1 py-2.5 rounded-xl font-semibold text-sm bg-gray-100 text-gray-700">
+                    Batal
+                </button>
+                <button type="button" id="btn-confirm-ok" class="flex-1 py-2.5 rounded-xl font-semibold text-sm bg-red-600 text-white">
+                    Ya, Lanjutkan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifikasi Ringan -->
+    <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-opacity duration-300">
+        <div id="toast-box" class="bg-gray-900 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-lg flex items-center gap-2">
+            <span id="toast-text">Tersimpan!</span>
+        </div>
+    </div>
+
+    <!-- Hidden Canvas untuk Render Gambar Laporan -->
+    <canvas id="export-canvas" class="hidden"></canvas>
+
+    <script>
+        /**
+         * KONFIGURASI OUTLET & TEMA WARNA
+         */
+        const OUTLETS = [
+            "Chatting 2 S.Parman",
+            "Chatting 3 Ampera",
+            "Chatting 4 Paris II",
+            "Chatting 5 Untan",
+            "Chatting 6 Tanray II",
+            "Chatting 7 Sumatra",
+            "Jolie Sumatra",
+            "Zola Sulawesi"
+        ];
+
+        // Palet Warna Tema untuk UI dan Generator Gambar Canvas
+        const BRAND_THEMES = {
+            chatting: {
+                key: 'chatting',
+                label: 'Chatting',
+                bodyClass: '',
+                primary: '#D97757',
+                primaryDark: '#B85A3B',
+                bgSoft: '#FDF6F3',
+                bgCard: '#FFFFFF',
+                border: '#F0D5C8',
+                pillBg: '#FCEAE3',
+                pillText: '#B85A3B',
+                textMain: '#2D1E18',
+                textMuted: '#786259'
+            },
+            jolie: {
+                key: 'jolie',
+                label: 'Jolie',
+                bodyClass: 'theme-jolie',
+                primary: '#4A2C2A',
+                primaryDark: '#2E1A19',
+                bgSoft: '#F9F6F4',
+                bgCard: '#FFFFFF',
+                border: '#DFD3CC',
+                pillBg: '#EFE6E4',
+                pillText: '#4A2C2A',
+                textMain: '#2B1917',
+                textMuted: '#6E5855'
+            },
+            zola: {
+                key: 'zola',
+                label: 'Zola',
+                bodyClass: 'theme-zola',
+                primary: '#722F37',
+                primaryDark: '#521E24',
+                bgSoft: '#FDF5F6',
+                bgCard: '#FFFFFF',
+                border: '#E8CDD1',
+                pillBg: '#F7E1E4',
+                pillText: '#722F37',
+                textMain: '#2C1216',
+                textMuted: '#755358'
+            }
+        };
+
+        function getBrandTheme(outletName) {
+            if (outletName.toLowerCase().startsWith('jolie')) return BRAND_THEMES.jolie;
+            if (outletName.toLowerCase().startsWith('zola')) return BRAND_THEMES.zola;
+            return BRAND_THEMES.chatting;
+        }
+
+        /**
+         * DATA DEFAULT & LOCALSTORAGE MANAGEMENT
+         */
+        const STORAGE_KEYS = {
+            CRITERIA: 'sertifikasi_criteria_v1',
+            EMPLOYEES: 'sertifikasi_employees_v1',
+            RESULTS: 'sertifikasi_results_v1'
+        };
+
+        const DEFAULT_CRITERIA = [
+            "Grooming & Kerapian Seragam",
+            "Salam, Senyum & SOP Pelayanan",
+            "Pengetahuan Produk & Menu",
+            "Kecepatan & Ketepatan Penyajian",
+            "Kebersihan Area Kerja (Clean as You Go)"
+        ];
+
+        const DEFAULT_EMPLOYEES = {
+            "Chatting 2 S.Parman": ["Dina", "Fajar"],
+            "Chatting 3 Ampera": ["Agus", "Sari"],
+            "Chatting 4 Paris II": ["Bella", "Rizky"],
+            "Chatting 5 Untan": ["Putri", "Dimas"],
+            "Chatting 6 Tanray II": ["Nadia", "Reza"],
+            "Chatting 7 Sumatra": ["Tia", "Galih"],
+            "Jolie Sumatra": ["Clara", "Kevin"],
+            "Zola Sulawesi": ["Rito", "Maya"]
+        };
+
+        let state = {
+            criteria: [],
+            employees: {},
+            results: [],
+            checkedCriteria: new Set(),
+            isManualEmployee: false,
+            activeTab: 'penilaian',
+            generatedDataUrl: ''
+        };
+
+        function getTodayStr() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function formatTanggalIndo(dateStr) {
+            if (!dateStr) return '-';
+            const [y, m, d] = dateStr.split('-').map(Number);
+            const dateObj = new Date(y, m - 1, d);
+            return dateObj.toLocaleDateString('id-ID', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+
+        function loadState() {
+            try {
+                const savedCriteria = localStorage.getItem(STORAGE_KEYS.CRITERIA);
+                state.criteria = savedCriteria ? JSON.parse(savedCriteria) : [...DEFAULT_CRITERIA];
+
+                const savedEmployees = localStorage.getItem(STORAGE_KEYS.EMPLOYEES);
+                state.employees = savedEmployees ? JSON.parse(savedEmployees) : JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES));
+
+                // Pastikan semua outlet ada di object employees
+                OUTLETS.forEach(o => {
+                    if (!Array.isArray(state.employees[o])) state.employees[o] = [];
+                });
+
+                const savedResults = localStorage.getItem(STORAGE_KEYS.RESULTS);
+                state.results = savedResults ? JSON.parse(savedResults) : [];
+            } catch (e) {
+                console.error("Gagal memuat data:", e);
+                state.criteria = [...DEFAULT_CRITERIA];
+                state.employees = JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES));
+                state.results = [];
+            }
+        }
+
+        function saveCriteria() {
+            localStorage.setItem(STORAGE_KEYS.CRITERIA, JSON.stringify(state.criteria));
+        }
+
+        function saveEmployees() {
+            localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(state.employees));
+        }
+
+        function saveResults() {
+            localStorage.setItem(STORAGE_KEYS.RESULTS, JSON.stringify(state.results));
+        }
+
+        /**
+         * UI HELPERS & NOTIFIKASI
+         */
+        let toastTimeout;
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-text').textContent = msg;
+            toast.classList.remove('opacity-0');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('opacity-0');
+            }, 2400);
+        }
+
+        function showConfirmModal(title, message, onConfirm) {
+            const modal = document.getElementById('modal-confirm');
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-message').textContent = message;
+            modal.classList.remove('hidden');
+
+            const btnOk = document.getElementById('btn-confirm-ok');
+            const btnCancel = document.getElementById('btn-confirm-cancel');
+
+            const cleanup = () => {
+                modal.classList.add('hidden');
+                btnOk.onclick = null;
+                btnCancel.onclick = null;
+            };
+
+            btnCancel.onclick = cleanup;
+            btnOk.onclick = () => {
+                cleanup();
+                onConfirm();
+            };
+        }
+
+        /**
+         * PERUBAHAN TEMA DINAMIS BERDASARKAN OUTLET
+         */
+        function applyOutletTheme(outletName) {
+            const theme = getBrandTheme(outletName);
+            document.body.className = `min-h-screen pb-24 select-none ${theme.bodyClass}`;
+            document.getElementById('header-outlet-badge').textContent = outletName;
+            document.getElementById('header-brand-pill').textContent = theme.label;
+        }
+
+        /**
+         * RENDER TAB 1: FORM PENILAIAN
+         */
+        function renderEmployeeDropdown() {
+            const outlet = document.getElementById('select-outlet').value;
+            const selectEmp = document.getElementById('select-karyawan');
+            const list = state.employees[outlet] || [];
+
+            selectEmp.innerHTML = '';
+            if (list.length === 0) {
+                const opt = document.createElement('option');
+                opt.value = '';
+                opt.textContent = '-- Belum ada data (Gunakan Manual) --';
+                selectEmp.appendChild(opt);
+            } else {
+                list.forEach(name => {
+                    const opt = document.createElement('option');
+                    opt.value = name;
+                    opt.textContent = name;
+                    selectEmp.appendChild(opt);
+                });
+            }
+        }
+
+        function renderChecklist() {
+            const container = document.getElementById('checklist-container');
+            container.innerHTML = '';
+
+            if (state.criteria.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-6 px-3 rounded-xl border border-dashed theme-border">
+                        <p class="text-xs theme-muted-text">Belum ada poin penilaian. Tambahkan di menu <b>Setting</b>.</p>
+                    </div>
+                `;
+                updateLiveScore();
+                return;
+            }
+
+            state.criteria.forEach((item, index) => {
+                const isChecked = state.checkedCriteria.has(index);
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between gap-3 cursor-pointer ${
+                    isChecked ? 'theme-soft border-current theme-primary-text shadow-xs' : 'theme-surface theme-border'
+                }`;
+                
+                btn.innerHTML = `
+                    <span class="text-sm font-medium leading-snug ${isChecked ? 'font-semibold' : ''}" style="color: var(--text-main)">
+                        ${index + 1}. ${escapeHtml(item)}
+                    </span>
+                    <div class="w-6 h-6 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+                        isChecked ? 'theme-primary-bg' : 'border-2 theme-border bg-transparent'
+                    }">
+                        ${isChecked ? `
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                        ` : ''}
+                    </div>
+                `;
+
+                btn.addEventListener('click', () => {
+                    if (state.checkedCriteria.has(index)) {
+                        state.checkedCriteria.delete(index);
+                    } else {
+                        state.checkedCriteria.add(index);
+                    }
+                    renderChecklist();
+                });
+
+                container.appendChild(btn);
+            });
+
+            updateLiveScore();
+        }
+
+        function updateLiveScore() {
+            const total = state.criteria.length;
+            const score = state.checkedCriteria.size;
+            document.getElementById('live-score-text').textContent = `${score}/${total}`;
+
+            const badge = document.getElementById('live-status-badge');
+            if (total > 0 && score === total) {
+                badge.textContent = 'Lulus Sempurna';
+                badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800';
+            } else if (total > 0 && score >= Math.ceil(total * 0.8)) {
+                badge.textContent = 'Lulus';
+                badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800';
+            } else {
+                badge.textContent = 'Perlu Evaluasi';
+                badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-800';
+            }
+        }
+
+        function handleSaveTestResult() {
+            const outlet = document.getElementById('select-outlet').value;
+            const date = document.getElementById('input-tanggal').value || getTodayStr();
+            const note = document.getElementById('input-catatan').value.trim();
+
+            let empName = '';
+            if (state.isManualEmployee) {
+                empName = document.getElementById('input-manual-karyawan').value.trim();
+            } else {
+                empName = document.getElementById('select-karyawan').value.trim();
+            }
+
+            if (!empName) {
+                showToast('Pilih atau ketik nama karyawan dulu!');
+                return;
+            }
+
+            const total = state.criteria.length;
+            if (total === 0) {
+                showToast('Tambahkan poin penilaian di Setting dulu!');
+                return;
+            }
+
+            const score = state.checkedCriteria.size;
+            const passedCriteria = state.criteria.filter((_, idx) => state.checkedCriteria.has(idx));
+
+            // Cek apakah karyawan & outlet di tanggal sama sudah pernah dinilai (timpa jika sama)
+            const existingIndex = state.results.findIndex(
+                r => r.date === date && r.outlet === outlet && r.employee.toLowerCase() === empName.toLowerCase()
+            );
+
+            const record = {
+                id: existingIndex >= 0 ? state.results[existingIndex].id : Date.now().toString(),
+                date,
+                outlet,
+                employee: empName,
+                score,
+                total,
+                passedCriteria,
+                note,
+                updatedAt: new Date().toISOString()
+            };
+
+            if (existingIndex >= 0) {
+                state.results[existingIndex] = record;
+                showToast(`Data ${empName} (${score}/${total}) diperbarui!`);
+            } else {
+                state.results.push(record);
+                showToast(`Tersimpan: ${empName} (${score}/${total})`);
+            }
+
+            saveResults();
+
+            // Reset form checklist & catatan
+            state.checkedCriteria.clear();
+            document.getElementById('input-catatan').value = '';
+            if (state.isManualEmployee) {
+                document.getElementById('input-manual-karyawan').value = '';
+            }
+            renderChecklist();
+        }
+
+        /**
+         * RENDER TAB 2: REKAP HARIAN
+         */
+        function renderRekapList() {
+            const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
+            const container = document.getElementById('rekap-list-container');
+            const dailyResults = state.results.filter(r => r.date === selectedDate);
+
+            document.getElementById('rekap-total-count').textContent = `${dailyResults.length} Peserta`;
+            container.innerHTML = '';
+
+            if (dailyResults.length === 0) {
+                container.innerHTML = `
+                    <div class="theme-surface border rounded-2xl p-8 text-center space-y-2">
+                        <div class="w-12 h-12 rounded-full theme-soft mx-auto flex items-center justify-center theme-primary-text">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <p class="text-sm font-bold">Belum Ada Hasil Tes</p>
+                        <p class="text-xs theme-muted-text">Belum ada data sertifikasi pada tanggal ${formatTanggalIndo(selectedDate)}.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Kelompokkan berdasarkan urutan OUTLETS
+            OUTLETS.forEach(outletName => {
+                const items = dailyResults.filter(r => r.outlet === outletName);
+                if (items.length === 0) return;
+
+                const theme = getBrandTheme(outletName);
+                const card = document.createElement('div');
+                card.className = 'rounded-2xl overflow-hidden shadow-sm border';
+                card.style.backgroundColor = theme.bgCard;
+                card.style.borderColor = theme.border;
+
+                let rowsHtml = items.map(item => {
+                    const isPass = item.total > 0 && item.score >= Math.ceil(item.total * 0.8);
+                    return `
+                        <div class="px-4 py-3 flex items-center justify-between gap-3 border-t" style="border-color: ${theme.border}">
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold text-sm truncate" style="color: ${theme.textMain}">${escapeHtml(item.employee)}</span>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${isPass ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                                        ${isPass ? 'LULUS' : 'EVALUASI'}
+                                    </span>
+                                </div>
+                                ${item.note ? `<p class="text-xs mt-0.5 truncate" style="color: ${theme.textMuted}">Catatan: ${escapeHtml(item.note)}</p>` : ''}
+                            </div>
+                            <div class="flex items-center gap-2.5 shrink-0">
+                                <span class="text-base font-extrabold px-2.5 py-1 rounded-lg" style="background-color: ${theme.pillBg}; color: ${theme.pillText}">
+                                    ${item.score}/${item.total}
+                                </span>
+                                <button type="button" data-delete-id="${item.id}" class="btn-del-result p-1.5 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50" title="Hapus">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                card.innerHTML = `
+                    <div class="px-4 py-2.5 flex items-center justify-between" style="background-color: ${theme.primary}; color: #FFFFFF;">
+                        <span class="font-bold text-xs tracking-wide uppercase">${escapeHtml(outletName)}</span>
+                        <span class="text-[11px] font-semibold opacity-90">${items.length} Karyawan</span>
+                    </div>
+                    <div>${rowsHtml}</div>
+                `;
+
+                container.appendChild(card);
+            });
+
+            // Event listener hapus item
+            container.querySelectorAll('.btn-del-result').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = btn.getAttribute('data-delete-id');
+                    showConfirmModal('Hapus Hasil Tes', 'Yakin ingin menghapus data penilaian ini?', () => {
+                        state.results = state.results.filter(r => r.id !== id);
+                        saveResults();
+                        renderRekapList();
+                        showToast('Data dihapus');
+                    });
+                });
+            });
+        }
+
+        /**
+         * GENERATOR GAMBAR LAPORAN 1 HARI (HTML5 CANVAS HIGH-DPI)
+         * Tiap outlet dipisah dalam blok kartunya sendiri dengan warna tema masing-masing
+         */
+        function generateDailyReportImage() {
+            const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
+            const dailyResults = state.results.filter(r => r.date === selectedDate);
+
+            if (dailyResults.length === 0) {
+                showToast('Tidak ada data sertifikasi di tanggal ini!');
+                return;
+            }
+
+            // Kelompokkan data per outlet sesuai urutan resmi
+            const groupedOutlets = [];
+            OUTLETS.forEach(outletName => {
+                const items = dailyResults.filter(r => r.outlet === outletName);
+                if (items.length > 0) {
+                    groupedOutlets.push({
+                        outletName,
+                        theme: getBrandTheme(outletName),
+                        items
+                    });
+                }
+            });
+
+            // Konfigurasi dimensi gambar (Lebar logis 720px, dikali scale 2 untuk ketajaman Retina/HP)
+            const scale = 2;
+            const width = 720;
+            const padding = 36;
+            const cardGap = 24;
+            const headerHeight = 148;
+            const footerHeight = 64;
+            const cardHeaderH = 54;
+            const rowHeight = 62;
+
+            // Hitung total tinggi kanvas secara dinamis
+            let totalCardsHeight = 0;
+            groupedOutlets.forEach((group, idx) => {
+                const cardH = cardHeaderH + (group.items.length * rowHeight) + 12;
+                totalCardsHeight += cardH;
+                if (idx < groupedOutlets.length - 1) totalCardsHeight += cardGap;
+            });
+
+            const height = headerHeight + totalCardsHeight + footerHeight;
+
+            const canvas = document.getElementById('export-canvas');
+            canvas.width = width * scale;
+            canvas.height = height * scale;
+            const ctx = canvas.getContext('2d');
+            ctx.scale(scale, scale);
+
+            // Helper Rounded Rectangle
+            function roundRect(x, y, w, h, r) {
+                ctx.beginPath();
+                ctx.moveTo(x + r, y);
+                ctx.lineTo(x + w - r, y);
+                ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+                ctx.lineTo(x + w, y + h - r);
+                ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                ctx.lineTo(x + r, y + h);
+                ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+                ctx.lineTo(x, y + r);
+                ctx.quadraticCurveTo(x, y, x + r, y);
+                ctx.closePath();
+            }
+
+            // Helper Top Rounded Rectangle
+            function topRoundRect(x, y, w, h, r) {
+                ctx.beginPath();
+                ctx.moveTo(x + r, y);
+                ctx.lineTo(x + w - r, y);
+                ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+                ctx.lineTo(x + w, y + h);
+                ctx.lineTo(x, y + h);
+                ctx.lineTo(x, y + r);
+                ctx.quadraticCurveTo(x, y, x + r, y);
+                ctx.closePath();
+            }
+
+            // 1. Latar Belakang Utama Kanvas (Netral bersih agar semua warna blok outlet menonjol)
+            ctx.fillStyle = '#F4F4F5';
+            ctx.fillRect(0, 0, width, height);
+
+            // 2. Header Laporan
+            ctx.fillStyle = '#18181B';
+            ctx.font = '800 26px Inter, sans-serif';
+            ctx.fillText('HASIL TES SERTIFIKASI KARYAWAN', padding, 56);
+
+            ctx.fillStyle = '#52525B';
+            ctx.font = '500 17px Inter, sans-serif';
+            ctx.fillText(formatTanggalIndo(selectedDate), padding, 86);
+
+            // Garis pemisah tipis & ringkasan total
+            ctx.fillStyle = '#E4E4E7';
+            ctx.fillRect(padding, 108, width - padding * 2, 1.5);
+
+            ctx.fillStyle = '#71717A';
+            ctx.font = '600 14px Inter, sans-serif';
+            ctx.fillText(`Total: ${groupedOutlets.length} Outlet  •  ${dailyResults.length} Karyawan Dinilai`, padding, 132);
+
+            // 3. Render Tiap Blok Outlet dengan Tema Warnanya Masing-Masing
+            let currentY = headerHeight;
+
+            groupedOutlets.forEach(group => {
+                const { outletName, theme, items } = group;
+                const cardW = width - padding * 2;
+                const cardH = cardHeaderH + (items.length * rowHeight) + 8;
+
+                // Bayangan lembut kartu
+                ctx.save();
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.06)';
+                ctx.shadowBlur = 14;
+                ctx.shadowOffsetY = 4;
+
+                // Badan Kartu dengan latar lembut tema outlet
+                roundRect(padding, currentY, cardW, cardH, 18);
+                ctx.fillStyle = theme.bgSoft;
+                ctx.fill();
+                ctx.restore();
+
+                // Border kartu sesuai tema outlet
+                roundRect(padding, currentY, cardW, cardH, 18);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = theme.border;
+                ctx.stroke();
+
+                // Header Blok Outlet (Warna Utama Brand: Oranye Koral / Coklat Tua / Merah Burgundy)
+                topRoundRect(padding, currentY, cardW, cardHeaderH, 16);
+                ctx.fillStyle = theme.primary;
+                ctx.fill();
+
+                // Nama Outlet di Header Blok
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = '700 19px Inter, sans-serif';
+                ctx.fillText(outletName, padding + 22, currentY + 34);
+
+                // Label Brand di Kanan Header Blok
+                ctx.font = '600 13px Inter, sans-serif';
+                ctx.fillStyle = 'rgba(255,255,255,0.88)';
+                const brandText = `${theme.label.toUpperCase()}  •  ${items.length} ORANG`;
+                const brandMetrics = ctx.measureText(brandText);
+                ctx.fillText(brandText, padding + cardW - 22 - brandMetrics.width, currentY + 33);
+
+                // Baris Daftar Karyawan di dalam Blok Outlet
+                let rowY = currentY + cardHeaderH + 4;
+                items.forEach((emp, idx) => {
+                    // Kartu putih bersih untuk tiap baris karyawan agar sangat terbaca
+                    const itemMarginX = 12;
+                    const itemW = cardW - itemMarginX * 2;
+                    const itemH = rowHeight - 8;
+
+                    roundRect(padding + itemMarginX, rowY + 4, itemW, itemH, 12);
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fill();
+
+                    // Nama Karyawan
+                    ctx.fillStyle = theme.textMain;
+                    ctx.font = '700 18px Inter, sans-serif';
+                    ctx.fillText(emp.employee, padding + itemMarginX + 18, rowY + 36);
+
+                    // Badge Skor (contoh: 5/5) dengan warna tema outlet
+                    const scoreText = `${emp.score}/${emp.total}`;
+                    ctx.font = '800 18px Inter, sans-serif';
+                    const scoreW = ctx.measureText(scoreText).width + 28;
+                    const scoreH = 34;
+                    const scoreX = padding + itemMarginX + itemW - scoreW - 14;
+                    const scoreY = rowY + 14;
+
+                    roundRect(scoreX, scoreY, scoreW, scoreH, 10);
+                    ctx.fillStyle = theme.pillBg;
+                    ctx.fill();
+
+                    ctx.fillStyle = theme.pillText;
+                    ctx.fillText(scoreText, scoreX + 14, scoreY + 23);
+
+                    // Status Lulus kecil di sebelah kiri skor
+                    const isPass = emp.total > 0 && emp.score >= Math.ceil(emp.total * 0.8);
+                    const statusLabel = isPass ? 'LULUS' : 'EVALUASI';
+                    ctx.font = '700 12px Inter, sans-serif';
+                    const stW = ctx.measureText(statusLabel).width + 18;
+                    const stX = scoreX - stW - 10;
+                    const stY = rowY + 18;
+
+                    roundRect(stX, stY, stW, 26, 8);
+                    ctx.fillStyle = isPass ? '#DCFCE7' : '#FEF3C7';
+                    ctx.fill();
+
+                    ctx.fillStyle = isPass ? '#166534' : '#92400E';
+                    ctx.fillText(statusLabel, stX + 9, stY + 17);
+
+                    rowY += rowHeight;
+                });
+
+                currentY += cardH + cardGap;
+            });
+
+            // 4. Footer Gambar
+            ctx.fillStyle = '#A1A1AA';
+            ctx.font = '500 13px Inter, sans-serif';
+            const footerText = 'Dicetak otomatis dari Sistem Sertifikasi Karyawan';
+            const footerW = ctx.measureText(footerText).width;
+            ctx.fillText(footerText, (width - footerW) / 2, height - 24);
+
+            // Tampilkan ke Modal Preview
+            state.generatedDataUrl = canvas.toDataURL('image/png');
+            document.getElementById('preview-img-result').src = state.generatedDataUrl;
+            document.getElementById('modal-preview').classList.remove('hidden');
+        }
+
+        function downloadGeneratedPng() {
+            if (!state.generatedDataUrl) return;
+            const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
+            const link = document.createElement('a');
+            link.download = `Sertifikasi_Karyawan_${selectedDate}.png`;
+            link.href = state.generatedDataUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast('Gambar laporan berhasil diunduh!');
+        }
+
+        /**
+         * RENDER TAB 3: SETTING (KRITERIA & KARYAWAN)
+         */
+        function renderSettingCriteria() {
+            const container = document.getElementById('setting-criteria-list');
+            container.innerHTML = '';
+
+            if (state.criteria.length === 0) {
+                container.innerHTML = `<p class="text-xs theme-muted-text italic py-2">Belum ada kriteria penilaian.</p>`;
+                return;
+            }
+
+            state.criteria.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between gap-2 p-2.5 rounded-xl border theme-border theme-soft';
+                row.innerHTML = `
+                    <span class="text-xs font-semibold flex-1">${index + 1}. ${escapeHtml(item)}</span>
+                    <button type="button" data-idx="${index}" class="btn-del-crit p-1.5 rounded-lg text-red-600 hover:bg-red-100" title="Hapus Poin">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                `;
+                container.appendChild(row);
+            });
+
+            container.querySelectorAll('.btn-del-crit').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = Number(btn.getAttribute('data-idx'));
+                    state.criteria.splice(idx, 1);
+                    state.checkedCriteria.clear();
+                    saveCriteria();
+                    renderSettingCriteria();
+                    renderChecklist();
+                    showToast('Poin penilaian dihapus');
+                });
+            });
+        }
+
+        function renderSettingEmployees() {
+            const outlet = document.getElementById('setting-select-outlet').value;
+            const list = state.employees[outlet] || [];
+            const container = document.getElementById('setting-employee-list');
+            container.innerHTML = '';
+
+            if (list.length === 0) {
+                container.innerHTML = `<p class="text-xs theme-muted-text italic py-2">Belum ada nama karyawan di outlet ini.</p>`;
+                return;
+            }
+
+            list.forEach((name, index) => {
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between gap-2 p-2.5 rounded-xl border theme-border theme-soft';
+                row.innerHTML = `
+                    <span class="text-xs font-semibold flex-1">${escapeHtml(name)}</span>
+                    <button type="button" data-idx="${index}" class="btn-del-emp p-1.5 rounded-lg text-red-600 hover:bg-red-100" title="Hapus Karyawan">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                `;
+                container.appendChild(row);
+            });
+
+            container.querySelectorAll('.btn-del-emp').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = Number(btn.getAttribute('data-idx'));
+                    state.employees[outlet].splice(idx, 1);
+                    saveEmployees();
+                    renderSettingEmployees();
+                    renderEmployeeDropdown();
+                    showToast('Nama karyawan dihapus');
+                });
+            });
+        }
+
+        /**
+         * NAVIGASI TAB
+         */
+        function switchTab(tabName) {
+            state.activeTab = tabName;
+            ['penilaian', 'rekap', 'setting'].forEach(t => {
+                const sec = document.getElementById(`tab-${t}`);
+                if (t === tabName) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+            });
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                const isTarget = btn.getAttribute('data-tab') === tabName;
+                if (isTarget) {
+                    btn.classList.remove('theme-muted-text', 'font-medium');
+                    btn.classList.add('theme-primary-text', 'font-bold');
+                } else {
+                    btn.classList.remove('theme-primary-text', 'font-bold');
+                    btn.classList.add('theme-muted-text', 'font-medium');
+                }
+            });
+
+            if (tabName === 'rekap') {
+                renderRekapList();
+            } else if (tabName === 'setting') {
+                renderSettingCriteria();
+                renderSettingEmployees();
+            }
+        }
+
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        /**
+         * INISIALISASI EVENT & APLIKASI
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            loadState();
+
+            // Set tanggal default hari ini
+            const today = getTodayStr();
+            document.getElementById('input-tanggal').value = today;
+            document.getElementById('rekap-tanggal').value = today;
+
+            // Terapkan tema awal
+            const initialOutlet = document.getElementById('select-outlet').value;
+            applyOutletTheme(initialOutlet);
+            renderEmployeeDropdown();
+            renderChecklist();
+
+            // Event: Ganti Outlet pada Form Penilaian
+            document.getElementById('select-outlet').addEventListener('change', (e) => {
+                const selected = e.target.value;
+                applyOutletTheme(selected);
+                renderEmployeeDropdown();
+                // Sinkronkan juga dropdown outlet di setting agar praktis
+                document.getElementById('setting-select-outlet').value = selected;
+            });
+
+            // Event: Toggle Input Karyawan Manual vs Dropdown
+            document.getElementById('btn-toggle-manual-emp').addEventListener('click', (e) => {
+                state.isManualEmployee = !state.isManualEmployee;
+                const wrapSelect = document.getElementById('wrapper-select-emp');
+                const wrapManual = document.getElementById('wrapper-manual-emp');
+
+                if (state.isManualEmployee) {
+                    wrapSelect.classList.add('hidden');
+                    wrapManual.classList.remove('hidden');
+                    e.target.textContent = 'Pilih dari Daftar';
+                    document.getElementById('input-manual-karyawan').focus();
+                } else {
+                    wrapManual.classList.add('hidden');
+                    wrapSelect.classList.remove('hidden');
+                    e.target.textContent = '+ Input Manual';
+                }
+            });
+
+            // Event: Pilih Semua / Reset Checklist
+            document.getElementById('btn-check-all').addEventListener('click', () => {
+                if (state.checkedCriteria.size === state.criteria.length) {
+                    state.checkedCriteria.clear();
+                } else {
+                    state.criteria.forEach((_, idx) => state.checkedCriteria.add(idx));
+                }
+                renderChecklist();
+            });
+
+            // Event: Simpan Hasil Tes
+            document.getElementById('btn-simpan-tes').addEventListener('click', handleSaveTestResult);
+
+            // Event: Filter Tanggal di Tab Rekap
+            document.getElementById('rekap-tanggal').addEventListener('change', renderRekapList);
+
+            // Event: Generate & Download Gambar
+            document.getElementById('btn-generate-image').addEventListener('click', generateDailyReportImage);
+            document.getElementById('btn-download-png').addEventListener('click', downloadGeneratedPng);
+            document.getElementById('btn-close-modal').addEventListener('click', () => {
+                document.getElementById('modal-preview').classList.add('hidden');
+            });
+
+            // Event: Setting - Tambah Kriteria
+            document.getElementById('form-add-criteria').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = document.getElementById('input-new-criteria');
+                const val = input.value.trim();
+                if (!val) return;
+                state.criteria.push(val);
+                saveCriteria();
+                input.value = '';
+                renderSettingCriteria();
+                renderChecklist();
+                showToast('Poin penilaian ditambahkan');
+            });
+
+            // Event: Setting - Ganti Outlet & Tambah Karyawan
+            document.getElementById('setting-select-outlet').addEventListener('change', renderSettingEmployees);
+            document.getElementById('form-add-employee').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const outlet = document.getElementById('setting-select-outlet').value;
+                const input = document.getElementById('input-new-employee');
+                const val = input.value.trim();
+                if (!val) return;
+
+                if (!state.employees[outlet]) state.employees[outlet] = [];
+                if (state.employees[outlet].some(n => n.toLowerCase() === val.toLowerCase())) {
+                    showToast('Nama karyawan sudah ada di outlet ini');
+                    return;
+                }
+
+                state.employees[outlet].push(val);
+                saveEmployees();
+                input.value = '';
+                renderSettingEmployees();
+                renderEmployeeDropdown();
+                showToast(`${val} ditambahkan ke ${outlet}`);
+            });
+
+            // Event: Setting - Reset Default
+            document.getElementById('btn-reset-default').addEventListener('click', () => {
+                showConfirmModal(
+                    'Reset Pengaturan Awal',
+                    'Poin penilaian dan daftar nama karyawan akan dikembalikan ke contoh awal. Riwayat hasil tes tetap aman. Lanjutkan?',
+                    () => {
+                        state.criteria = [...DEFAULT_CRITERIA];
+                        state.employees = JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES));
+                        state.checkedCriteria.clear();
+                        saveCriteria();
+                        saveEmployees();
+                        renderSettingCriteria();
+                        renderSettingEmployees();
+                        renderEmployeeDropdown();
+                        renderChecklist();
+                        showToast('Pengaturan dikembalikan ke default');
+                    }
+                );
+            });
+
+            // Event: Navigasi Bawah
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    switchTab(btn.getAttribute('data-tab'));
+                });
+            });
+        });
+    </script>
+</body>
+</html>
