@@ -268,17 +268,23 @@
                             </button>
                         </div>
                         <div id="wrapper-select-emp" class="relative">
-                            <select id="select-karyawan" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold appearance-none pr-9 cursor-pointer">
+                            <select id="select-karyawan" class="theme-input w-full rounded-xl pl-3.5 pr-24 py-2.5 text-sm font-semibold appearance-none cursor-pointer">
                                 <!-- Diisi via JS -->
                             </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 theme-primary-text">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center gap-1.5 pr-3">
+                                <span id="dropdown-leader-badge" class="hidden text-[9px] font-extrabold uppercase tracking-tight px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 border border-amber-500/35 leading-none">
+                                    ★ Leader
+                                </span>
+                                <svg class="w-4 h-4 theme-primary-text shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                                 </svg>
                             </div>
                         </div>
-                        <div id="wrapper-manual-emp" class="hidden">
-                            <input type="text" id="input-manual-karyawan" placeholder="Ketik nama karyawan..." class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-medium">
+                        <div id="wrapper-manual-emp" class="hidden relative">
+                            <input type="text" id="input-manual-karyawan" placeholder="Ketik nama karyawan..." class="theme-input w-full rounded-xl pl-3.5 pr-20 py-2.5 text-sm font-medium">
+                            <span id="manual-leader-badge" class="pointer-events-none hidden absolute right-3 top-1/2 -translate-y-1/2 text-[9px] font-extrabold uppercase tracking-tight px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 border border-amber-500/35 leading-none">
+                                ★ Leader
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -287,9 +293,6 @@
                 <div id="active-employee-role-bar" class="pt-2.5 border-t theme-border flex items-center justify-between gap-2">
                     <div class="flex items-center gap-2 min-w-0">
                         <span id="active-emp-name-display" class="text-xs font-bold truncate">-</span>
-                        <span id="active-emp-leader-badge" class="hidden shrink-0 inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 border border-amber-500/30">
-                            ★ Leader Bar
-                        </span>
                     </div>
                     <span id="active-criteria-mode-label" class="text-[11px] font-semibold theme-muted-text shrink-0">
                         Kriteria Reguler
@@ -939,7 +942,8 @@
         function updateActiveEmployeeRoleIndicator() {
             const { empName, isLeader } = getSelectedEmployeeInfo();
             const nameDisplay = document.getElementById('active-emp-name-display');
-            const leaderBadge = document.getElementById('active-emp-leader-badge');
+            const dropdownBadge = document.getElementById('dropdown-leader-badge');
+            const manualBadge = document.getElementById('manual-leader-badge');
             const modeLabel = document.getElementById('active-criteria-mode-label');
             const checklistLeaderPill = document.getElementById('checklist-leader-pill');
             const checklistSubtitle = document.getElementById('checklist-card-subtitle');
@@ -947,13 +951,20 @@
             nameDisplay.textContent = empName || 'Belum pilih karyawan';
 
             if (isLeader) {
-                leaderBadge.classList.remove('hidden');
+                if (!state.isManualEmployee) {
+                    dropdownBadge.classList.remove('hidden');
+                    manualBadge.classList.add('hidden');
+                } else {
+                    dropdownBadge.classList.add('hidden');
+                    manualBadge.classList.remove('hidden');
+                }
                 checklistLeaderPill.classList.remove('hidden');
                 modeLabel.textContent = 'Kriteria Leader Bar';
                 modeLabel.className = 'text-[11px] font-bold text-amber-600 shrink-0';
-                checklistSubtitle.textContent = 'Penilaian khusus Leader Bar (5 poin)';
+                checklistSubtitle.textContent = `Penilaian khusus Leader Bar (${getActiveCriteriaList(true).length} poin)`;
             } else {
-                leaderBadge.classList.add('hidden');
+                dropdownBadge.classList.add('hidden');
+                manualBadge.classList.add('hidden');
                 checklistLeaderPill.classList.add('hidden');
                 modeLabel.textContent = 'Kriteria Reguler';
                 modeLabel.className = 'text-[11px] font-semibold theme-muted-text shrink-0';
@@ -977,7 +988,7 @@
                 list.forEach(emp => {
                     const opt = document.createElement('option');
                     opt.value = emp.name;
-                    opt.textContent = emp.isLeader ? `${emp.name} ★ (Leader Bar)` : emp.name;
+                    opt.textContent = emp.name;
                     selectEl.appendChild(opt);
                 });
             }
@@ -1112,7 +1123,7 @@
                 total,
                 passedCriteria: validChecked.map(i => criteriaList[i]),
                 note,
-                timestamp: Date.now()
+                timestamp: existingIndex >= 0 ? state.results[existingIndex].timestamp : Date.now()
             };
 
             if (existingIndex >= 0) {
@@ -1132,6 +1143,26 @@
                 document.getElementById('input-manual-karyawan').value = '';
             }
             renderChecklist();
+        }
+
+        /**
+         * HELPER PENGELOMPOKAN OUTLET BERDASARKAN URUTAN INPUT PERTAMA HARI ITU
+         */
+        function getChronologicalOutletGroups(dailyResults) {
+            const sortedResults = [...dailyResults].sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+            const outletOrder = [];
+
+            sortedResults.forEach(item => {
+                if (!outletOrder.includes(item.outlet)) {
+                    outletOrder.push(item.outlet);
+                }
+            });
+
+            return outletOrder.map(outletName => ({
+                outletName,
+                theme: getBrandTheme(outletName, state.isDarkMode),
+                items: sortedResults.filter(r => r.outlet === outletName)
+            }));
         }
 
         /**
@@ -1164,12 +1195,10 @@
             clearWrapper.classList.remove('hidden');
             container.innerHTML = '';
 
-            // Kelompokkan sesuai urutan outlet
-            OUTLETS.forEach(outletName => {
-                const items = dailyResults.filter(r => r.outlet === outletName);
-                if (items.length === 0) return;
+            // Kelompokkan sesuai urutan outlet yang pertama kali diinput hari itu
+            const grouped = getChronologicalOutletGroups(dailyResults);
 
-                const theme = getBrandTheme(outletName, state.isDarkMode);
+            grouped.forEach(({ outletName, theme, items }) => {
                 const card = document.createElement('div');
                 card.className = 'rounded-2xl overflow-hidden border shadow-xs';
                 card.style.borderColor = theme.border;
@@ -1257,17 +1286,8 @@
                 return;
             }
 
-            const grouped = [];
-            OUTLETS.forEach(outletName => {
-                const items = dailyResults.filter(r => r.outlet === outletName);
-                if (items.length > 0) {
-                    grouped.push({
-                        outletName,
-                        theme: getBrandTheme(outletName, state.isDarkMode),
-                        items
-                    });
-                }
-            });
+            // Urutkan outlet berdasarkan input pertama kali pada tanggal tersebut
+            const grouped = getChronologicalOutletGroups(dailyResults);
 
             const canvas = document.getElementById('export-canvas');
             const ctx = canvas.getContext('2d');
@@ -1310,22 +1330,23 @@
             ctx.fillStyle = isDark ? '#12100F' : '#F8FAFC';
             ctx.fillRect(0, 0, width, totalHeight);
 
-            // 2. Banner Judul Atas
+            // 2. Banner Judul Atas (Menyesuaikan warna tema outlet pertama yang diinput hari itu)
+            const topOutletTheme = grouped[0].theme;
             roundRect(padding, padding, width - padding * 2, 105, 20);
-            ctx.fillStyle = isDark ? '#1F1B1A' : '#1E293B';
+            ctx.fillStyle = topOutletTheme.primary;
             ctx.fill();
 
-            if (isDark) {
-                ctx.lineWidth = 1.5;
-                ctx.strokeStyle = '#332C2A';
-                ctx.stroke();
-            }
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = topOutletTheme.border;
+            ctx.stroke();
 
-            ctx.fillStyle = '#FFFFFF';
+            ctx.fillStyle = topOutletTheme.headerText;
             ctx.font = '800 22px Inter, sans-serif';
             ctx.fillText('HASIL TES SERTIFIKASI KARYAWAN', padding + 24, padding + 42);
 
-            ctx.fillStyle = isDark ? '#A89F9C' : '#CBD5E1';
+            ctx.fillStyle = isDark && topOutletTheme.key === 'jolie'
+                ? 'rgba(27, 16, 10, 0.78)'
+                : 'rgba(255, 255, 255, 0.88)';
             ctx.font = '500 15px Inter, sans-serif';
             ctx.fillText(`${formatTanggalIndo(selectedDate)}  •  Total ${dailyResults.length} Karyawan`, padding + 24, padding + 72);
 
@@ -1504,6 +1525,8 @@
             }
 
             targetList.forEach((crit, index) => {
+                const isFirst = index === 0;
+                const isLast = index === targetList.length - 1;
                 const row = document.createElement('div');
                 row.className = 'flex items-center justify-between gap-2 p-2.5 rounded-xl theme-soft border theme-border';
                 row.innerHTML = `
@@ -1513,7 +1536,17 @@
                         </span>
                         <span class="text-xs font-semibold truncate">${escapeHtml(crit)}</span>
                     </div>
-                    <div class="flex items-center gap-1 shrink-0">
+                    <div class="flex items-center gap-0.5 shrink-0">
+                        <button type="button" data-move-crit="${index}" data-dir="-1" ${isFirst ? 'disabled' : ''} class="p-1.5 rounded-lg theme-surface border theme-border ${isFirst ? 'opacity-30 cursor-not-allowed' : 'theme-muted-text hover:opacity-80 cursor-pointer active:scale-95'}" title="Geser ke Atas">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                            </svg>
+                        </button>
+                        <button type="button" data-move-crit="${index}" data-dir="1" ${isLast ? 'disabled' : ''} class="p-1.5 rounded-lg theme-surface border theme-border ${isLast ? 'opacity-30 cursor-not-allowed' : 'theme-muted-text hover:opacity-80 cursor-pointer active:scale-95'}" title="Geser ke Bawah">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
                         <button type="button" data-edit-crit="${index}" class="p-1.5 rounded-lg theme-muted-text hover:opacity-80 cursor-pointer" title="Edit">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -1527,6 +1560,25 @@
                     </div>
                 `;
                 container.appendChild(row);
+            });
+
+            container.querySelectorAll('[data-move-crit]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (btn.disabled) return;
+                    const idx = Number(btn.getAttribute('data-move-crit'));
+                    const dir = Number(btn.getAttribute('data-dir'));
+                    const targetIdx = idx + dir;
+                    if (targetIdx < 0 || targetIdx >= targetList.length) return;
+
+                    const temp = targetList[idx];
+                    targetList[idx] = targetList[targetIdx];
+                    targetList[targetIdx] = temp;
+
+                    saveCriteria();
+                    renderSettingCriteria();
+                    state.checkedCriteria.clear();
+                    renderChecklist();
+                });
             });
 
             container.querySelectorAll('[data-edit-crit]').forEach(btn => {
@@ -1680,130 +1732,137 @@
         }
 
         /**
-         * INISIALISASI EVENT LISTENERS
+         * INISIALISASI APLIKASI & EVENT LISTENERS
          */
         function initApp() {
             loadState();
 
             const today = getTodayStr();
-            document.getElementById('input-tanggal').value = today;
-            document.getElementById('rekap-tanggal').value = today;
+            const inputTanggal = document.getElementById('input-tanggal');
+            const rekapTanggal = document.getElementById('rekap-tanggal');
+            inputTanggal.value = today;
+            rekapTanggal.value = today;
             document.getElementById('header-date-badge').textContent = formatTanggalSingkat(today);
 
-            // Terapkan tema outlet awal + light/dark mode
-            const initialOutlet = document.getElementById('select-outlet').value;
-            applyOutletTheme(initialOutlet);
+            const selectOutlet = document.getElementById('select-outlet');
+            applyOutletTheme(selectOutlet.value);
             renderEmployeeDropdown();
             renderChecklist();
 
-            // Event: Toggle Mode Terang / Gelap
+            // Toggle Mode Gelap / Terang
             document.getElementById('btn-toggle-dark').addEventListener('click', () => {
                 state.isDarkMode = !state.isDarkMode;
                 saveDarkMode();
-                const currentOutlet = document.getElementById('select-outlet').value;
-                applyOutletTheme(currentOutlet);
+                applyOutletTheme(selectOutlet.value);
                 if (state.activeTab === 'rekap') {
                     renderRekapList();
                 }
-                showToast(state.isDarkMode ? 'Mode Gelap aktif' : 'Mode Terang aktif');
             });
 
-            // Event: Ganti Outlet pada Form Penilaian
-            document.getElementById('select-outlet').addEventListener('change', (e) => {
-                const newOutlet = e.target.value;
-                applyOutletTheme(newOutlet);
+            // Ganti Outlet
+            selectOutlet.addEventListener('change', () => {
+                applyOutletTheme(selectOutlet.value);
                 state.checkedCriteria.clear();
                 renderEmployeeDropdown();
                 renderChecklist();
             });
 
-            // Event: Ganti Karyawan pada Dropdown atau Input Manual
+            // Ganti Tanggal Penilaian
+            inputTanggal.addEventListener('change', () => {
+                const val = inputTanggal.value || today;
+                document.getElementById('header-date-badge').textContent = formatTanggalSingkat(val);
+                rekapTanggal.value = val;
+            });
+
+            // Ganti Karyawan dari Dropdown
             document.getElementById('select-karyawan').addEventListener('change', () => {
                 state.checkedCriteria.clear();
                 renderChecklist();
             });
 
-            document.getElementById('input-manual-karyawan').addEventListener('input', () => {
-                state.checkedCriteria.clear();
-                renderChecklist();
-            });
-
-            // Event: Update tanggal header jika user mengganti tanggal tes
-            document.getElementById('input-tanggal').addEventListener('change', (e) => {
-                document.getElementById('header-date-badge').textContent = formatTanggalSingkat(e.target.value);
-            });
-
-            // Event: Toggle Input Karyawan Manual vs Dropdown
-            document.getElementById('btn-toggle-manual-emp').addEventListener('click', () => {
+            // Toggle Input Karyawan Manual
+            document.getElementById('btn-toggle-manual-emp').addEventListener('click', (e) => {
                 state.isManualEmployee = !state.isManualEmployee;
-                const selectWrapper = document.getElementById('wrapper-select-emp');
-                const manualWrapper = document.getElementById('wrapper-manual-emp');
-                const toggleBtn = document.getElementById('btn-toggle-manual-emp');
-
+                const wrapSelect = document.getElementById('wrapper-select-emp');
+                const wrapManual = document.getElementById('wrapper-manual-emp');
                 if (state.isManualEmployee) {
-                    selectWrapper.classList.add('hidden');
-                    manualWrapper.classList.remove('hidden');
-                    toggleBtn.textContent = 'Pilih dari Daftar';
+                    wrapSelect.classList.add('hidden');
+                    wrapManual.classList.remove('hidden');
+                    e.target.textContent = 'Pilih dari Daftar';
                     document.getElementById('input-manual-karyawan').focus();
                 } else {
-                    manualWrapper.classList.add('hidden');
-                    selectWrapper.classList.remove('hidden');
-                    toggleBtn.textContent = '+ Input Manual';
+                    wrapManual.classList.add('hidden');
+                    wrapSelect.classList.remove('hidden');
+                    e.target.textContent = '+ Input Manual';
                 }
                 state.checkedCriteria.clear();
                 renderChecklist();
             });
 
-            // Event: Pilih Semua / Batal Semua Poin Penilaian
+            // Deteksi otomatis Leader Bar saat mengetik nama manual
+            document.getElementById('input-manual-karyawan').addEventListener('input', () => {
+                renderChecklist();
+            });
+
+            // Pilih Semua / Batal Semua Checklist
             document.getElementById('btn-check-all').addEventListener('click', () => {
                 const { isLeader } = getSelectedEmployeeInfo();
                 const criteriaList = getActiveCriteriaList(isLeader);
-                const total = criteriaList.length;
-                if (total === 0) return;
-
-                if (state.checkedCriteria.size === total) {
+                if (state.checkedCriteria.size === criteriaList.length) {
                     state.checkedCriteria.clear();
                 } else {
-                    for (let i = 0; i < total; i++) {
-                        state.checkedCriteria.add(i);
-                    }
+                    criteriaList.forEach((_, idx) => state.checkedCriteria.add(idx));
                 }
                 renderChecklist();
             });
 
-            // Event: Simpan Hasil Tes
+            // Simpan Hasil Tes
             document.getElementById('btn-simpan-tes').addEventListener('click', handleSaveTestResult);
 
-            // Event: Navigasi Bawah
+            // Navigasi Tab Bawah
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     switchTab(btn.getAttribute('data-tab'));
                 });
             });
 
-            // Event: Tab Rekap
-            document.getElementById('rekap-tanggal').addEventListener('change', renderRekapList);
+            // Tab Rekap: Ganti Tanggal, Generate Gambar, Hapus Data Hari Ini
+            rekapTanggal.addEventListener('change', renderRekapList);
             document.getElementById('btn-generate-image').addEventListener('click', generateDailyReportImage);
+            document.getElementById('btn-clear-day').addEventListener('click', () => {
+                const targetDate = rekapTanggal.value || getTodayStr();
+                showConfirmModal(
+                    'Hapus Data Harian',
+                    `Hapus semua hasil sertifikasi pada tanggal ${formatTanggalSingkat(targetDate)}?`,
+                    () => {
+                        state.results = state.results.filter(r => r.date !== targetDate);
+                        saveResults();
+                        renderRekapList();
+                        showToast('Data tanggal ini dibersihkan');
+                    }
+                );
+            });
+
+            // Modal Preview Gambar
             document.getElementById('btn-close-modal').addEventListener('click', () => {
                 document.getElementById('modal-preview').classList.add('hidden');
             });
             document.getElementById('btn-download-png').addEventListener('click', downloadGeneratedImage);
 
-            document.getElementById('btn-clear-day').addEventListener('click', () => {
-                const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
-                showConfirmModal(
-                    'Hapus Data Harian',
-                    `Hapus semua hasil tes pada tanggal ${formatTanggalSingkat(selectedDate)}?`,
-                    () => {
-                        state.results = state.results.filter(r => r.date !== selectedDate);
-                        saveResults();
-                        renderRekapList();
-                        showToast('Semua data tanggal tersebut dihapus');
-                    }
-                );
+            // Modal Konfirmasi
+            document.getElementById('btn-confirm-cancel').addEventListener('click', () => {
+                document.getElementById('modal-confirm').classList.add('hidden');
+                confirmCallback = null;
+            });
+            document.getElementById('btn-confirm-ok').addEventListener('click', () => {
+                document.getElementById('modal-confirm').classList.add('hidden');
+                if (typeof confirmCallback === 'function') {
+                    confirmCallback();
+                    confirmCallback = null;
+                }
             });
 
-            // Event: Setting - Sub-tab Kriteria Reguler vs Leader Bar
+            // Tab Setting: Sub-Tab Kriteria Reguler vs Leader Bar
             document.getElementById('btn-crit-tab-regular').addEventListener('click', () => {
                 state.settingCriteriaType = 'regular';
                 renderSettingCriteria();
@@ -1813,18 +1872,14 @@
                 renderSettingCriteria();
             });
 
-            // Event: Setting - Tambah Kriteria Baru
+            // Tambah Kriteria Baru
             document.getElementById('form-add-criteria').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const input = document.getElementById('input-new-criteria');
                 const val = input.value.trim();
                 if (!val) return;
-
-                if (state.settingCriteriaType === 'leader') {
-                    state.criteriaLeader.push(val);
-                } else {
-                    state.criteriaRegular.push(val);
-                }
+                const targetList = state.settingCriteriaType === 'leader' ? state.criteriaLeader : state.criteriaRegular;
+                targetList.push(val);
                 saveCriteria();
                 input.value = '';
                 renderSettingCriteria();
@@ -1832,59 +1887,54 @@
                 showToast('Poin penilaian ditambahkan');
             });
 
-            // Event: Setting - Modal Edit Kriteria
+            // Modal Edit Kriteria
             document.getElementById('btn-edit-crit-cancel').addEventListener('click', () => {
                 document.getElementById('modal-edit-criteria').classList.add('hidden');
                 state.editingCriteriaIndex = null;
             });
             document.getElementById('btn-edit-crit-save').addEventListener('click', () => {
-                const val = document.getElementById('input-edit-criteria').value.trim();
-                if (!val || state.editingCriteriaIndex === null) return;
-
-                const targetList = state.settingCriteriaType === 'leader' ? state.criteriaLeader : state.criteriaRegular;
-                targetList[state.editingCriteriaIndex] = val;
-                saveCriteria();
+                const newVal = document.getElementById('input-edit-criteria').value.trim();
+                if (newVal && state.editingCriteriaIndex !== null) {
+                    const targetList = state.settingCriteriaType === 'leader' ? state.criteriaLeader : state.criteriaRegular;
+                    targetList[state.editingCriteriaIndex] = newVal;
+                    saveCriteria();
+                    renderSettingCriteria();
+                    renderChecklist();
+                    showToast('Poin penilaian diperbarui');
+                }
                 document.getElementById('modal-edit-criteria').classList.add('hidden');
                 state.editingCriteriaIndex = null;
-                renderSettingCriteria();
-                renderChecklist();
-                showToast('Poin penilaian diperbarui');
             });
 
-            // Event: Setting - Kelola Karyawan
+            // Tab Setting: Kelola Karyawan
             document.getElementById('setting-select-outlet').addEventListener('change', renderSettingEmployees);
-
             document.getElementById('form-add-employee').addEventListener('submit', (e) => {
                 e.preventDefault();
-                const outlet = document.getElementById('setting-select-outlet').value;
+                const targetOutlet = document.getElementById('setting-select-outlet').value;
                 const input = document.getElementById('input-new-employee');
-                const isLeaderCheckbox = document.getElementById('checkbox-new-emp-leader');
-                const empName = input.value.trim();
-                if (!empName) return;
+                const cbLeader = document.getElementById('checkbox-new-emp-leader');
+                const name = input.value.trim();
+                if (!name) return;
 
-                if (!state.employees[outlet]) state.employees[outlet] = [];
-                const exists = state.employees[outlet].some(emp => emp.name.toLowerCase() === empName.toLowerCase());
-                if (exists) {
-                    showToast('Nama karyawan sudah ada di outlet ini!');
-                    return;
+                if (!state.employees[targetOutlet]) {
+                    state.employees[targetOutlet] = [];
                 }
-
-                const isLeader = isLeaderCheckbox.checked || isDefaultLeaderName(empName);
-                state.employees[outlet].push({ name: empName, isLeader });
+                const isLeader = cbLeader.checked || isDefaultLeaderName(name);
+                state.employees[targetOutlet].push({ name, isLeader });
                 saveEmployees();
                 input.value = '';
-                isLeaderCheckbox.checked = false;
+                cbLeader.checked = false;
                 renderSettingEmployees();
                 renderEmployeeDropdown();
                 renderChecklist();
-                showToast(`${empName} ditambahkan ke ${outlet}`);
+                showToast(`${name} ditambahkan ke ${targetOutlet}`);
             });
 
-            // Event: Setting - Reset Default
+            // Reset Default Pengaturan
             document.getElementById('btn-reset-default').addEventListener('click', () => {
                 showConfirmModal(
-                    'Reset Pengaturan Default',
-                    'Kembalikan poin penilaian (Reguler & Leader Bar) serta daftar karyawan awal? Hasil rekap tes tetap aman.',
+                    'Reset Pengaturan Awal',
+                    'Kembalikan semua poin penilaian dan daftar karyawan ke bawaan awal?',
                     () => {
                         state.criteriaRegular = [...DEFAULT_CRITERIA_REGULAR];
                         state.criteriaLeader = [...DEFAULT_CRITERIA_LEADER];
@@ -1900,22 +1950,9 @@
                     }
                 );
             });
-
-            // Event: Modal Konfirmasi
-            document.getElementById('btn-confirm-cancel').addEventListener('click', () => {
-                document.getElementById('modal-confirm').classList.add('hidden');
-                confirmCallback = null;
-            });
-            document.getElementById('btn-confirm-ok').addEventListener('click', () => {
-                document.getElementById('modal-confirm').classList.add('hidden');
-                if (typeof confirmCallback === 'function') {
-                    confirmCallback();
-                }
-                confirmCallback = null;
-            });
         }
 
-        window.addEventListener('DOMContentLoaded', initApp);
+        window.onload = initApp;
     </script>
 </body>
 </html>
