@@ -250,6 +250,28 @@
                     </button>
                 </form>
 
+                <!-- Panel Konfigurasi Cloud Sync Cepat di Layar Login -->
+                <div class="pt-2 border-t theme-border">
+                    <button type="button" id="btn-toggle-auth-sync" class="w-full flex items-center justify-between text-xs font-bold theme-muted-text py-1 cursor-pointer">
+                        <span class="flex items-center gap-1.5">
+                            <span id="auth-sync-dot" class="w-2 h-2 rounded-full bg-amber-500"></span>
+                            <span id="auth-sync-label">Sinkronisasi Perangkat (HP / Tablet / PC)</span>
+                        </span>
+                        <span class="theme-primary-text underline">Atur</span>
+                    </button>
+                    <div id="auth-sync-panel" class="hidden mt-2.5 space-y-2 p-3 rounded-2xl theme-soft border theme-border">
+                        <p class="text-[11px] theme-muted-text leading-relaxed">
+                            Tempel URL <b>Firebase Realtime Database</b> yang sama di HP, Tablet, dan PC agar seluruh akun & data otomatis tersinkron.
+                        </p>
+                        <input type="url" id="input-auth-firebase-url" placeholder="https://nama-project-default-rtdb.firebaseio.com" class="theme-input w-full rounded-xl px-3 py-2 text-xs font-medium">
+                        <div class="flex gap-2">
+                            <button type="button" id="btn-save-auth-firebase" class="flex-1 theme-primary-bg py-2 rounded-xl text-xs font-bold cursor-pointer">
+                                Hubungkan & Sinkron
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="text-center pt-1">
                     <button type="button" id="btn-auth-switch-link" class="text-xs font-bold theme-muted-text hover:underline cursor-pointer">
                         Belum punya akun? <span class="theme-primary-text font-extrabold">Daftar di sini</span>
@@ -263,7 +285,7 @@
     <div id="app-wrapper" class="hidden pb-24">
         <!-- Header Aplikasi -->
         <header class="sticky top-0 z-30 theme-surface border-b px-4 py-3 shadow-xs">
-            <div class="max-w-md mx-auto flex items-center justify-between gap-2">
+            <div class="max-w-md md:max-w-2xl mx-auto flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2.5 min-w-0">
                     <div class="w-9 h-9 rounded-xl theme-primary-bg flex items-center justify-center shadow-xs shrink-0">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
@@ -287,6 +309,14 @@
                 </div>
 
                 <div class="flex items-center gap-1.5 shrink-0">
+                    <!-- Tombol Sinkronisasi Manual / Status Cloud -->
+                    <button type="button" id="btn-header-sync" aria-label="Sinkronisasi Data" title="Sinkronisasi Data Perangkat" class="h-9 px-2.5 rounded-xl border theme-border theme-soft flex items-center gap-1.5 cursor-pointer active:scale-95 transition-transform">
+                        <span id="header-sync-dot" class="w-2 h-2 rounded-full bg-amber-500"></span>
+                        <svg id="header-sync-icon" class="w-3.5 h-3.5 theme-primary-text" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                    </button>
+
                     <!-- Tombol Toggle Mode Terang / Gelap (Icon-Only) -->
                     <button type="button" id="btn-toggle-dark" aria-label="Ganti Mode Terang atau Gelap" title="Ganti Mode Terang / Gelap" class="w-9 h-9 rounded-xl border theme-border theme-soft flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
                         <svg id="icon-sun" class="w-4 h-4 hidden text-amber-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
@@ -307,8 +337,8 @@
             </div>
         </header>
 
-        <!-- Kontainer Utama -->
-        <main class="max-w-md mx-auto px-4 pt-4">
+        <!-- Kontainer Utama (Responsif HP, Tablet, & PC) -->
+        <main class="max-w-md md:max-w-2xl mx-auto px-4 pt-4">
 
             <!-- ==================== TAB 1: PENILAIAN ==================== -->
             <section id="tab-penilaian" class="space-y-4">
@@ -500,6 +530,21 @@
                         Keluar Akun
                     </button>
                 </div>
+
+                <!-- Card Khusus Akun Okta: Sinkron Template dari Akun Abrar -->
+                <div id="card-copy-from-abrar" class="hidden theme-surface border rounded-2xl p-4 shadow-xs space-y-2.5">
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <h2 class="text-sm font-bold">Salin Data Master dari Akun Abrar</h2>
+                            <p class="text-xs theme-muted-text mt-0.5">
+                                Menyalin seluruh nama karyawan tiap outlet beserta 10 poin Leader & 5 poin Reguler dari akun <b>abrar</b> ke akun <b>okta</b> (tanpa hasil penilaian).
+                            </p>
+                        </div>
+                    </div>
+                    <button type="button" id="btn-sync-from-abrar" class="w-full py-2.5 px-4 rounded-xl text-xs font-bold theme-primary-light border border-current/20 cursor-pointer active:scale-98">
+                        Salin Ulang Data Karyawan & Poin dari Abrar
+                    </button>
+                </div>
                 
                 <!-- Kelola Poin Penilaian (Reguler & Leader Bar) -->
                 <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
@@ -572,6 +617,51 @@
                     </div>
                 </div>
 
+                <!-- 3. Sinkronisasi Lintas Perangkat (HP, Tablet, & PC) -->
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
+                    <div class="flex items-center justify-between gap-2">
+                        <div>
+                            <h2 class="text-sm font-bold">3. Sinkronisasi HP, Tablet & PC</h2>
+                            <p class="text-xs theme-muted-text">Samakan seluruh akun, nama karyawan, poin, dan hasil tes antar perangkat</p>
+                        </div>
+                        <span id="setting-sync-status-pill" class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-600 shrink-0">
+                            Lokal
+                        </span>
+                    </div>
+
+                    <!-- Cloud Sync via Firebase Realtime Database URL -->
+                    <div class="p-3 rounded-xl theme-soft border theme-border space-y-2.5">
+                        <label for="input-setting-firebase-url" class="block text-xs font-bold">
+                            URL Cloud Sync (Firebase Realtime Database)
+                        </label>
+                        <input type="url" id="input-setting-firebase-url" placeholder="https://nama-project-default-rtdb.firebaseio.com" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-xs font-medium">
+                        <div class="flex gap-2">
+                            <button type="button" id="btn-save-setting-firebase" class="flex-1 theme-primary-bg py-2.5 px-3 rounded-xl font-bold text-xs cursor-pointer">
+                                Simpan & Sinkron Sekarang
+                            </button>
+                            <button type="button" id="btn-pull-setting-firebase" class="py-2.5 px-3 rounded-xl font-bold text-xs theme-surface border theme-border cursor-pointer" title="Tarik Data Terbaru dari Cloud">
+                                Tarik Data
+                            </button>
+                        </div>
+                        <p id="setting-last-sync-text" class="text-[11px] theme-muted-text">
+                            Masukkan URL Firebase yang sama di HP dan Tablet/PC untuk sinkronisasi otomatis.
+                        </p>
+                    </div>
+
+                    <!-- Transfer Instan via Kode Sinkronisasi (Tanpa Server) -->
+                    <div class="pt-1 border-t theme-border space-y-2">
+                        <span class="block text-xs font-bold">Transfer Cepat Antar Perangkat (Salin / Tempel Kode)</span>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button type="button" id="btn-export-sync-code" class="py-2.5 px-3 rounded-xl text-xs font-bold theme-soft border theme-border cursor-pointer">
+                                Salin Kode Data
+                            </button>
+                            <button type="button" id="btn-open-import-modal" class="py-2.5 px-3 rounded-xl text-xs font-bold theme-primary-light cursor-pointer">
+                                Tempel Kode Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Reset Data Default -->
                 <div class="theme-surface border rounded-2xl p-4 shadow-xs flex items-center justify-between gap-3">
                     <div>
@@ -588,7 +678,7 @@
 
         <!-- Navigasi Bawah -->
         <nav class="fixed bottom-0 inset-x-0 z-30 theme-surface border-t shadow-lg">
-            <div class="max-w-md mx-auto grid grid-cols-3 h-16">
+            <div class="max-w-md md:max-w-2xl mx-auto grid grid-cols-3 h-16">
                 <button type="button" data-tab="penilaian" class="nav-btn flex flex-col items-center justify-center gap-1 theme-primary-text font-bold text-xs cursor-pointer">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -610,6 +700,23 @@
                 </button>
             </div>
         </nav>
+    </div>
+
+    <!-- Modal Import Kode Sinkronisasi -->
+    <div id="modal-import-sync" class="fixed inset-0 z-50 hidden bg-black/65 flex items-center justify-center p-4">
+        <div class="theme-surface border rounded-2xl max-w-sm w-full p-5 shadow-xl space-y-3.5">
+            <h3 class="font-bold text-base">Tempel Kode Sinkronisasi</h3>
+            <p class="text-xs theme-muted-text">Tempel kode data yang disalin dari HP atau perangkat lain untuk menyamakan seluruh data di perangkat ini.</p>
+            <textarea id="textarea-import-sync" rows="4" class="theme-input w-full rounded-xl p-3 text-xs font-mono" placeholder="Tempel kode sinkronisasi di sini..."></textarea>
+            <div class="flex gap-2.5 pt-1">
+                <button type="button" id="btn-import-sync-cancel" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-soft border theme-border cursor-pointer">
+                    Batal
+                </button>
+                <button type="button" id="btn-import-sync-apply" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-primary-bg cursor-pointer">
+                    Terapkan Data
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Modal Preview Gambar & Download -->
@@ -814,13 +921,19 @@
         }
 
         /**
-         * MANAJEMEN AKUN & LOCALSTORAGE PER PENGGUNA
+         * MANAJEMEN AKUN, LOCALSTORAGE & SINKRONISASI PERANGKAT (HP / TABLET / PC)
          */
         const GLOBAL_STORAGE_KEYS = {
             ACCOUNTS: 'sertifikasi_accounts_v1',
             CURRENT_SESSION: 'sertifikasi_current_user_v1',
-            DARK_MODE: 'sertifikasi_dark_mode_v1'
+            DARK_MODE: 'sertifikasi_dark_mode_v1',
+            FIREBASE_URL: 'sertifikasi_firebase_sync_url_v1',
+            LAST_SYNC: 'sertifikasi_last_sync_ts_v1',
+            OKTA_INIT_COPIED: 'sertifikasi_okta_copied_from_abrar_v1'
         };
+
+        // Optional: Anda dapat mengisi default URL Firebase di sini agar langsung aktif di semua perangkat
+        const DEFAULT_FIREBASE_URL = '';
 
         function getUserStorageKeys(username) {
             const safeKey = String(username || 'default').trim().toLowerCase();
@@ -832,6 +945,7 @@
             };
         }
 
+        // 5 Poin Penilaian Karyawan Reguler Default
         const DEFAULT_CRITERIA_REGULAR = [
             "Grooming & Kerapian Seragam",
             "Salam, Senyum & SOP Pelayanan",
@@ -840,12 +954,18 @@
             "Kebersihan Area Kerja (Clean as You Go)"
         ];
 
+        // 10 Poin Penilaian Leader Bar Default
         const DEFAULT_CRITERIA_LEADER = [
             "Briefing",
             "Bebas K.O.M.I.B.A",
             "Penanganan Kebakaran",
             "Memberikan Teguran",
-            "Problem Solving"
+            "Problem Solving",
+            "Kontrol Kualitas Produk & SOP",
+            "Manajemen Stok & Kebersihan Bar",
+            "Koordinasi Tim & Pembagian Shift",
+            "Penanganan Komplain Pelanggan",
+            "Ketepatan Laporan & Evaluasi Harian"
         ];
 
         const DEFAULT_EMPLOYEES = {
@@ -908,7 +1028,9 @@
             activeTab: 'penilaian',
             settingCriteriaType: 'regular',
             generatedDataUrl: '',
-            editingCriteriaIndex: null
+            editingCriteriaIndex: null,
+            firebaseUrl: '',
+            isSyncing: false
         };
 
         function getAccounts() {
@@ -922,6 +1044,7 @@
 
         function saveAccounts(accounts) {
             localStorage.setItem(GLOBAL_STORAGE_KEYS.ACCOUNTS, JSON.stringify(accounts));
+            scheduleCloudPush();
         }
 
         function isDefaultLeaderName(name) {
@@ -937,6 +1060,313 @@
                 name: entry.name,
                 isLeader: typeof entry.isLeader === 'boolean' ? entry.isLeader : isDefaultLeaderName(entry.name)
             };
+        }
+
+        /**
+         * SALIN DATA MASTER DARI AKUN 'abrar' KE AKUN 'okta'
+         * (Seluruh nama data karyawan tiap outlet + 10 poin leader + 5 poin reguler, TANPA hasil penilaian)
+         */
+        function copyMasterDataFromAbrarToOkta(force = false) {
+            const abrarKeys = getUserStorageKeys('abrar');
+            const oktaKeys = getUserStorageKeys('okta');
+
+            const alreadyCopied = localStorage.getItem(GLOBAL_STORAGE_KEYS.OKTA_INIT_COPIED) === 'true';
+            if (alreadyCopied && !force) return false;
+
+            const rawAbrarEmp = localStorage.getItem(abrarKeys.EMPLOYEES);
+            const rawAbrarLdr = localStorage.getItem(abrarKeys.CRITERIA_LEADER);
+            const rawAbrarReg = localStorage.getItem(abrarKeys.CRITERIA_REGULAR);
+
+            // Ambil data dari akun abrar jika ada, atau gunakan fallback sesuai konfigurasi abrar
+            let sourceEmployees = null;
+            if (rawAbrarEmp) {
+                try {
+                    sourceEmployees = JSON.parse(rawAbrarEmp);
+                } catch (e) {
+                    sourceEmployees = null;
+                }
+            }
+
+            let sourceCriteriaLeader = null;
+            if (rawAbrarLdr) {
+                try {
+                    sourceCriteriaLeader = JSON.parse(rawAbrarLdr);
+                } catch (e) {
+                    sourceCriteriaLeader = null;
+                }
+            }
+
+            let sourceCriteriaRegular = null;
+            if (rawAbrarReg) {
+                try {
+                    sourceCriteriaRegular = JSON.parse(rawAbrarReg);
+                } catch (e) {
+                    sourceCriteriaRegular = null;
+                }
+            }
+
+            // Jika akun abrar belum ada di perangkat ini dan bukan force, tetap salin struktur default
+            // Namun jika akun abrar ada, salin seluruh data karyawan dan 10 poin leader + 5 poin reguler darinya
+            const finalEmployees = {};
+            OUTLETS.forEach(outlet => {
+                const list = (sourceEmployees && Array.isArray(sourceEmployees[outlet]))
+                    ? sourceEmployees[outlet]
+                    : (DEFAULT_EMPLOYEES[outlet] || []);
+                finalEmployees[outlet] = list.map(normalizeEmployeeEntry);
+            });
+
+            const finalCriteriaLeader = (Array.isArray(sourceCriteriaLeader) && sourceCriteriaLeader.length > 0)
+                ? [...sourceCriteriaLeader]
+                : [...DEFAULT_CRITERIA_LEADER];
+
+            const finalCriteriaRegular = (Array.isArray(sourceCriteriaRegular) && sourceCriteriaRegular.length > 0)
+                ? [...sourceCriteriaRegular]
+                : [...DEFAULT_CRITERIA_REGULAR];
+
+            localStorage.setItem(oktaKeys.EMPLOYEES, JSON.stringify(finalEmployees));
+            localStorage.setItem(oktaKeys.CRITERIA_LEADER, JSON.stringify(finalCriteriaLeader));
+            localStorage.setItem(oktaKeys.CRITERIA_REGULAR, JSON.stringify(finalCriteriaRegular));
+
+            // Pastikan hasil penilaian akun okta tidak ikut terisi dari abrar
+            if (!localStorage.getItem(oktaKeys.RESULTS)) {
+                localStorage.setItem(oktaKeys.RESULTS, JSON.stringify([]));
+            }
+
+            localStorage.setItem(GLOBAL_STORAGE_KEYS.OKTA_INIT_COPIED, 'true');
+
+            // Jika sedang login sebagai okta, perbarui state aktif seketika
+            if (state.currentUser && state.currentUser.username.trim().toLowerCase() === 'okta') {
+                state.employees = finalEmployees;
+                state.criteriaLeader = finalCriteriaLeader;
+                state.criteriaRegular = finalCriteriaRegular;
+            }
+
+            return true;
+        }
+
+        /**
+         * SINKRONISASI CLOUD (FIREBASE REALTIME DATABASE) & ANTAR PERANGKAT
+         */
+        function normalizeFirebaseUrl(rawUrl) {
+            if (!rawUrl) return '';
+            let clean = String(rawUrl).trim();
+            if (!clean) return '';
+            if (!/^https?:\/\//i.test(clean)) {
+                clean = 'https://' + clean;
+            }
+            clean = clean.replace(/\/+$/, '');
+            if (clean.endsWith('.json')) {
+                clean = clean.slice(0, -5);
+            }
+            return clean;
+        }
+
+        function getFirebaseEndpoint() {
+            const url = normalizeFirebaseUrl(state.firebaseUrl);
+            if (!url) return '';
+            return `${url}/sertifikasi_app_sync_v1.json`;
+        }
+
+        function buildFullSyncPayload() {
+            const accounts = getAccounts();
+            const usersData = {};
+            const usernames = new Set(accounts.map(a => a.username.trim().toLowerCase()));
+            usernames.add('abrar');
+            usernames.add('okta');
+            if (state.currentUser) {
+                usernames.add(state.currentUser.username.trim().toLowerCase());
+            }
+
+            usernames.forEach(uname => {
+                const keys = getUserStorageKeys(uname);
+                try {
+                    usersData[uname] = {
+                        criteriaRegular: JSON.parse(localStorage.getItem(keys.CRITERIA_REGULAR) || 'null'),
+                        criteriaLeader: JSON.parse(localStorage.getItem(keys.CRITERIA_LEADER) || 'null'),
+                        employees: JSON.parse(localStorage.getItem(keys.EMPLOYEES) || 'null'),
+                        results: JSON.parse(localStorage.getItem(keys.RESULTS) || 'null')
+                    };
+                } catch (e) {
+                    // Abaikan jika korup
+                }
+            });
+
+            return {
+                version: 1,
+                updatedAt: Date.now(),
+                accounts,
+                usersData
+            };
+        }
+
+        function applyFullSyncPayload(payload) {
+            if (!payload || typeof payload !== 'object') return false;
+
+            if (Array.isArray(payload.accounts) && payload.accounts.length > 0) {
+                const localAccs = getAccounts();
+                const mergedMap = new Map();
+                localAccs.forEach(a => mergedMap.set(a.username.toLowerCase(), a));
+                payload.accounts.forEach(a => {
+                    if (a && a.username) {
+                        mergedMap.set(a.username.toLowerCase(), a);
+                    }
+                });
+                localStorage.setItem(GLOBAL_STORAGE_KEYS.ACCOUNTS, JSON.stringify(Array.from(mergedMap.values())));
+            }
+
+            if (payload.usersData && typeof payload.usersData === 'object') {
+                Object.entries(payload.usersData).forEach(([uname, udata]) => {
+                    if (!udata || typeof udata !== 'object') return;
+                    const keys = getUserStorageKeys(uname);
+                    if (Array.isArray(udata.criteriaRegular)) {
+                        localStorage.setItem(keys.CRITERIA_REGULAR, JSON.stringify(udata.criteriaRegular));
+                    }
+                    if (Array.isArray(udata.criteriaLeader)) {
+                        localStorage.setItem(keys.CRITERIA_LEADER, JSON.stringify(udata.criteriaLeader));
+                    }
+                    if (udata.employees && typeof udata.employees === 'object') {
+                        localStorage.setItem(keys.EMPLOYEES, JSON.stringify(udata.employees));
+                    }
+                    if (Array.isArray(udata.results)) {
+                        localStorage.setItem(keys.RESULTS, JSON.stringify(udata.results));
+                    }
+                });
+            }
+
+            // Pastikan akun okta tetap tersinkron dari abrar jika belum pernah disalin
+            copyMasterDataFromAbrarToOkta(false);
+
+            // Jika sedang login, muat ulang UI dari data terbaru
+            if (state.currentUser) {
+                loadUserState(state.currentUser.username);
+                renderEmployeeDropdown();
+                renderChecklist();
+                if (state.activeTab === 'rekap') renderRekapList();
+                if (state.activeTab === 'setting') {
+                    renderSettingCriteria();
+                    renderSettingEmployees();
+                }
+            }
+
+            const nowStr = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+            localStorage.setItem(GLOBAL_STORAGE_KEYS.LAST_SYNC, nowStr);
+            updateSyncStatusUI();
+            return true;
+        }
+
+        let cloudPushTimer = null;
+        function scheduleCloudPush() {
+            if (!getFirebaseEndpoint()) return;
+            clearTimeout(cloudPushTimer);
+            cloudPushTimer = setTimeout(() => {
+                pushDataToCloud(true);
+            }, 600);
+        }
+
+        async function pushDataToCloud(silent = false) {
+            const endpoint = getFirebaseEndpoint();
+            if (!endpoint) return false;
+            state.isSyncing = true;
+            updateSyncStatusUI();
+
+            try {
+                const payload = buildFullSyncPayload();
+                const res = await fetch(endpoint, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+
+                const nowStr = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                localStorage.setItem(GLOBAL_STORAGE_KEYS.LAST_SYNC, nowStr);
+                state.isSyncing = false;
+                updateSyncStatusUI();
+                if (!silent) showToast('Data tersinkron ke Cloud!');
+                return true;
+            } catch (err) {
+                console.error('Gagal push ke cloud:', err);
+                state.isSyncing = false;
+                updateSyncStatusUI();
+                if (!silent) showToast('Gagal sinkron ke Cloud. Cek URL Firebase.');
+                return false;
+            }
+        }
+
+        async function pullDataFromCloud(silent = false) {
+            const endpoint = getFirebaseEndpoint();
+            if (!endpoint) return false;
+            state.isSyncing = true;
+            updateSyncStatusUI();
+
+            try {
+                const res = await fetch(endpoint, { cache: 'no-store' });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+
+                if (data && typeof data === 'object') {
+                    applyFullSyncPayload(data);
+                    if (!silent) showToast('Data berhasil ditarik dari Cloud!');
+                } else {
+                    // Cloud masih kosong -> unggah data lokal pertama kali
+                    await pushDataToCloud(true);
+                    if (!silent) showToast('Data lokal diunggah ke Cloud!');
+                }
+
+                state.isSyncing = false;
+                updateSyncStatusUI();
+                return true;
+            } catch (err) {
+                console.error('Gagal pull dari cloud:', err);
+                state.isSyncing = false;
+                updateSyncStatusUI();
+                if (!silent) showToast('Gagal menarik data dari Cloud.');
+                return false;
+            }
+        }
+
+        function updateSyncStatusUI() {
+            const hasCloud = Boolean(getFirebaseEndpoint());
+            const lastSync = localStorage.getItem(GLOBAL_STORAGE_KEYS.LAST_SYNC);
+
+            const authDot = document.getElementById('auth-sync-dot');
+            const authLabel = document.getElementById('auth-sync-label');
+            const headerDot = document.getElementById('header-sync-dot');
+            const headerIcon = document.getElementById('header-sync-icon');
+            const settingPill = document.getElementById('setting-sync-status-pill');
+            const lastSyncText = document.getElementById('setting-last-sync-text');
+
+            if (state.isSyncing) {
+                if (headerIcon) headerIcon.classList.add('animate-spin');
+            } else {
+                if (headerIcon) headerIcon.classList.remove('animate-spin');
+            }
+
+            if (hasCloud) {
+                if (authDot) authDot.className = 'w-2 h-2 rounded-full bg-emerald-500';
+                if (authLabel) authLabel.textContent = 'Cloud Sync Aktif (HP / Tablet / PC)';
+                if (headerDot) headerDot.className = 'w-2 h-2 rounded-full bg-emerald-500';
+                if (settingPill) {
+                    settingPill.textContent = 'Cloud Aktif';
+                    settingPill.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-600 shrink-0';
+                }
+                if (lastSyncText) {
+                    lastSyncText.textContent = lastSync
+                        ? `Terhubung ke Cloud • Terakhir sinkron pukul ${lastSync}`
+                        : 'Terhubung ke Cloud • Otomatis sinkron antar perangkat';
+                }
+            } else {
+                if (authDot) authDot.className = 'w-2 h-2 rounded-full bg-amber-500';
+                if (authLabel) authLabel.textContent = 'Sinkronisasi Perangkat (Belum Terhubung)';
+                if (headerDot) headerDot.className = 'w-2 h-2 rounded-full bg-amber-500';
+                if (settingPill) {
+                    settingPill.textContent = 'Lokal';
+                    settingPill.className = 'text-[10px] font-bold px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-600 shrink-0';
+                }
+                if (lastSyncText) {
+                    lastSyncText.textContent = 'Masukkan URL Firebase yang sama di HP dan Tablet/PC untuk sinkronisasi otomatis.';
+                }
+            }
         }
 
         function isEmployeeLeader(outletName, empName) {
@@ -993,6 +1423,13 @@
         }
 
         function loadUserState(username) {
+            const cleanLower = String(username || '').trim().toLowerCase();
+
+            // Jika akun adalah 'okta', pastikan data karyawan & poin dari 'abrar' sudah tersalin
+            if (cleanLower === 'okta') {
+                copyMasterDataFromAbrarToOkta(false);
+            }
+
             const keys = getUserStorageKeys(username);
             try {
                 const savedReg = localStorage.getItem(keys.CRITERIA_REGULAR);
@@ -1026,18 +1463,21 @@
             const keys = getUserStorageKeys(state.currentUser.username);
             localStorage.setItem(keys.CRITERIA_REGULAR, JSON.stringify(state.criteriaRegular));
             localStorage.setItem(keys.CRITERIA_LEADER, JSON.stringify(state.criteriaLeader));
+            scheduleCloudPush();
         }
 
         function saveEmployees() {
             if (!state.currentUser) return;
             const keys = getUserStorageKeys(state.currentUser.username);
             localStorage.setItem(keys.EMPLOYEES, JSON.stringify(state.employees));
+            scheduleCloudPush();
         }
 
         function saveResults() {
             if (!state.currentUser) return;
             const keys = getUserStorageKeys(state.currentUser.username);
             localStorage.setItem(keys.RESULTS, JSON.stringify(state.results));
+            scheduleCloudPush();
         }
 
         function saveDarkMode() {
@@ -1126,6 +1566,14 @@
             // Muat data khusus milik akun ini
             loadUserState(cleanUsername);
 
+            // Tampilkan card salin dari abrar khusus jika user login sebagai okta
+            const cardCopyAbrar = document.getElementById('card-copy-from-abrar');
+            if (cleanUsername.toLowerCase() === 'okta') {
+                cardCopyAbrar.classList.remove('hidden');
+            } else {
+                cardCopyAbrar.classList.add('hidden');
+            }
+
             // Tampilkan username penguji pada UI
             document.getElementById('header-user-badge').textContent = cleanUsername;
             document.getElementById('setting-username-display').textContent = cleanUsername;
@@ -1139,6 +1587,7 @@
             renderEmployeeDropdown();
             renderChecklist();
             switchTab('penilaian');
+            updateSyncStatusUI();
         }
 
         function logoutSession() {
@@ -1195,6 +1644,13 @@
                     createdAt: Date.now()
                 });
                 saveAccounts(accounts);
+
+                // Jika akun baru yang didaftarkan adalah 'okta', salin data karyawan & poin dari 'abrar'
+                if (rawUsername.toLowerCase() === 'okta') {
+                    copyMasterDataFromAbrarToOkta(true);
+                    scheduleCloudPush();
+                }
+
                 enterAppSession(rawUsername);
                 showToast(`Akun "${rawUsername}" berhasil dibuat!`);
             } else {
@@ -2048,6 +2504,7 @@
             } else if (tabName === 'setting') {
                 renderSettingCriteria();
                 renderSettingEmployees();
+                updateSyncStatusUI();
             }
         }
 
@@ -2084,8 +2541,17 @@
         /**
          * INISIALISASI APLIKASI & EVENT LISTENERS
          */
-        function initApp() {
+        async function initApp() {
             loadThemePreference();
+
+            // Muat URL Cloud Sync jika tersimpan
+            const savedFirebaseUrl = localStorage.getItem(GLOBAL_STORAGE_KEYS.FIREBASE_URL) || DEFAULT_FIREBASE_URL;
+            state.firebaseUrl = normalizeFirebaseUrl(savedFirebaseUrl);
+            document.getElementById('input-auth-firebase-url').value = state.firebaseUrl;
+            document.getElementById('input-setting-firebase-url').value = state.firebaseUrl;
+
+            // Pastikan data karyawan & 10 poin leader + 5 poin reguler dari akun abrar tersalin ke akun okta
+            copyMasterDataFromAbrarToOkta(false);
 
             const today = getTodayStr();
             const inputTanggal = document.getElementById('input-tanggal');
@@ -2096,6 +2562,115 @@
 
             const selectOutlet = document.getElementById('select-outlet');
             applyOutletTheme(selectOutlet.value);
+            updateSyncStatusUI();
+
+            // Jika Cloud Sync terkonfigurasi, tarik data terbaru saat membuka website di HP / Tablet / PC
+            if (getFirebaseEndpoint()) {
+                await pullDataFromCloud(true);
+            }
+
+            // Event Listener Panel Cloud Sync di Layar Login
+            document.getElementById('btn-toggle-auth-sync').addEventListener('click', () => {
+                document.getElementById('auth-sync-panel').classList.toggle('hidden');
+            });
+
+            document.getElementById('btn-save-auth-firebase').addEventListener('click', async () => {
+                const rawUrl = document.getElementById('input-auth-firebase-url').value;
+                state.firebaseUrl = normalizeFirebaseUrl(rawUrl);
+                localStorage.setItem(GLOBAL_STORAGE_KEYS.FIREBASE_URL, state.firebaseUrl);
+                document.getElementById('input-setting-firebase-url').value = state.firebaseUrl;
+                if (state.firebaseUrl) {
+                    await pullDataFromCloud(false);
+                } else {
+                    updateSyncStatusUI();
+                    showToast('URL Cloud Sync dihapus');
+                }
+            });
+
+            // Event Listener Tombol Sinkronisasi di Header & Setting
+            document.getElementById('btn-header-sync').addEventListener('click', async () => {
+                if (getFirebaseEndpoint()) {
+                    await pullDataFromCloud(false);
+                    await pushDataToCloud(true);
+                } else {
+                    switchTab('setting');
+                    showToast('Atur URL Cloud Sync atau Kode Sinkron di menu Setting');
+                }
+            });
+
+            document.getElementById('btn-save-setting-firebase').addEventListener('click', async () => {
+                const rawUrl = document.getElementById('input-setting-firebase-url').value;
+                state.firebaseUrl = normalizeFirebaseUrl(rawUrl);
+                localStorage.setItem(GLOBAL_STORAGE_KEYS.FIREBASE_URL, state.firebaseUrl);
+                document.getElementById('input-auth-firebase-url').value = state.firebaseUrl;
+                if (state.firebaseUrl) {
+                    await pushDataToCloud(false);
+                } else {
+                    updateSyncStatusUI();
+                    showToast('URL Cloud Sync dihapus');
+                }
+            });
+
+            document.getElementById('btn-pull-setting-firebase').addEventListener('click', async () => {
+                if (!getFirebaseEndpoint()) {
+                    showToast('Masukkan URL Firebase terlebih dahulu');
+                    return;
+                }
+                await pullDataFromCloud(false);
+            });
+
+            // Export & Import Kode Sinkronisasi Instan (HP <-> Tablet/PC)
+            document.getElementById('btn-export-sync-code').addEventListener('click', async () => {
+                const payload = buildFullSyncPayload();
+                const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+                try {
+                    await navigator.clipboard.writeText(encoded);
+                    showToast('Kode sinkronisasi disalin ke clipboard!');
+                } catch (e) {
+                    prompt('Salin kode sinkronisasi berikut:', encoded);
+                }
+            });
+
+            document.getElementById('btn-open-import-modal').addEventListener('click', () => {
+                document.getElementById('textarea-import-sync').value = '';
+                document.getElementById('modal-import-sync').classList.remove('hidden');
+            });
+
+            document.getElementById('btn-import-sync-cancel').addEventListener('click', () => {
+                document.getElementById('modal-import-sync').classList.add('hidden');
+            });
+
+            document.getElementById('btn-import-sync-apply').addEventListener('click', () => {
+                const rawCode = document.getElementById('textarea-import-sync').value.trim();
+                if (!rawCode) {
+                    showToast('Tempel kode terlebih dahulu!');
+                    return;
+                }
+                try {
+                    const decodedStr = decodeURIComponent(escape(atob(rawCode)));
+                    const parsed = JSON.parse(decodedStr);
+                    if (applyFullSyncPayload(parsed)) {
+                        document.getElementById('modal-import-sync').classList.add('hidden');
+                        scheduleCloudPush();
+                        showToast('Seluruh data berhasil disinkronkan!');
+                    } else {
+                        showToast('Format kode tidak valid.');
+                    }
+                } catch (e) {
+                    showToast('Kode sinkronisasi rusak atau tidak valid.');
+                }
+            });
+
+            // Tombol Salin Ulang dari Akun Abrar ke Akun Okta
+            document.getElementById('btn-sync-from-abrar').addEventListener('click', () => {
+                copyMasterDataFromAbrarToOkta(true);
+                renderSettingCriteria();
+                renderSettingEmployees();
+                renderEmployeeDropdown();
+                renderChecklist();
+                scheduleCloudPush();
+                showToast('Data karyawan & poin dari Abrar berhasil disalin ke Okta!');
+            });
 
             // Event Listener Halaman Login / Daftar
             document.getElementById('btn-auth-mode-login').addEventListener('click', () => setAuthMode('login'));
@@ -2322,6 +2897,13 @@
                         showToast('Pengaturan dikembalikan ke default');
                     }
                 );
+            });
+
+            // Otomatis tarik data saat tab/window kembali aktif di HP/Tablet/PC
+            window.addEventListener('focus', () => {
+                if (getFirebaseEndpoint() && !state.isSyncing) {
+                    pullDataFromCloud(true);
+                }
             });
 
             // Cek apakah ada sesi akun yang sedang login
