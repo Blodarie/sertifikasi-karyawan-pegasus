@@ -13,7 +13,6 @@
     
     <style>
         /* ==================== LIGHT MODE PALETTES ==================== */
-        /* 1. Chatting Light (Oranye Koral Claude) */
         :root,
         body.theme-chatting-light {
             --bg-page: #FBF6F3;
@@ -29,7 +28,6 @@
             --ring-color: rgba(217, 119, 87, 0.25);
         }
 
-        /* 2. Jolie Light (Coklat Tua & Putih) */
         body.theme-jolie-light {
             --bg-page: #FFFFFF;
             --bg-surface: #FAF6F3;
@@ -44,7 +42,6 @@
             --ring-color: rgba(74, 44, 42, 0.22);
         }
 
-        /* 3. Zola Light (Merah Burgundy) */
         body.theme-zola-light {
             --bg-page: #FDF5F6;
             --bg-surface: #FFFFFF;
@@ -60,7 +57,6 @@
         }
 
         /* ==================== DARK MODE PALETTES ==================== */
-        /* 4. Chatting Dark (Oranye Koral Claude Gelap) */
         body.theme-chatting-dark {
             --bg-page: #191311;
             --bg-surface: #241B18;
@@ -75,7 +71,6 @@
             --ring-color: rgba(224, 122, 95, 0.3);
         }
 
-        /* 5. Jolie Dark (Coklat Gelap & Karamel/Krim) */
         body.theme-jolie-dark {
             --bg-page: #160E0A;
             --bg-surface: #231711;
@@ -90,7 +85,6 @@
             --ring-color: rgba(198, 156, 114, 0.3);
         }
 
-        /* 6. Zola Dark (Merah Burgundy Gelap) */
         body.theme-zola-dark {
             --bg-page: #170A0D;
             --bg-surface: #251116;
@@ -171,7 +165,6 @@
             box-shadow: 0 0 0 3px var(--ring-color);
         }
 
-        /* Perbaiki ikon kalender pada input date saat dark mode */
         body.is-dark input[type="date"] {
             color-scheme: dark;
         }
@@ -190,7 +183,6 @@
 
     <!-- ==================== HALAMAN LOGIN / DAFTAR ==================== -->
     <section id="auth-screen" class="min-h-screen flex flex-col items-center justify-center px-4 py-8 font-rounded-geo relative">
-        <!-- Toggle Dark/Light Mode di Pojok Kanan Atas Login -->
         <button type="button" id="btn-auth-toggle-dark" aria-label="Ganti Mode Terang atau Gelap" title="Ganti Mode Terang / Gelap" class="fixed top-4 right-4 w-10 h-10 rounded-2xl border theme-border theme-surface shadow-xs flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
             <svg id="auth-icon-sun" class="w-4 h-4 hidden text-amber-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -201,7 +193,6 @@
         </button>
 
         <div class="w-full max-w-sm space-y-6">
-            <!-- Logo & Judul di Tengah Halaman -->
             <div class="flex flex-col items-center text-center space-y-3">
                 <div class="w-20 h-20 rounded-3xl theme-primary-bg flex items-center justify-center shadow-lg">
                     <svg class="w-11 h-11" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
@@ -214,9 +205,7 @@
                 </div>
             </div>
 
-            <!-- Kartu Form Login / Daftar -->
             <div class="theme-surface border rounded-3xl p-6 shadow-md space-y-4">
-                <!-- Switcher Masuk / Daftar -->
                 <div class="grid grid-cols-2 gap-1.5 p-1 rounded-2xl theme-soft border theme-border">
                     <button type="button" id="btn-auth-mode-login" class="py-2 rounded-xl text-sm font-extrabold theme-primary-bg transition-all cursor-pointer">
                         Masuk
@@ -250,7 +239,7 @@
                     </button>
                 </form>
 
-                <!-- Tombol Cepat Salin / Tempel Kode Data di Layar Login -->
+                <!-- Salin & Tempel Kode Data Pendek -->
                 <div class="pt-2 border-t theme-border space-y-2">
                     <span class="block text-[11px] font-bold theme-muted-text text-center">Sinkronisasi Antar Perangkat (HP / Tablet / PC)</span>
                     <div class="grid grid-cols-2 gap-2">
@@ -274,7 +263,6 @@
 
     <!-- ==================== APLIKASI UTAMA (SETELAH LOGIN) ==================== -->
     <div id="app-wrapper" class="hidden pb-24">
-        <!-- Header Aplikasi -->
         <header class="sticky top-0 z-30 theme-surface border-b px-4 py-3 shadow-xs">
             <div class="max-w-md md:max-w-2xl mx-auto flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2.5 min-w-0">
@@ -292,15 +280,17 @@
                                 Chatting
                             </span>
                             <span class="text-[10px] theme-muted-text">•</span>
-                            <span id="header-user-badge" class="text-[10px] font-bold theme-primary-text truncate max-w-[90px]">
+                            <span id="header-user-badge" class="text-[10px] font-bold theme-primary-text truncate max-w-[110px]">
                                 @user
+                            </span>
+                            <span id="header-dev-pill" class="hidden text-[9px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-500 border border-violet-500/35">
+                                DEV
                             </span>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-1.5 shrink-0">
-                    <!-- Tombol Toggle Mode Terang / Gelap (Icon-Only) -->
                     <button type="button" id="btn-toggle-dark" aria-label="Ganti Mode Terang atau Gelap" title="Ganti Mode Terang / Gelap" class="w-9 h-9 rounded-xl border theme-border theme-soft flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
                         <svg id="icon-sun" class="w-4 h-4 hidden text-amber-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -310,7 +300,6 @@
                         </svg>
                     </button>
 
-                    <!-- Tombol Keluar / Ganti Akun -->
                     <button type="button" id="btn-header-logout" aria-label="Keluar Akun" title="Keluar Akun" class="w-9 h-9 rounded-xl border theme-border theme-soft flex items-center justify-center text-red-500 cursor-pointer active:scale-95 transition-transform">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -320,13 +309,10 @@
             </div>
         </header>
 
-        <!-- Kontainer Utama (Responsif HP, Tablet, & PC) -->
         <main class="max-w-md md:max-w-2xl mx-auto px-4 pt-4">
 
             <!-- ==================== TAB 1: PENILAIAN ==================== -->
             <section id="tab-penilaian" class="space-y-4">
-                
-                <!-- Kartu Pemilihan Outlet, Tanggal & Karyawan -->
                 <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3.5">
                     <div>
                         <label for="select-outlet" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text mb-1.5">
@@ -369,11 +355,10 @@
                                 </button>
                             </div>
                             <div id="wrapper-select-emp" class="relative">
-                                <select id="select-karyawan" class="theme-input w-full rounded-xl pl-3.5 pr-24 py-2.5 text-sm font-semibold appearance-none cursor-pointer">
-                                    <!-- Diisi via JS -->
+                                <select id="select-karyawan" class="theme-input w-full rounded-xl pl-3.5 pr-28 py-2.5 text-sm font-semibold appearance-none cursor-pointer">
                                 </select>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center gap-1.5 pr-3">
-                                    <span id="dropdown-leader-badge" class="hidden text-[9px] font-extrabold uppercase tracking-tight px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 border border-amber-500/35 leading-none">
+                                    <span id="dropdown-emp-badge" class="hidden text-[9px] font-extrabold uppercase tracking-tight px-1.5 py-0.5 rounded leading-none">
                                         ★ Leader
                                     </span>
                                     <svg class="w-4 h-4 theme-primary-text shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -382,18 +367,18 @@
                                 </div>
                             </div>
                             <div id="wrapper-manual-emp" class="hidden relative">
-                                <input type="text" id="input-manual-karyawan" placeholder="Ketik nama karyawan..." class="theme-input w-full rounded-xl pl-3.5 pr-20 py-2.5 text-sm font-medium">
-                                <span id="manual-leader-badge" class="pointer-events-none hidden absolute right-3 top-1/2 -translate-y-1/2 text-[9px] font-extrabold uppercase tracking-tight px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 border border-amber-500/35 leading-none">
+                                <input type="text" id="input-manual-karyawan" placeholder="Ketik nama karyawan..." class="theme-input w-full rounded-xl pl-3.5 pr-24 py-2.5 text-sm font-medium">
+                                <span id="manual-emp-badge" class="pointer-events-none hidden absolute right-3 top-1/2 -translate-y-1/2 text-[9px] font-extrabold uppercase tracking-tight px-1.5 py-0.5 rounded leading-none">
                                     ★ Leader
                                 </span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Indikator Role Karyawan Aktif (Reguler vs Leader Bar) -->
                     <div id="active-employee-role-bar" class="pt-2.5 border-t theme-border flex items-center justify-between gap-2">
                         <div class="flex items-center gap-2 min-w-0">
                             <span id="active-emp-name-display" class="text-xs font-bold truncate">-</span>
+                            <span id="active-emp-inline-badge" class="hidden text-[10px] font-extrabold px-2 py-0.5 rounded-full shrink-0"></span>
                         </div>
                         <span id="active-criteria-mode-label" class="text-[11px] font-semibold theme-muted-text shrink-0">
                             Kriteria Reguler
@@ -418,12 +403,8 @@
                         </button>
                     </div>
 
-                    <!-- List Checklist Poin -->
-                    <div id="checklist-container" class="space-y-2.5">
-                        <!-- Diisi via JS -->
-                    </div>
+                    <div id="checklist-container" class="space-y-2.5"></div>
 
-                    <!-- Catatan Opsional -->
                     <div class="mt-4 pt-3 border-t theme-border">
                         <label for="input-catatan" class="block text-xs font-semibold theme-muted-text mb-1">
                             Catatan Penguji (Opsional)
@@ -454,8 +435,6 @@
 
             <!-- ==================== TAB 2: REKAP & UNDUH ==================== -->
             <section id="tab-rekap" class="hidden space-y-4">
-                
-                <!-- Filter Tanggal Rekap & Tombol Aksi -->
                 <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3.5">
                     <div class="flex items-center justify-between gap-3">
                         <div class="flex-1">
@@ -471,7 +450,6 @@
                         </div>
                     </div>
 
-                    <!-- Tombol Generate & Download Gambar -->
                     <button type="button" id="btn-generate-image" class="w-full theme-primary-bg py-3.5 px-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -479,7 +457,6 @@
                         Buat & Download Gambar (1 Hari)
                     </button>
 
-                    <!-- Tombol Bersihkan Log Hari Ini -->
                     <div id="wrapper-clear-day" class="hidden pt-1 border-t theme-border flex justify-end">
                         <button type="button" id="btn-clear-day" class="text-xs font-semibold text-red-500 hover:underline py-1 cursor-pointer">
                             Hapus Semua Data Tanggal Ini
@@ -487,16 +464,13 @@
                     </div>
                 </div>
 
-                <!-- Daftar Hasil Per Outlet pada Tanggal Terpilih -->
-                <div id="rekap-list-container" class="space-y-3">
-                    <!-- Diisi via JS -->
-                </div>
+                <div id="rekap-list-container" class="space-y-3"></div>
             </section>
 
-            <!-- ==================== TAB 3: SETTING (PENGATURAN) ==================== -->
+            <!-- ==================== TAB 3: SETTING / PANEL DEVELOPER ==================== -->
             <section id="tab-setting" class="hidden space-y-4">
 
-                <!-- Info Akun Penguji Aktif -->
+                <!-- Info Akun Aktif -->
                 <div class="theme-surface border rounded-2xl p-4 shadow-xs flex items-center justify-between gap-3">
                     <div class="flex items-center gap-3 min-w-0">
                         <div class="w-10 h-10 rounded-xl theme-primary-light flex items-center justify-center font-extrabold text-sm shrink-0">
@@ -505,13 +479,51 @@
                             </svg>
                         </div>
                         <div class="min-w-0">
-                            <span class="text-[11px] font-semibold theme-muted-text block">Akun Penguji Aktif</span>
+                            <span id="setting-role-label" class="text-[11px] font-semibold theme-muted-text block">Akun Penguji Aktif</span>
                             <span id="setting-username-display" class="text-sm font-bold truncate block">-</span>
                         </div>
                     </div>
                     <button type="button" id="btn-setting-logout" class="text-xs font-bold px-3.5 py-2 rounded-xl border border-red-500/30 text-red-500 bg-red-500/10 active:scale-95 cursor-pointer shrink-0">
                         Keluar Akun
                     </button>
+                </div>
+
+                <!-- ==================== KHUSUS DEVELOPER: KELOLA SEMUA AKUN PENGUJI ==================== -->
+                <div id="dev-accounts-panel" class="hidden theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
+                    <div class="flex items-center justify-between gap-2">
+                        <div>
+                            <div class="flex items-center gap-1.5">
+                                <h2 class="text-sm font-bold">Panel Developer: Kelola Akun Penguji</h2>
+                                <span class="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-violet-500/15 text-violet-500 border border-violet-500/30">Master</span>
+                            </div>
+                            <p class="text-xs theme-muted-text">Ubah nama penguji (username), ubah password, atau tambah/hapus akun terdaftar</p>
+                        </div>
+                    </div>
+
+                    <!-- Form Tambah Akun Baru oleh Developer -->
+                    <form id="form-dev-add-account" class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <input type="text" id="dev-new-acc-username" placeholder="Username baru..." class="theme-input rounded-xl px-3 py-2 text-xs font-semibold" required>
+                        <input type="text" id="dev-new-acc-password" placeholder="Password..." class="theme-input rounded-xl px-3 py-2 text-xs font-semibold" required>
+                        <button type="submit" class="theme-primary-bg py-2 px-3 rounded-xl font-bold text-xs cursor-pointer">
+                            + Buat Akun
+                        </button>
+                    </form>
+
+                    <!-- Daftar Semua Akun Terdaftar -->
+                    <div id="dev-accounts-list" class="space-y-2 pt-1"></div>
+                </div>
+
+                <!-- ==================== KHUSUS DEVELOPER: PILIH AKUN TARGET YANG DIEDIT ==================== -->
+                <div id="dev-target-account-bar" class="hidden theme-surface border rounded-2xl p-4 shadow-xs space-y-2">
+                    <div class="flex items-center justify-between gap-2">
+                        <label for="dev-select-target-account" class="text-xs font-extrabold uppercase tracking-wider theme-primary-text">
+                            Edit Poin, Karyawan & Badge Milik Akun:
+                        </label>
+                    </div>
+                    <select id="dev-select-target-account" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-bold cursor-pointer"></select>
+                    <p class="text-[11px] theme-muted-text">
+                        Semua perubahan poin penilaian, daftar karyawan, dan badge di bawah ini akan langsung diterapkan ke akun penguji yang dipilih di atas.
+                    </p>
                 </div>
 
                 <!-- Card Khusus Akun Okta: Sinkron Template dari Akun Abrar -->
@@ -527,14 +539,13 @@
                     </button>
                 </div>
                 
-                <!-- Kelola Poin Penilaian (Reguler & Leader Bar) -->
+                <!-- 1. Kelola Poin Penilaian (Reguler & Leader Bar) -->
                 <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
                     <div>
                         <h2 class="text-sm font-bold">1. Kelola Poin Penilaian</h2>
-                        <p class="text-xs theme-muted-text">Atur kriteria terpisah untuk Karyawan Reguler dan Leader Bar</p>
+                        <p class="text-xs theme-muted-text">Tambah, edit, urutkan, atau hapus kriteria Reguler dan Leader Bar</p>
                     </div>
 
-                    <!-- Sub-Tab Tipe Kriteria -->
                     <div class="grid grid-cols-2 gap-1.5 p-1 rounded-xl theme-soft border theme-border">
                         <button type="button" id="btn-crit-tab-regular" class="py-2 px-3 rounded-lg text-xs font-bold theme-primary-bg transition-all cursor-pointer">
                             Karyawan Reguler
@@ -551,16 +562,14 @@
                         </button>
                     </form>
 
-                    <div id="setting-criteria-list" class="space-y-2 pt-1">
-                        <!-- Diisi via JS -->
-                    </div>
+                    <div id="setting-criteria-list" class="space-y-2 pt-1"></div>
                 </div>
 
-                <!-- Kelola Daftar Karyawan per Outlet -->
+                <!-- 2. Kelola Daftar Karyawan & Custom Badge per Outlet -->
                 <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
                     <div>
-                        <h2 class="text-sm font-bold">2. Kelola Daftar Karyawan</h2>
-                        <p class="text-xs theme-muted-text">Atur daftar nama karyawan & status Leader Bar tiap outlet</p>
+                        <h2 class="text-sm font-bold">2. Kelola Daftar Karyawan & Badge</h2>
+                        <p class="text-xs theme-muted-text">Atur daftar nama karyawan, status Leader Bar, serta custom badge</p>
                     </div>
 
                     <div>
@@ -587,22 +596,30 @@
                                 + Tambah
                             </button>
                         </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="text" id="input-new-emp-badge" placeholder="Label badge (opsional, misal: Senior)" class="theme-input rounded-xl px-3 py-2 text-xs font-medium">
+                            <select id="select-new-emp-badge-color" class="theme-input rounded-xl px-3 py-2 text-xs font-semibold">
+                                <option value="amber">Warna Badge: Amber / Emas</option>
+                                <option value="emerald">Warna Badge: Hijau / Emerald</option>
+                                <option value="sky">Warna Badge: Biru / Sky</option>
+                                <option value="rose">Warna Badge: Merah / Rose</option>
+                                <option value="violet">Warna Badge: Ungu / Violet</option>
+                            </select>
+                        </div>
                         <label class="flex items-center gap-2 text-xs font-semibold cursor-pointer select-none px-1">
                             <input type="checkbox" id="checkbox-new-emp-leader" class="w-4 h-4 rounded accent-amber-500 cursor-pointer">
-                            <span>Tandai sebagai <span class="text-amber-600 font-bold">★ Leader Bar</span> (Penilaian khusus Leader Bar)</span>
+                            <span>Gunakan kriteria <span class="text-amber-600 font-bold">★ Leader Bar</span> (Otomatis beri badge Leader jika label kosong)</span>
                         </label>
                     </form>
 
-                    <div id="setting-employee-list" class="space-y-2 pt-1">
-                        <!-- Diisi via JS -->
-                    </div>
+                    <div id="setting-employee-list" class="space-y-2 pt-1"></div>
                 </div>
 
-                <!-- 3. Salin & Tempel Kode Data Antar Perangkat -->
+                <!-- 3. Salin & Tempel Kode Data Pendek Antar Perangkat -->
                 <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
                     <div>
-                        <h2 class="text-sm font-bold">3. Salin & Tempel Kode Data</h2>
-                        <p class="text-xs theme-muted-text">Salin kode data di perangkat ini lalu tempel di HP, Tablet, atau PC lain agar isinya sama</p>
+                        <h2 class="text-sm font-bold">3. Salin & Tempel Kode Data (Terkompresi)</h2>
+                        <p class="text-xs theme-muted-text">Salin kode data ringkas lalu tempel di HP, Tablet, atau PC lain agar seluruh akun & data sama</p>
                     </div>
                     <div class="grid grid-cols-2 gap-2.5">
                         <button type="button" id="btn-export-sync-code" class="theme-primary-bg py-3 px-4 rounded-xl font-bold text-xs shadow-xs cursor-pointer">
@@ -618,7 +635,7 @@
                 <div class="theme-surface border rounded-2xl p-4 shadow-xs flex items-center justify-between gap-3">
                     <div>
                         <h3 class="text-xs font-bold">Reset Pengaturan Awal</h3>
-                        <p class="text-[11px] theme-muted-text">Kembalikan poin & contoh karyawan default</p>
+                        <p class="text-[11px] theme-muted-text">Kembalikan poin & daftar karyawan akun target ke bawaan awal</p>
                     </div>
                     <button type="button" id="btn-reset-default" class="text-xs font-semibold px-3 py-2 rounded-xl border border-red-500/30 text-red-500 bg-red-500/10 active:scale-95 cursor-pointer shrink-0">
                         Reset Default
@@ -648,7 +665,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    <span>Setting</span>
+                    <span id="nav-setting-label">Setting</span>
                 </button>
             </div>
         </nav>
@@ -659,13 +676,70 @@
         <div class="theme-surface border rounded-2xl max-w-sm w-full p-5 shadow-xl space-y-3.5">
             <h3 class="font-bold text-base">Tempel Kode Data</h3>
             <p class="text-xs theme-muted-text">Tempel kode data yang sudah disalin dari HP, Tablet, atau PC lain lalu klik Terapkan Data.</p>
-            <textarea id="textarea-import-sync" rows="4" class="theme-input w-full rounded-xl p-3 text-xs font-mono" placeholder="Tempel kode data di sini..."></textarea>
+            <textarea id="textarea-import-sync" rows="4" class="theme-input w-full rounded-xl p-3 text-xs font-mono" placeholder="Tempel kode data (GZ:...) di sini..."></textarea>
             <div class="flex gap-2.5 pt-1">
                 <button type="button" id="btn-import-sync-cancel" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-soft border theme-border cursor-pointer">
                     Batal
                 </button>
                 <button type="button" id="btn-import-sync-apply" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-primary-bg cursor-pointer">
                     Terapkan Data
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Akun Penguji (Khusus Developer) -->
+    <div id="modal-dev-edit-account" class="fixed inset-0 z-50 hidden bg-black/65 flex items-center justify-center p-4">
+        <div class="theme-surface border rounded-2xl max-w-xs w-full p-5 shadow-xl space-y-3.5">
+            <h3 class="font-bold text-base">Edit Akun Penguji</h3>
+            <div>
+                <label class="block text-xs font-bold theme-muted-text mb-1">Nama Penguji / Username</label>
+                <input type="text" id="input-dev-edit-username" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-bold" placeholder="Username...">
+            </div>
+            <div>
+                <label class="block text-xs font-bold theme-muted-text mb-1">Password Baru</label>
+                <input type="text" id="input-dev-edit-password" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-bold" placeholder="Password...">
+            </div>
+            <div class="flex gap-2.5 pt-1">
+                <button type="button" id="btn-dev-edit-acc-cancel" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-soft border theme-border cursor-pointer">
+                    Batal
+                </button>
+                <button type="button" id="btn-dev-edit-acc-save" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-primary-bg cursor-pointer">
+                    Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Badge Karyawan -->
+    <div id="modal-edit-emp-badge" class="fixed inset-0 z-50 hidden bg-black/65 flex items-center justify-center p-4">
+        <div class="theme-surface border rounded-2xl max-w-xs w-full p-5 shadow-xl space-y-3.5">
+            <h3 class="font-bold text-base">Atur Badge Karyawan</h3>
+            <p id="edit-badge-emp-name" class="text-xs font-bold theme-primary-text">-</p>
+            <div>
+                <label class="block text-xs font-bold theme-muted-text mb-1">Teks Badge (Kosongkan untuk hapus badge)</label>
+                <input type="text" id="input-edit-emp-badge" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold" placeholder="Misal: ★ Leader Bar, Senior, Trainer...">
+            </div>
+            <div>
+                <label class="block text-xs font-bold theme-muted-text mb-1">Warna Badge</label>
+                <select id="select-edit-emp-badge-color" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold">
+                    <option value="amber">Amber / Emas</option>
+                    <option value="emerald">Hijau / Emerald</option>
+                    <option value="sky">Biru / Sky</option>
+                    <option value="rose">Merah / Rose</option>
+                    <option value="violet">Ungu / Violet</option>
+                </select>
+            </div>
+            <label class="flex items-center gap-2 text-xs font-semibold cursor-pointer select-none">
+                <input type="checkbox" id="checkbox-edit-emp-leader" class="w-4 h-4 rounded accent-amber-500 cursor-pointer">
+                <span>Gunakan Poin Penilaian Leader Bar</span>
+            </label>
+            <div class="flex gap-2.5 pt-1">
+                <button type="button" id="btn-edit-badge-cancel" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-soft border theme-border cursor-pointer">
+                    Batal
+                </button>
+                <button type="button" id="btn-edit-badge-save" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-primary-bg cursor-pointer">
+                    Simpan
                 </button>
             </div>
         </div>
@@ -740,8 +814,13 @@
 
     <script>
         /**
-         * KONFIGURASI OUTLET, LEADER BAR & TEMA WARNA (LIGHT & DARK MODE)
+         * KONFIGURASI OUTLET, AKUN DEVELOPER, BADGE & TEMA WARNA
          */
+        const DEVELOPER_ACCOUNT = {
+            username: 'developer',
+            defaultPassword: 'dev123'
+        };
+
         const OUTLETS = [
             "Chatting 2 S.Parman",
             "Chatting 3 Ampera",
@@ -762,101 +841,77 @@
 
         const DEFAULT_LEADER_SET = new Set(DEFAULT_LEADER_BAR_NAMES.map(n => n.toLowerCase()));
 
+        const BADGE_PALETTES = {
+            amber: {
+                lightBg: '#FEF3C7', lightText: '#B45309', lightBorder: '#FDE68A',
+                darkBg: 'rgba(245, 158, 11, 0.22)', darkText: '#FBBF24', darkBorder: 'rgba(251, 191, 36, 0.35)'
+            },
+            emerald: {
+                lightBg: '#DCFCE7', lightText: '#166534', lightBorder: '#BBF7D0',
+                darkBg: 'rgba(16, 185, 129, 0.22)', darkText: '#6EE7B7', darkBorder: 'rgba(52, 211, 153, 0.35)'
+            },
+            sky: {
+                lightBg: '#E0F2FE', lightText: '#0369A1', lightBorder: '#BAE6FD',
+                darkBg: 'rgba(14, 165, 233, 0.22)', darkText: '#7DD3FC', darkBorder: 'rgba(56, 189, 248, 0.35)'
+            },
+            rose: {
+                lightBg: '#FFE4E6', lightText: '#BE123C', lightBorder: '#FECDD3',
+                darkBg: 'rgba(244, 63, 94, 0.22)', darkText: '#FDA4AF', darkBorder: 'rgba(251, 113, 133, 0.35)'
+            },
+            violet: {
+                lightBg: '#EDE9FE', lightText: '#6D28D9', lightBorder: '#DDD6FE',
+                darkBg: 'rgba(139, 92, 246, 0.22)', darkText: '#C4B5FD', darkBorder: 'rgba(167, 139, 250, 0.35)'
+            }
+        };
+
+        function getBadgeInlineStyle(colorKey = 'amber', isDark = state.isDarkMode) {
+            const p = BADGE_PALETTES[colorKey] || BADGE_PALETTES.amber;
+            return isDark
+                ? `background-color: ${p.darkBg}; color: ${p.darkText}; border: 1px solid ${p.darkBorder};`
+                : `background-color: ${p.lightBg}; color: ${p.lightText}; border: 1px solid ${p.lightBorder};`;
+        }
+
         const BRAND_THEMES = {
             chatting: {
                 light: {
-                    key: 'chatting',
-                    label: 'Chatting',
-                    bodyClass: 'theme-chatting-light',
-                    primary: '#D97757',
-                    headerText: '#FFFFFF',
-                    bgSoft: '#FBF6F3',
-                    bgCard: '#FFFFFF',
-                    rowBg: '#FFFFFF',
-                    border: '#EFD7CB',
-                    pillBg: '#FCE8DF',
-                    pillText: '#C6613F',
-                    textMain: '#1F1A17',
-                    textMuted: '#75635A'
+                    key: 'chatting', label: 'Chatting', bodyClass: 'theme-chatting-light',
+                    primary: '#D97757', headerText: '#FFFFFF', bgSoft: '#FBF6F3',
+                    bgCard: '#FFFFFF', rowBg: '#FFFFFF', border: '#EFD7CB',
+                    pillBg: '#FCE8DF', pillText: '#C6613F', textMain: '#1F1A17', textMuted: '#75635A'
                 },
                 dark: {
-                    key: 'chatting',
-                    label: 'Chatting',
-                    bodyClass: 'theme-chatting-dark is-dark',
-                    primary: '#E07A5F',
-                    headerText: '#FFFFFF',
-                    bgSoft: '#191311',
-                    bgCard: '#241B18',
-                    rowBg: '#302420',
-                    border: '#3D2E29',
-                    pillBg: '#3D2821',
-                    pillText: '#F4A28C',
-                    textMain: '#F6EFEA',
-                    textMuted: '#B8A59C'
+                    key: 'chatting', label: 'Chatting', bodyClass: 'theme-chatting-dark is-dark',
+                    primary: '#E07A5F', headerText: '#FFFFFF', bgSoft: '#191311',
+                    bgCard: '#241B18', rowBg: '#302420', border: '#3D2E29',
+                    pillBg: '#3D2821', pillText: '#F4A28C', textMain: '#F6EFEA', textMuted: '#B8A59C'
                 }
             },
             jolie: {
                 light: {
-                    key: 'jolie',
-                    label: 'Jolie',
-                    bodyClass: 'theme-jolie-light',
-                    primary: '#4A2C2A',
-                    headerText: '#FFFFFF',
-                    bgSoft: '#FAF6F3',
-                    bgCard: '#FFFFFF',
-                    rowBg: '#FFFFFF',
-                    border: '#DFD2C8',
-                    pillBg: '#EBE0D8',
-                    pillText: '#3B2314',
-                    textMain: '#2A1810',
-                    textMuted: '#6E584F'
+                    key: 'jolie', label: 'Jolie', bodyClass: 'theme-jolie-light',
+                    primary: '#4A2C2A', headerText: '#FFFFFF', bgSoft: '#FAF6F3',
+                    bgCard: '#FFFFFF', rowBg: '#FFFFFF', border: '#DFD2C8',
+                    pillBg: '#EBE0D8', pillText: '#3B2314', textMain: '#2A1810', textMuted: '#6E584F'
                 },
                 dark: {
-                    key: 'jolie',
-                    label: 'Jolie',
-                    bodyClass: 'theme-jolie-dark is-dark',
-                    primary: '#C69C72',
-                    headerText: '#1B100A',
-                    bgSoft: '#160E0A',
-                    bgCard: '#231711',
-                    rowBg: '#2F1F17',
-                    border: '#3D291F',
-                    pillBg: '#38251B',
-                    pillText: '#EAD7C3',
-                    textMain: '#F5EDE6',
-                    textMuted: '#B8A394'
+                    key: 'jolie', label: 'Jolie', bodyClass: 'theme-jolie-dark is-dark',
+                    primary: '#C69C72', headerText: '#1B100A', bgSoft: '#160E0A',
+                    bgCard: '#231711', rowBg: '#2F1F17', border: '#3D291F',
+                    pillBg: '#38251B', pillText: '#EAD7C3', textMain: '#F5EDE6', textMuted: '#B8A394'
                 }
             },
             zola: {
                 light: {
-                    key: 'zola',
-                    label: 'Zola',
-                    bodyClass: 'theme-zola-light',
-                    primary: '#721C24',
-                    headerText: '#FFFFFF',
-                    bgSoft: '#FDF5F6',
-                    bgCard: '#FFFFFF',
-                    rowBg: '#FFFFFF',
-                    border: '#E8C9CE',
-                    pillBg: '#F6DCE0',
-                    pillText: '#800020',
-                    textMain: '#2B0B10',
-                    textMuted: '#785258'
+                    key: 'zola', label: 'Zola', bodyClass: 'theme-zola-light',
+                    primary: '#721C24', headerText: '#FFFFFF', bgSoft: '#FDF5F6',
+                    bgCard: '#FFFFFF', rowBg: '#FFFFFF', border: '#E8C9CE',
+                    pillBg: '#F6DCE0', pillText: '#800020', textMain: '#2B0B10', textMuted: '#785258'
                 },
                 dark: {
-                    key: 'zola',
-                    label: 'Zola',
-                    bodyClass: 'theme-zola-dark is-dark',
-                    primary: '#B83246',
-                    headerText: '#FFFFFF',
-                    bgSoft: '#170A0D',
-                    bgCard: '#251116',
-                    rowBg: '#33171E',
-                    border: '#452029',
-                    pillBg: '#421822',
-                    pillText: '#F59AA8',
-                    textMain: '#F7ECEE',
-                    textMuted: '#C29FA6'
+                    key: 'zola', label: 'Zola', bodyClass: 'theme-zola-dark is-dark',
+                    primary: '#B83246', headerText: '#FFFFFF', bgSoft: '#170A0D',
+                    bgCard: '#251116', rowBg: '#33171E', border: '#452029',
+                    pillBg: '#421822', pillText: '#F59AA8', textMain: '#F7ECEE', textMuted: '#C29FA6'
                 }
             }
         };
@@ -892,7 +947,6 @@
             };
         }
 
-        // 5 Poin Penilaian Karyawan Reguler Default
         const DEFAULT_CRITERIA_REGULAR = [
             "Grooming & Kerapian Seragam",
             "Salam, Senyum & SOP Pelayanan",
@@ -901,7 +955,6 @@
             "Kebersihan Area Kerja (Clean as You Go)"
         ];
 
-        // 10 Poin Penilaian Leader Bar Default
         const DEFAULT_CRITERIA_LEADER = [
             "Briefing",
             "Bebas K.O.M.I.B.A",
@@ -917,54 +970,55 @@
 
         const DEFAULT_EMPLOYEES = {
             "Chatting 2 S.Parman": [
-                { name: "Fajar", isLeader: true },
-                { name: "Alip", isLeader: true },
-                { name: "Dina", isLeader: false }
+                { name: "Fajar", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Alip", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Dina", isLeader: false, badge: "", badgeColor: "amber" }
             ],
             "Chatting 3 Ampera": [
-                { name: "Kamira", isLeader: true },
-                { name: "Mayang", isLeader: true },
-                { name: "Agus", isLeader: false }
+                { name: "Kamira", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Mayang", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Agus", isLeader: false, badge: "", badgeColor: "amber" }
             ],
             "Chatting 4 Paris II": [
-                { name: "Farhan", isLeader: true },
-                { name: "Fatur", isLeader: true },
-                { name: "Bella", isLeader: false }
+                { name: "Farhan", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Fatur", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Bella", isLeader: false, badge: "", badgeColor: "amber" }
             ],
             "Chatting 5 Untan": [
-                { name: "Hesti", isLeader: true },
-                { name: "Rafli", isLeader: true },
-                { name: "Putri", isLeader: false }
+                { name: "Hesti", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Rafli", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Putri", isLeader: false, badge: "", badgeColor: "amber" }
             ],
             "Chatting 6 Tanray II": [
-                { name: "Zeka", isLeader: true },
-                { name: "Subhan", isLeader: true },
-                { name: "Nadia", isLeader: false }
+                { name: "Zeka", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Subhan", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Nadia", isLeader: false, badge: "", badgeColor: "amber" }
             ],
             "Chatting 7 Sumatra": [
-                { name: "Lan", isLeader: true },
-                { name: "Lisa", isLeader: true },
-                { name: "Tia", isLeader: false }
+                { name: "Lan", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Lisa", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Tia", isLeader: false, badge: "", badgeColor: "amber" }
             ],
             "Chatting 8 Karet": [
-                { name: "Irham", isLeader: true },
-                { name: "Selvira", isLeader: true },
-                { name: "Umi", isLeader: true }
+                { name: "Irham", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Selvira", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Umi", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" }
             ],
             "Jolie Sumatra": [
-                { name: "Haru", isLeader: true },
-                { name: "Vivi", isLeader: true },
-                { name: "Clara", isLeader: false }
+                { name: "Haru", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Vivi", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Clara", isLeader: false, badge: "", badgeColor: "amber" }
             ],
             "Zola Sulawesi": [
-                { name: "Rito", isLeader: true },
-                { name: "Maya", isLeader: false }
+                { name: "Rito", isLeader: true, badge: "★ Leader Bar", badgeColor: "amber" },
+                { name: "Maya", isLeader: false, badge: "", badgeColor: "amber" }
             ]
         };
 
         let state = {
-            currentUser: null, // { username: string }
-            authMode: 'login', // 'login' | 'register'
+            currentUser: null, // { username: string, isDeveloper: boolean }
+            targetUsername: '', // Akun yang sedang diedit (untuk developer bisa pilih akun lain)
+            authMode: 'login',
             criteriaRegular: [],
             criteriaLeader: [],
             employees: {},
@@ -975,8 +1029,28 @@
             activeTab: 'penilaian',
             settingCriteriaType: 'regular',
             generatedDataUrl: '',
-            editingCriteriaIndex: null
+            editingCriteriaIndex: null,
+            editingAccountUsername: null,
+            editingBadgeEmpIndex: null
         };
+
+        function isDeveloperUser(username) {
+            return String(username || '').trim().toLowerCase() === DEVELOPER_ACCOUNT.username;
+        }
+
+        function ensureDeveloperAccountExists() {
+            const accounts = getAccounts();
+            const hasDev = accounts.some(a => a.username.toLowerCase() === DEVELOPER_ACCOUNT.username);
+            if (!hasDev) {
+                accounts.unshift({
+                    username: DEVELOPER_ACCOUNT.username,
+                    password: DEVELOPER_ACCOUNT.defaultPassword,
+                    isDeveloper: true,
+                    createdAt: Date.now()
+                });
+                saveAccounts(accounts);
+            }
+        }
 
         function getAccounts() {
             try {
@@ -998,17 +1072,43 @@
 
         function normalizeEmployeeEntry(entry) {
             if (typeof entry === 'string') {
-                return { name: entry, isLeader: isDefaultLeaderName(entry) };
+                const isLdr = isDefaultLeaderName(entry);
+                return {
+                    name: entry,
+                    isLeader: isLdr,
+                    badge: isLdr ? '★ Leader Bar' : '',
+                    badgeColor: 'amber'
+                };
             }
+            const isLdr = typeof entry.isLeader === 'boolean' ? entry.isLeader : isDefaultLeaderName(entry.name);
+            let badgeText = typeof entry.badge === 'string' ? entry.badge : (isLdr ? '★ Leader Bar' : '');
             return {
                 name: entry.name,
-                isLeader: typeof entry.isLeader === 'boolean' ? entry.isLeader : isDefaultLeaderName(entry.name)
+                isLeader: isLdr,
+                badge: badgeText,
+                badgeColor: entry.badgeColor || 'amber'
             };
+        }
+
+        function getEmployeeRecord(outletName, empName) {
+            if (!empName) return null;
+            const cleanName = empName.trim().toLowerCase();
+            const outletList = state.employees[outletName] || [];
+            const found = outletList.find(e => e.name.trim().toLowerCase() === cleanName);
+            if (found) return normalizeEmployeeEntry(found);
+            if (isDefaultLeaderName(empName)) {
+                return { name: empName.trim(), isLeader: true, badge: '★ Leader Bar', badgeColor: 'amber' };
+            }
+            return { name: empName.trim(), isLeader: false, badge: '', badgeColor: 'amber' };
+        }
+
+        function isEmployeeLeader(outletName, empName) {
+            const rec = getEmployeeRecord(outletName, empName);
+            return rec ? Boolean(rec.isLeader) : false;
         }
 
         /**
          * SALIN DATA KARYAWAN & POIN DARI AKUN 'abrar' KE AKUN 'okta'
-         * (Seluruh nama karyawan tiap outlet + 10 poin leader + 5 poin reguler, TANPA hasil penilaian)
          */
         function copyMasterDataFromAbrarToOkta(force = false) {
             const abrarKeys = getUserStorageKeys('abrar');
@@ -1024,23 +1124,17 @@
             try {
                 const rawEmp = localStorage.getItem(abrarKeys.EMPLOYEES);
                 if (rawEmp) sourceEmployees = JSON.parse(rawEmp);
-            } catch (e) {
-                sourceEmployees = null;
-            }
+            } catch (e) { sourceEmployees = null; }
 
             try {
                 const rawLdr = localStorage.getItem(abrarKeys.CRITERIA_LEADER);
                 if (rawLdr) sourceCriteriaLeader = JSON.parse(rawLdr);
-            } catch (e) {
-                sourceCriteriaLeader = null;
-            }
+            } catch (e) { sourceCriteriaLeader = null; }
 
             try {
                 const rawReg = localStorage.getItem(abrarKeys.CRITERIA_REGULAR);
                 if (rawReg) sourceCriteriaRegular = JSON.parse(rawReg);
-            } catch (e) {
-                sourceCriteriaRegular = null;
-            }
+            } catch (e) { sourceCriteriaRegular = null; }
 
             const finalEmployees = {};
             OUTLETS.forEach(outlet => {
@@ -1062,14 +1156,13 @@
             localStorage.setItem(oktaKeys.CRITERIA_LEADER, JSON.stringify(finalCriteriaLeader));
             localStorage.setItem(oktaKeys.CRITERIA_REGULAR, JSON.stringify(finalCriteriaRegular));
 
-            // Hasil penilaian akun okta tidak ikut disalin dari abrar
             if (!localStorage.getItem(oktaKeys.RESULTS)) {
                 localStorage.setItem(oktaKeys.RESULTS, JSON.stringify([]));
             }
 
             localStorage.setItem(GLOBAL_STORAGE_KEYS.OKTA_INIT_COPIED, 'true');
 
-            if (state.currentUser && state.currentUser.username.trim().toLowerCase() === 'okta') {
+            if (state.targetUsername && state.targetUsername.trim().toLowerCase() === 'okta') {
                 state.employees = finalEmployees;
                 state.criteriaLeader = finalCriteriaLeader;
                 state.criteriaRegular = finalCriteriaRegular;
@@ -1079,9 +1172,9 @@
         }
 
         /**
-         * SALIN & TEMPEL KODE DATA ANTAR PERANGKAT (HP <-> TABLET <-> PC)
+         * KOMPRESI KODE DATA PENDEK (GZIP + BASE64URL)
          */
-        function buildSyncCode() {
+        async function buildShortSyncCode() {
             const accounts = getAccounts();
             const usersData = {};
             const usernames = new Set(accounts.map(a => a.username.trim().toLowerCase()));
@@ -1094,71 +1187,96 @@
             usernames.forEach(uname => {
                 const keys = getUserStorageKeys(uname);
                 try {
-                    usersData[uname] = {
-                        criteriaRegular: JSON.parse(localStorage.getItem(keys.CRITERIA_REGULAR) || 'null'),
-                        criteriaLeader: JSON.parse(localStorage.getItem(keys.CRITERIA_LEADER) || 'null'),
-                        employees: JSON.parse(localStorage.getItem(keys.EMPLOYEES) || 'null'),
-                        results: JSON.parse(localStorage.getItem(keys.RESULTS) || 'null')
-                    };
-                } catch (e) {
-                    // Abaikan jika rusak
-                }
+                    const reg = JSON.parse(localStorage.getItem(keys.CRITERIA_REGULAR) || 'null');
+                    const ldr = JSON.parse(localStorage.getItem(keys.CRITERIA_LEADER) || 'null');
+                    const emp = JSON.parse(localStorage.getItem(keys.EMPLOYEES) || 'null');
+                    const res = JSON.parse(localStorage.getItem(keys.RESULTS) || 'null');
+                    if (reg || ldr || emp || (res && res.length > 0)) {
+                        usersData[uname] = { r: reg, l: ldr, e: emp, s: res };
+                    }
+                } catch (e) {}
             });
 
             const payload = {
-                version: 1,
-                exportedAt: Date.now(),
-                accounts,
-                usersData
+                v: 2,
+                a: accounts.map(acc => ({ u: acc.username, p: acc.password, d: acc.isDeveloper ? 1 : 0 })),
+                u: usersData
             };
 
-            return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+            const jsonStr = JSON.stringify(payload);
+            if (typeof CompressionStream !== 'undefined') {
+                const stream = new Blob([jsonStr]).stream().pipeThrough(new CompressionStream('gzip'));
+                const buf = await new Response(stream).arrayBuffer();
+                const bytes = new Uint8Array(buf);
+                let bin = '';
+                for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+                return 'GZ:' + btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+            }
+            return 'RAW:' + btoa(unescape(encodeURIComponent(jsonStr)));
         }
 
-        function applySyncCode(encodedCode) {
-            const decodedStr = decodeURIComponent(escape(atob(encodedCode.trim())));
-            const payload = JSON.parse(decodedStr);
+        async function applyShortSyncCode(encodedCode) {
+            const clean = encodedCode.trim();
+            let jsonStr = '';
+
+            if (clean.startsWith('GZ:') && typeof DecompressionStream !== 'undefined') {
+                let b64 = clean.slice(3).replace(/-/g, '+').replace(/_/g, '/');
+                while (b64.length % 4) b64 += '=';
+                const bin = atob(b64);
+                const bytes = new Uint8Array(bin.length);
+                for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+                const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+                jsonStr = await new Response(stream).text();
+            } else {
+                const rawPart = clean.startsWith('RAW:') ? clean.slice(4) : clean;
+                jsonStr = decodeURIComponent(escape(atob(rawPart)));
+            }
+
+            const payload = JSON.parse(jsonStr);
             if (!payload || typeof payload !== 'object') return false;
 
-            if (Array.isArray(payload.accounts) && payload.accounts.length > 0) {
+            const incomingAccs = Array.isArray(payload.a)
+                ? payload.a.map(x => ({ username: x.u, password: x.p, isDeveloper: Boolean(x.d) }))
+                : (Array.isArray(payload.accounts) ? payload.accounts : []);
+
+            if (incomingAccs.length > 0) {
                 const localAccs = getAccounts();
                 const mergedMap = new Map();
                 localAccs.forEach(a => mergedMap.set(a.username.toLowerCase(), a));
-                payload.accounts.forEach(a => {
-                    if (a && a.username) {
-                        mergedMap.set(a.username.toLowerCase(), a);
-                    }
+                incomingAccs.forEach(a => {
+                    if (a && a.username) mergedMap.set(a.username.toLowerCase(), a);
                 });
                 localStorage.setItem(GLOBAL_STORAGE_KEYS.ACCOUNTS, JSON.stringify(Array.from(mergedMap.values())));
             }
 
-            if (payload.usersData && typeof payload.usersData === 'object') {
-                Object.entries(payload.usersData).forEach(([uname, udata]) => {
+            const incomingUsers = payload.u || payload.usersData;
+            if (incomingUsers && typeof incomingUsers === 'object') {
+                Object.entries(incomingUsers).forEach(([uname, udata]) => {
                     if (!udata || typeof udata !== 'object') return;
                     const keys = getUserStorageKeys(uname);
-                    if (Array.isArray(udata.criteriaRegular)) {
-                        localStorage.setItem(keys.CRITERIA_REGULAR, JSON.stringify(udata.criteriaRegular));
-                    }
-                    if (Array.isArray(udata.criteriaLeader)) {
-                        localStorage.setItem(keys.CRITERIA_LEADER, JSON.stringify(udata.criteriaLeader));
-                    }
-                    if (udata.employees && typeof udata.employees === 'object') {
-                        localStorage.setItem(keys.EMPLOYEES, JSON.stringify(udata.employees));
-                    }
-                    if (Array.isArray(udata.results)) {
-                        localStorage.setItem(keys.RESULTS, JSON.stringify(udata.results));
-                    }
+                    const reg = udata.r || udata.criteriaRegular;
+                    const ldr = udata.l || udata.criteriaLeader;
+                    const emp = udata.e || udata.employees;
+                    const res = udata.s || udata.results;
+
+                    if (Array.isArray(reg)) localStorage.setItem(keys.CRITERIA_REGULAR, JSON.stringify(reg));
+                    if (Array.isArray(ldr)) localStorage.setItem(keys.CRITERIA_LEADER, JSON.stringify(ldr));
+                    if (emp && typeof emp === 'object') localStorage.setItem(keys.EMPLOYEES, JSON.stringify(emp));
+                    if (Array.isArray(res)) localStorage.setItem(keys.RESULTS, JSON.stringify(res));
                 });
             }
 
+            ensureDeveloperAccountExists();
             copyMasterDataFromAbrarToOkta(false);
 
             if (state.currentUser) {
-                loadUserState(state.currentUser.username);
+                loadUserState(state.targetUsername || state.currentUser.username);
                 renderEmployeeDropdown();
                 renderChecklist();
                 if (state.activeTab === 'rekap') renderRekapList();
                 if (state.activeTab === 'setting') {
+                    renderDeveloperTargetAccountSelect();
+                    renderDeveloperAccountsList();
                     renderSettingCriteria();
                     renderSettingEmployees();
                 }
@@ -1168,10 +1286,10 @@
         }
 
         async function handleCopySyncCode() {
-            const code = buildSyncCode();
+            const code = await buildShortSyncCode();
             try {
                 await navigator.clipboard.writeText(code);
-                showToast('Kode data disalin!');
+                showToast(`Kode data disalin (${code.length} karakter)!`);
             } catch (e) {
                 prompt('Salin kode data berikut:', code);
             }
@@ -1180,15 +1298,6 @@
         function handleOpenImportModal() {
             document.getElementById('textarea-import-sync').value = '';
             document.getElementById('modal-import-sync').classList.remove('hidden');
-        }
-
-        function isEmployeeLeader(outletName, empName) {
-            if (!empName) return false;
-            const cleanName = empName.trim().toLowerCase();
-            const outletList = state.employees[outletName] || [];
-            const found = outletList.find(e => e.name.trim().toLowerCase() === cleanName);
-            if (found) return Boolean(found.isLeader);
-            return isDefaultLeaderName(empName);
         }
 
         function getActiveCriteriaList(isLeader) {
@@ -1208,10 +1317,7 @@
             const [y, m, d] = dateStr.split('-').map(Number);
             const dateObj = new Date(y, m - 1, d);
             return dateObj.toLocaleDateString('id-ID', {
-                weekday: 'long',
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
+                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
             });
         }
 
@@ -1220,9 +1326,7 @@
             const [y, m, d] = dateStr.split('-').map(Number);
             const dateObj = new Date(y, m - 1, d);
             return dateObj.toLocaleDateString('id-ID', {
-                day: 'numeric',
-                month: 'short',
-                year: 'numeric'
+                day: 'numeric', month: 'short', year: 'numeric'
             });
         }
 
@@ -1236,13 +1340,15 @@
         }
 
         function loadUserState(username) {
-            const cleanLower = String(username || '').trim().toLowerCase();
+            const targetUser = username || (state.currentUser ? state.currentUser.username : 'default');
+            state.targetUsername = targetUser;
+            const cleanLower = String(targetUser).trim().toLowerCase();
 
             if (cleanLower === 'okta') {
                 copyMasterDataFromAbrarToOkta(false);
             }
 
-            const keys = getUserStorageKeys(username);
+            const keys = getUserStorageKeys(targetUser);
             try {
                 const savedReg = localStorage.getItem(keys.CRITERIA_REGULAR);
                 state.criteriaRegular = savedReg ? JSON.parse(savedReg) : [...DEFAULT_CRITERIA_REGULAR];
@@ -1262,7 +1368,6 @@
                 const savedResults = localStorage.getItem(keys.RESULTS);
                 state.results = savedResults ? JSON.parse(savedResults) : [];
             } catch (e) {
-                console.error("Gagal memuat data akun:", e);
                 state.criteriaRegular = [...DEFAULT_CRITERIA_REGULAR];
                 state.criteriaLeader = [...DEFAULT_CRITERIA_LEADER];
                 state.employees = JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES));
@@ -1270,22 +1375,26 @@
             }
         }
 
+        function getStorageOwnerUsername() {
+            return state.targetUsername || (state.currentUser ? state.currentUser.username : 'default');
+        }
+
         function saveCriteria() {
             if (!state.currentUser) return;
-            const keys = getUserStorageKeys(state.currentUser.username);
+            const keys = getUserStorageKeys(getStorageOwnerUsername());
             localStorage.setItem(keys.CRITERIA_REGULAR, JSON.stringify(state.criteriaRegular));
             localStorage.setItem(keys.CRITERIA_LEADER, JSON.stringify(state.criteriaLeader));
         }
 
         function saveEmployees() {
             if (!state.currentUser) return;
-            const keys = getUserStorageKeys(state.currentUser.username);
+            const keys = getUserStorageKeys(getStorageOwnerUsername());
             localStorage.setItem(keys.EMPLOYEES, JSON.stringify(state.employees));
         }
 
         function saveResults() {
             if (!state.currentUser) return;
-            const keys = getUserStorageKeys(state.currentUser.username);
+            const keys = getUserStorageKeys(getStorageOwnerUsername());
             localStorage.setItem(keys.RESULTS, JSON.stringify(state.results));
         }
 
@@ -1359,7 +1468,8 @@
 
         function enterAppSession(username) {
             const cleanUsername = username.trim();
-            state.currentUser = { username: cleanUsername };
+            const isDev = isDeveloperUser(cleanUsername);
+            state.currentUser = { username: cleanUsername, isDeveloper: isDev };
             localStorage.setItem(GLOBAL_STORAGE_KEYS.CURRENT_SESSION, cleanUsername);
 
             state.checkedCriteria.clear();
@@ -1371,10 +1481,36 @@
             document.getElementById('wrapper-select-emp').classList.remove('hidden');
             document.getElementById('btn-toggle-manual-emp').textContent = '+ Input Manual';
 
-            loadUserState(cleanUsername);
+            if (isDev) {
+                const accounts = getAccounts().filter(a => !isDeveloperUser(a.username));
+                const defaultTarget = accounts.length > 0 ? accounts[0].username : 'abrar';
+                loadUserState(defaultTarget);
+            } else {
+                loadUserState(cleanUsername);
+            }
+
+            const devPill = document.getElementById('header-dev-pill');
+            const devAccountsPanel = document.getElementById('dev-accounts-panel');
+            const devTargetBar = document.getElementById('dev-target-account-bar');
+            const navSettingLabel = document.getElementById('nav-setting-label');
+            const settingRoleLabel = document.getElementById('setting-role-label');
+
+            if (isDev) {
+                devPill.classList.remove('hidden');
+                devAccountsPanel.classList.remove('hidden');
+                devTargetBar.classList.remove('hidden');
+                navSettingLabel.textContent = 'Developer';
+                settingRoleLabel.textContent = 'Mode Developer (Master Akses)';
+            } else {
+                devPill.classList.add('hidden');
+                devAccountsPanel.classList.add('hidden');
+                devTargetBar.classList.add('hidden');
+                navSettingLabel.textContent = 'Setting';
+                settingRoleLabel.textContent = 'Akun Penguji Aktif';
+            }
 
             const cardCopyAbrar = document.getElementById('card-copy-from-abrar');
-            if (cleanUsername.toLowerCase() === 'okta') {
+            if (!isDev && cleanUsername.toLowerCase() === 'okta') {
                 cardCopyAbrar.classList.remove('hidden');
             } else {
                 cardCopyAbrar.classList.add('hidden');
@@ -1390,11 +1526,12 @@
             applyOutletTheme(selectOutlet.value);
             renderEmployeeDropdown();
             renderChecklist();
-            switchTab('penilaian');
+            switchTab(isDev ? 'setting' : 'penilaian');
         }
 
         function logoutSession() {
             state.currentUser = null;
+            state.targetUsername = '';
             state.results = [];
             state.checkedCriteria.clear();
             localStorage.removeItem(GLOBAL_STORAGE_KEYS.CURRENT_SESSION);
@@ -1430,6 +1567,7 @@
                 return;
             }
 
+            ensureDeveloperAccountExists();
             const accounts = getAccounts();
             const existingAccount = accounts.find(
                 acc => acc.username.toLowerCase() === rawUsername.toLowerCase()
@@ -1444,6 +1582,7 @@
                 accounts.push({
                     username: rawUsername,
                     password: password,
+                    isDeveloper: isDeveloperUser(rawUsername),
                     createdAt: Date.now()
                 });
                 saveAccounts(accounts);
@@ -1466,6 +1605,137 @@
         }
 
         /**
+         * FITUR KHUSUS DEVELOPER: KELOLA SEMUA AKUN, RENAME PENGUJI & GANTI PASSWORD
+         */
+        function renderDeveloperTargetAccountSelect() {
+            const selectEl = document.getElementById('dev-select-target-account');
+            if (!selectEl) return;
+
+            const accounts = getAccounts();
+            const usernames = new Set(accounts.map(a => a.username));
+            if (!Array.from(usernames).some(u => u.toLowerCase() === 'abrar')) usernames.add('abrar');
+            if (!Array.from(usernames).some(u => u.toLowerCase() === 'okta')) usernames.add('okta');
+
+            selectEl.innerHTML = '';
+            Array.from(usernames).forEach(uname => {
+                if (isDeveloperUser(uname)) return;
+                const opt = document.createElement('option');
+                opt.value = uname;
+                opt.textContent = `Akun: ${uname}`;
+                if (state.targetUsername && state.targetUsername.toLowerCase() === uname.toLowerCase()) {
+                    opt.selected = true;
+                }
+                selectEl.appendChild(opt);
+            });
+        }
+
+        function renderDeveloperAccountsList() {
+            const container = document.getElementById('dev-accounts-list');
+            if (!container) return;
+
+            const accounts = getAccounts();
+            container.innerHTML = '';
+
+            if (accounts.length === 0) {
+                container.innerHTML = `<p class="text-xs theme-muted-text text-center py-3">Belum ada akun terdaftar.</p>`;
+                return;
+            }
+
+            accounts.forEach(acc => {
+                const isDev = isDeveloperUser(acc.username);
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between gap-2 p-2.5 rounded-xl theme-soft border theme-border';
+                row.innerHTML = `
+                    <div class="min-w-0 flex-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-extrabold truncate">${escapeHtml(acc.username)}</span>
+                            ${isDev ? `<span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-500">DEVELOPER</span>` : ''}
+                        </div>
+                        <span class="text-[11px] theme-muted-text block">Password: <b class="font-mono">${escapeHtml(acc.password)}</b></span>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button type="button" data-dev-edit-acc="${escapeHtml(acc.username)}" class="text-[11px] font-bold px-2.5 py-1.5 rounded-lg theme-primary-light cursor-pointer">
+                            Edit Nama / Pass
+                        </button>
+                        ${!isDev ? `
+                            <button type="button" data-dev-del-acc="${escapeHtml(acc.username)}" class="p-1.5 rounded-lg text-red-500 hover:opacity-80 cursor-pointer" title="Hapus Akun">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        ` : ''}
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+
+            container.querySelectorAll('[data-dev-edit-acc]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetUname = btn.getAttribute('data-dev-edit-acc');
+                    const accountsList = getAccounts();
+                    const found = accountsList.find(a => a.username === targetUname);
+                    if (!found) return;
+
+                    state.editingAccountUsername = found.username;
+                    const inputUname = document.getElementById('input-dev-edit-username');
+                    const inputPass = document.getElementById('input-dev-edit-password');
+                    inputUname.value = found.username;
+                    inputUname.disabled = isDeveloperUser(found.username);
+                    inputPass.value = found.password;
+                    document.getElementById('modal-dev-edit-account').classList.remove('hidden');
+                });
+            });
+
+            container.querySelectorAll('[data-dev-del-acc]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetUname = btn.getAttribute('data-dev-del-acc');
+                    showConfirmModal(
+                        'Hapus Akun Penguji',
+                        `Hapus akun "${targetUname}" beserta seluruh datanya?`,
+                        () => {
+                            const updated = getAccounts().filter(a => a.username !== targetUname);
+                            saveAccounts(updated);
+                            const oldKeys = getUserStorageKeys(targetUname);
+                            Object.values(oldKeys).forEach(k => localStorage.removeItem(k));
+                            renderDeveloperTargetAccountSelect();
+                            renderDeveloperAccountsList();
+                            showToast(`Akun ${targetUname} dihapus`);
+                        }
+                    );
+                });
+            });
+        }
+
+        function migrateUserAccountData(oldUsername, newUsername) {
+            if (!oldUsername || !newUsername) return;
+            const oldKeys = getUserStorageKeys(oldUsername);
+            const newKeys = getUserStorageKeys(newUsername);
+            if (oldKeys.EMPLOYEES === newKeys.EMPLOYEES) return;
+
+            ['CRITERIA_REGULAR', 'CRITERIA_LEADER', 'EMPLOYEES', 'RESULTS'].forEach(k => {
+                const rawVal = localStorage.getItem(oldKeys[k]);
+                if (rawVal !== null) {
+                    if (k === 'RESULTS') {
+                        try {
+                            const parsed = JSON.parse(rawVal);
+                            if (Array.isArray(parsed)) {
+                                parsed.forEach(item => { item.examiner = newUsername; });
+                                localStorage.setItem(newKeys[k], JSON.stringify(parsed));
+                            } else {
+                                localStorage.setItem(newKeys[k], rawVal);
+                            }
+                        } catch (e) {
+                            localStorage.setItem(newKeys[k], rawVal);
+                        }
+                    } else {
+                        localStorage.setItem(newKeys[k], rawVal);
+                    }
+                    localStorage.removeItem(oldKeys[k]);
+                }
+            });
+        }
+
+        /**
          * RENDER TAB 1: FORM PENILAIAN
          */
         function getSelectedEmployeeInfo() {
@@ -1476,36 +1746,56 @@
             } else {
                 empName = document.getElementById('select-karyawan').value || '';
             }
-            const isLeader = isEmployeeLeader(outlet, empName);
-            return { outlet, empName, isLeader };
+            const empRecord = getEmployeeRecord(outlet, empName);
+            const isLeader = empRecord ? Boolean(empRecord.isLeader) : false;
+            const badge = empRecord ? empRecord.badge : '';
+            const badgeColor = empRecord ? empRecord.badgeColor : 'amber';
+            return { outlet, empName, isLeader, badge, badgeColor };
         }
 
         function updateActiveEmployeeRoleIndicator() {
-            const { empName, isLeader } = getSelectedEmployeeInfo();
+            const { empName, isLeader, badge, badgeColor } = getSelectedEmployeeInfo();
             const nameDisplay = document.getElementById('active-emp-name-display');
-            const dropdownBadge = document.getElementById('dropdown-leader-badge');
-            const manualBadge = document.getElementById('manual-leader-badge');
+            const inlineBadge = document.getElementById('active-emp-inline-badge');
+            const dropdownBadge = document.getElementById('dropdown-emp-badge');
+            const manualBadge = document.getElementById('manual-emp-badge');
             const modeLabel = document.getElementById('active-criteria-mode-label');
             const checklistLeaderPill = document.getElementById('checklist-leader-pill');
             const checklistSubtitle = document.getElementById('checklist-card-subtitle');
 
             nameDisplay.textContent = empName || 'Belum pilih karyawan';
 
-            if (isLeader) {
+            const badgeText = badge || (isLeader ? '★ Leader Bar' : '');
+            if (badgeText && empName) {
+                const styleStr = getBadgeInlineStyle(badgeColor);
+                inlineBadge.textContent = badgeText;
+                inlineBadge.setAttribute('style', styleStr);
+                inlineBadge.classList.remove('hidden');
+
                 if (!state.isManualEmployee) {
+                    dropdownBadge.textContent = badgeText;
+                    dropdownBadge.setAttribute('style', styleStr);
                     dropdownBadge.classList.remove('hidden');
                     manualBadge.classList.add('hidden');
                 } else {
-                    dropdownBadge.classList.add('hidden');
+                    manualBadge.textContent = badgeText;
+                    manualBadge.setAttribute('style', styleStr);
                     manualBadge.classList.remove('hidden');
+                    dropdownBadge.classList.add('hidden');
                 }
+            } else {
+                inlineBadge.classList.add('hidden');
+                dropdownBadge.classList.add('hidden');
+                manualBadge.classList.add('hidden');
+            }
+
+            if (isLeader) {
+                checklistLeaderPill.textContent = badgeText || 'Leader Bar';
                 checklistLeaderPill.classList.remove('hidden');
                 modeLabel.textContent = 'Kriteria Leader Bar';
                 modeLabel.className = 'text-[11px] font-bold text-amber-600 shrink-0';
                 checklistSubtitle.textContent = `Penilaian khusus Leader Bar (${getActiveCriteriaList(true).length} poin)`;
             } else {
-                dropdownBadge.classList.add('hidden');
-                manualBadge.classList.add('hidden');
                 checklistLeaderPill.classList.add('hidden');
                 modeLabel.textContent = 'Kriteria Reguler';
                 modeLabel.className = 'text-[11px] font-semibold theme-muted-text shrink-0';
@@ -1630,7 +1920,7 @@
         }
 
         function handleSaveTestResult() {
-            const { outlet, empName, isLeader } = getSelectedEmployeeInfo();
+            const { outlet, empName, isLeader, badge, badgeColor } = getSelectedEmployeeInfo();
             const date = document.getElementById('input-tanggal').value || getTodayStr();
             const note = document.getElementById('input-catatan').value.trim();
 
@@ -1653,17 +1943,23 @@
                 r => r.date === date && r.outlet === outlet && r.employee.toLowerCase() === empName.toLowerCase()
             );
 
+            const examinerName = state.currentUser && state.currentUser.isDeveloper
+                ? getStorageOwnerUsername()
+                : (state.currentUser ? state.currentUser.username : '-');
+
             const record = {
                 id: existingIndex >= 0 ? state.results[existingIndex].id : Date.now().toString(),
                 date,
                 outlet,
                 employee: empName,
                 isLeader,
+                badge: badge || (isLeader ? '★ Leader Bar' : ''),
+                badgeColor: badgeColor || 'amber',
                 score,
                 total,
                 passedCriteria: validChecked.map(i => criteriaList[i]),
                 note,
-                examiner: state.currentUser ? state.currentUser.username : '-',
+                examiner: examinerName,
                 timestamp: existingIndex >= 0 ? state.results[existingIndex].timestamp : Date.now()
             };
 
@@ -1685,9 +1981,6 @@
             renderChecklist();
         }
 
-        /**
-         * HELPER PENGELOMPOKAN OUTLET BERDASARKAN URUTAN INPUT PERTAMA HARI ITU
-         */
         function getChronologicalOutletGroups(dailyResults) {
             const sortedResults = [...dailyResults].sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
             const outletOrder = [];
@@ -1745,23 +2038,25 @@
 
                 let rowsHtml = items.map(item => {
                     const isPass = item.total > 0 && item.score >= Math.ceil(item.total * 0.8);
-                    const isLeader = typeof item.isLeader === 'boolean' ? item.isLeader : isEmployeeLeader(outletName, item.employee);
+                    const empRec = getEmployeeRecord(outletName, item.employee);
+                    const isLeader = typeof item.isLeader === 'boolean' ? item.isLeader : (empRec ? empRec.isLeader : false);
+                    const customBadge = item.badge || (empRec && empRec.badge) || (isLeader ? '★ Leader Bar' : '');
+                    const customBadgeColor = item.badgeColor || (empRec && empRec.badgeColor) || 'amber';
+
                     const passBadgeStyle = state.isDarkMode
                         ? (isPass ? 'background-color: rgba(16, 185, 129, 0.18); color: #6EE7B7;' : 'background-color: rgba(245, 158, 11, 0.18); color: #FCD34D;')
                         : (isPass ? 'background-color: #DCFCE7; color: #166534;' : 'background-color: #FEF3C7; color: #92400E;');
 
-                    const leaderBadgeStyle = state.isDarkMode
-                        ? 'background-color: rgba(245, 158, 11, 0.22); color: #FBBF24; border: 1px solid rgba(251, 191, 36, 0.35);'
-                        : 'background-color: #FEF3C7; color: #B45309; border: 1px solid #FDE68A;';
+                    const customBadgeStyle = getBadgeInlineStyle(customBadgeColor, state.isDarkMode);
 
                     return `
                         <div class="px-4 py-3 flex items-center justify-between gap-3 border-t" style="border-color: ${theme.border}">
                             <div class="min-w-0 flex-1">
                                 <div class="flex items-center flex-wrap gap-1.5">
                                     <span class="font-bold text-sm truncate" style="color: ${theme.textMain}">${escapeHtml(item.employee)}</span>
-                                    ${isLeader ? `
-                                        <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full shrink-0" style="${leaderBadgeStyle}">
-                                            ★ Leader Bar
+                                    ${customBadge ? `
+                                        <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full shrink-0" style="${customBadgeStyle}">
+                                            ${escapeHtml(customBadge)}
                                         </span>
                                     ` : ''}
                                     <span class="text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0" style="${passBadgeStyle}">
@@ -1813,7 +2108,7 @@
         }
 
         /**
-         * GENERATOR GAMBAR LAPORAN 1 HARI (HTML5 CANVAS HIGH-DPI, LIGHT & DARK AWARE)
+         * GENERATOR GAMBAR LAPORAN 1 HARI (HTML5 CANVAS HIGH-DPI)
          */
         function generateDailyReportImage() {
             const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
@@ -1934,7 +2229,9 @@
             ctx.font = '800 21px Inter, sans-serif';
             ctx.fillText('HASIL TES SERTIFIKASI KARYAWAN', padding + 24, padding + 44);
 
-            const examinerName = state.currentUser ? state.currentUser.username : '-';
+            const examinerName = state.currentUser && state.currentUser.isDeveloper
+                ? getStorageOwnerUsername()
+                : (state.currentUser ? state.currentUser.username : '-');
             const examinerLabel = `Penguji : ${examinerName}`;
             ctx.font = '600 13px Inter, sans-serif';
             const examinerW = ctx.measureText(examinerLabel).width;
@@ -1981,7 +2278,10 @@
                 let rowY = currentY + cardHeaderH + 4;
                 itemLayouts.forEach(({ emp, hasNote, noteLines, rowH }) => {
                     const itemH = rowH - 8;
-                    const isLeader = typeof emp.isLeader === 'boolean' ? emp.isLeader : isEmployeeLeader(outletName, emp.employee);
+                    const empRec = getEmployeeRecord(outletName, emp.employee);
+                    const isLeader = typeof emp.isLeader === 'boolean' ? emp.isLeader : (empRec ? empRec.isLeader : false);
+                    const customBadge = emp.badge || (empRec && empRec.badge) || (isLeader ? '★ Leader Bar' : '');
+                    const customBadgeColor = emp.badgeColor || (empRec && empRec.badgeColor) || 'amber';
 
                     roundRect(padding + itemMarginX, rowY + 4, itemW, itemH, 12);
                     ctx.fillStyle = theme.rowBg;
@@ -1994,31 +2294,31 @@
                     ctx.fillText(emp.employee, nameStartX, nameTopY);
                     const nameWidth = ctx.measureText(emp.employee).width;
 
-                    if (isLeader) {
-                        const ldrLabel = '★ Leader Bar';
+                    if (customBadge) {
+                        const palette = BADGE_PALETTES[customBadgeColor] || BADGE_PALETTES.amber;
                         ctx.font = '800 11px Inter, sans-serif';
-                        const ldrW = ctx.measureText(ldrLabel).width + 18;
+                        const ldrW = ctx.measureText(customBadge).width + 18;
                         const ldrH = 24;
                         const ldrX = nameStartX + nameWidth + 10;
                         const ldrY = rowY + 18;
 
                         roundRect(ldrX, ldrY, ldrW, ldrH, 8);
                         if (isDark) {
-                            ctx.fillStyle = 'rgba(245, 158, 11, 0.24)';
+                            ctx.fillStyle = palette.darkBg;
                             ctx.fill();
                             ctx.lineWidth = 1;
-                            ctx.strokeStyle = 'rgba(251, 191, 36, 0.45)';
+                            ctx.strokeStyle = palette.darkBorder;
                             ctx.stroke();
-                            ctx.fillStyle = '#FBBF24';
+                            ctx.fillStyle = palette.darkText;
                         } else {
-                            ctx.fillStyle = '#FEF3C7';
+                            ctx.fillStyle = palette.lightBg;
                             ctx.fill();
                             ctx.lineWidth = 1;
-                            ctx.strokeStyle = '#FCD34D';
+                            ctx.strokeStyle = palette.lightBorder;
                             ctx.stroke();
-                            ctx.fillStyle = '#B45309';
+                            ctx.fillStyle = palette.lightText;
                         }
-                        ctx.fillText(ldrLabel, ldrX + 9, ldrY + 16);
+                        ctx.fillText(customBadge, ldrX + 9, ldrY + 16);
                     }
 
                     const scoreText = `${emp.score}/${emp.total}`;
@@ -2094,7 +2394,7 @@
         }
 
         /**
-         * RENDER TAB 3: SETTING (KRITERIA & KARYAWAN)
+         * RENDER TAB 3: SETTING (KRITERIA & KARYAWAN + BADGE)
          */
         function renderSettingCriteria() {
             const container = document.getElementById('setting-criteria-list');
@@ -2209,20 +2509,22 @@
             }
 
             list.forEach((emp, index) => {
+                const badgeText = emp.badge || (emp.isLeader ? '★ Leader Bar' : '');
+                const badgeStyle = getBadgeInlineStyle(emp.badgeColor || 'amber', state.isDarkMode);
                 const row = document.createElement('div');
                 row.className = 'flex items-center justify-between gap-2 p-2.5 rounded-xl theme-soft border theme-border';
                 row.innerHTML = `
-                    <div class="flex items-center gap-2 min-w-0 flex-1">
+                    <div class="flex items-center gap-2 min-w-0 flex-1 flex-wrap">
                         <span class="text-xs font-bold truncate">${escapeHtml(emp.name)}</span>
-                        ${emp.isLeader ? `
-                            <span class="shrink-0 text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 border border-amber-500/30">
-                                ★ Leader Bar
+                        ${badgeText ? `
+                            <span class="shrink-0 text-[10px] font-extrabold px-2 py-0.5 rounded-full" style="${badgeStyle}">
+                                ${escapeHtml(badgeText)}
                             </span>
                         ` : ''}
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0">
-                        <button type="button" data-toggle-ldr="${index}" class="text-[11px] font-semibold px-2 py-1 rounded-lg border theme-border theme-surface cursor-pointer" title="Ubah status Leader Bar">
-                            ${emp.isLeader ? 'Set Reguler' : 'Set Leader'}
+                        <button type="button" data-edit-badge="${index}" class="text-[11px] font-semibold px-2 py-1 rounded-lg border theme-border theme-surface cursor-pointer" title="Ganti / Tambah Badge">
+                            Badge
                         </button>
                         <button type="button" data-del-emp="${index}" class="p-1.5 rounded-lg text-red-500 hover:opacity-80 cursor-pointer" title="Hapus">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -2234,16 +2536,17 @@
                 container.appendChild(row);
             });
 
-            container.querySelectorAll('[data-toggle-ldr]').forEach(btn => {
+            container.querySelectorAll('[data-edit-badge]').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    const idx = Number(btn.getAttribute('data-toggle-ldr'));
-                    list[idx].isLeader = !list[idx].isLeader;
-                    saveEmployees();
-                    renderSettingEmployees();
-                    renderEmployeeDropdown();
-                    state.checkedCriteria.clear();
-                    renderChecklist();
-                    showToast(`Status ${list[idx].name} diubah`);
+                    const idx = Number(btn.getAttribute('data-edit-badge'));
+                    const emp = list[idx];
+                    if (!emp) return;
+                    state.editingBadgeEmpIndex = idx;
+                    document.getElementById('edit-badge-emp-name').textContent = `${emp.name} (${targetOutlet})`;
+                    document.getElementById('input-edit-emp-badge').value = emp.badge || (emp.isLeader ? '★ Leader Bar' : '');
+                    document.getElementById('select-edit-emp-badge-color').value = emp.badgeColor || 'amber';
+                    document.getElementById('checkbox-edit-emp-leader').checked = Boolean(emp.isLeader);
+                    document.getElementById('modal-edit-emp-badge').classList.remove('hidden');
                 });
             });
 
@@ -2290,6 +2593,10 @@
             if (tabName === 'rekap') {
                 renderRekapList();
             } else if (tabName === 'setting') {
+                if (state.currentUser && state.currentUser.isDeveloper) {
+                    renderDeveloperTargetAccountSelect();
+                    renderDeveloperAccountsList();
+                }
                 renderSettingCriteria();
                 renderSettingEmployees();
             }
@@ -2330,8 +2637,7 @@
          */
         function initApp() {
             loadThemePreference();
-
-            // Pastikan data karyawan & 10 poin leader + 5 poin reguler dari akun abrar tersalin ke akun okta
+            ensureDeveloperAccountExists();
             copyMasterDataFromAbrarToOkta(false);
 
             const today = getTodayStr();
@@ -2344,7 +2650,7 @@
             const selectOutlet = document.getElementById('select-outlet');
             applyOutletTheme(selectOutlet.value);
 
-            // Salin & Tempel Kode Data (Layar Login & Tab Setting)
+            // Salin & Tempel Kode Data Pendek
             document.getElementById('btn-auth-copy-code').addEventListener('click', handleCopySyncCode);
             document.getElementById('btn-auth-paste-code').addEventListener('click', handleOpenImportModal);
             document.getElementById('btn-export-sync-code').addEventListener('click', handleCopySyncCode);
@@ -2354,14 +2660,14 @@
                 document.getElementById('modal-import-sync').classList.add('hidden');
             });
 
-            document.getElementById('btn-import-sync-apply').addEventListener('click', () => {
+            document.getElementById('btn-import-sync-apply').addEventListener('click', async () => {
                 const rawCode = document.getElementById('textarea-import-sync').value.trim();
                 if (!rawCode) {
                     showToast('Tempel kode data terlebih dahulu!');
                     return;
                 }
                 try {
-                    if (applySyncCode(rawCode)) {
+                    if (await applyShortSyncCode(rawCode)) {
                         document.getElementById('modal-import-sync').classList.add('hidden');
                         showToast('Data berhasil ditempel & disamakan!');
                     } else {
@@ -2370,6 +2676,123 @@
                 } catch (e) {
                     showToast('Kode data tidak valid.');
                 }
+            });
+
+            // Khusus Developer: Pilih akun target yang diedit
+            document.getElementById('dev-select-target-account').addEventListener('change', (e) => {
+                const targetUname = e.target.value;
+                loadUserState(targetUname);
+                state.checkedCriteria.clear();
+                renderSettingCriteria();
+                renderSettingEmployees();
+                renderEmployeeDropdown();
+                renderChecklist();
+                showToast(`Mengedit data akun: ${targetUname}`);
+            });
+
+            // Khusus Developer: Tambah akun penguji baru
+            document.getElementById('form-dev-add-account').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const uname = document.getElementById('dev-new-acc-username').value.trim();
+                const pass = document.getElementById('dev-new-acc-password').value.trim();
+                if (uname.length < 3 || pass.length < 4) {
+                    showToast('Username min. 3 huruf & password min. 4 karakter');
+                    return;
+                }
+                const accounts = getAccounts();
+                if (accounts.some(a => a.username.toLowerCase() === uname.toLowerCase())) {
+                    showToast('Username sudah terdaftar!');
+                    return;
+                }
+                accounts.push({ username: uname, password: pass, isDeveloper: false, createdAt: Date.now() });
+                saveAccounts(accounts);
+                if (uname.toLowerCase() === 'okta') {
+                    copyMasterDataFromAbrarToOkta(true);
+                }
+                document.getElementById('dev-new-acc-username').value = '';
+                document.getElementById('dev-new-acc-password').value = '';
+                renderDeveloperTargetAccountSelect();
+                renderDeveloperAccountsList();
+                showToast(`Akun "${uname}" berhasil dibuat!`);
+            });
+
+            // Khusus Developer: Simpan perubahan username / password akun
+            document.getElementById('btn-dev-edit-acc-cancel').addEventListener('click', () => {
+                document.getElementById('modal-dev-edit-account').classList.add('hidden');
+                state.editingAccountUsername = null;
+            });
+
+            document.getElementById('btn-dev-edit-acc-save').addEventListener('click', () => {
+                const oldUname = state.editingAccountUsername;
+                const newUname = document.getElementById('input-dev-edit-username').value.trim();
+                const newPass = document.getElementById('input-dev-edit-password').value.trim();
+
+                if (!oldUname || newUname.length < 3 || newPass.length < 4) {
+                    showToast('Username min. 3 karakter & password min. 4 karakter');
+                    return;
+                }
+
+                const accounts = getAccounts();
+                const duplicate = accounts.find(
+                    a => a.username.toLowerCase() === newUname.toLowerCase() && a.username !== oldUname
+                );
+                if (duplicate) {
+                    showToast('Username sudah dipakai akun lain!');
+                    return;
+                }
+
+                const idx = accounts.findIndex(a => a.username === oldUname);
+                if (idx >= 0) {
+                    accounts[idx].username = newUname;
+                    accounts[idx].password = newPass;
+                    saveAccounts(accounts);
+
+                    if (oldUname !== newUname) {
+                        migrateUserAccountData(oldUname, newUname);
+                        if (state.targetUsername === oldUname) {
+                            state.targetUsername = newUname;
+                        }
+                    }
+
+                    renderDeveloperTargetAccountSelect();
+                    renderDeveloperAccountsList();
+                    showToast(`Akun "${newUname}" diperbarui!`);
+                }
+
+                document.getElementById('modal-dev-edit-account').classList.add('hidden');
+                state.editingAccountUsername = null;
+            });
+
+            // Modal Edit Badge Karyawan
+            document.getElementById('btn-edit-badge-cancel').addEventListener('click', () => {
+                document.getElementById('modal-edit-emp-badge').classList.add('hidden');
+                state.editingBadgeEmpIndex = null;
+            });
+
+            document.getElementById('btn-edit-badge-save').addEventListener('click', () => {
+                const targetOutlet = document.getElementById('setting-select-outlet').value;
+                const list = state.employees[targetOutlet] || [];
+                const idx = state.editingBadgeEmpIndex;
+
+                if (idx !== null && list[idx]) {
+                    const badgeText = document.getElementById('input-edit-emp-badge').value.trim();
+                    const badgeColor = document.getElementById('select-edit-emp-badge-color').value;
+                    const isLdr = document.getElementById('checkbox-edit-emp-leader').checked;
+
+                    list[idx].badge = badgeText;
+                    list[idx].badgeColor = badgeColor;
+                    list[idx].isLeader = isLdr;
+
+                    saveEmployees();
+                    renderSettingEmployees();
+                    renderEmployeeDropdown();
+                    state.checkedCriteria.clear();
+                    renderChecklist();
+                    showToast(`Badge ${list[idx].name} diperbarui!`);
+                }
+
+                document.getElementById('modal-edit-emp-badge').classList.add('hidden');
+                state.editingBadgeEmpIndex = null;
             });
 
             // Tombol Salin Ulang dari Akun Abrar ke Akun Okta
@@ -2414,6 +2837,8 @@
                 applyOutletTheme(selectOutlet.value);
                 if (state.activeTab === 'rekap') {
                     renderRekapList();
+                } else if (state.activeTab === 'setting') {
+                    renderSettingEmployees();
                 }
             });
 
@@ -2457,7 +2882,6 @@
                 renderChecklist();
             });
 
-            // Deteksi otomatis Leader Bar saat mengetik nama manual
             document.getElementById('input-manual-karyawan').addEventListener('input', () => {
                 renderChecklist();
             });
@@ -2484,7 +2908,7 @@
                 });
             });
 
-            // Tab Rekap: Ganti Tanggal, Generate Gambar, Hapus Data Hari Ini
+            // Tab Rekap
             rekapTanggal.addEventListener('change', renderRekapList);
             document.getElementById('btn-generate-image').addEventListener('click', generateDailyReportImage);
             document.getElementById('btn-clear-day').addEventListener('click', () => {
@@ -2564,12 +2988,14 @@
                 state.editingCriteriaIndex = null;
             });
 
-            // Tab Setting: Kelola Karyawan
+            // Tab Setting: Kelola Karyawan + Badge
             document.getElementById('setting-select-outlet').addEventListener('change', renderSettingEmployees);
             document.getElementById('form-add-employee').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const targetOutlet = document.getElementById('setting-select-outlet').value;
                 const input = document.getElementById('input-new-employee');
+                const inputBadge = document.getElementById('input-new-emp-badge');
+                const selectBadgeColor = document.getElementById('select-new-emp-badge-color');
                 const cbLeader = document.getElementById('checkbox-new-emp-leader');
                 const name = input.value.trim();
                 if (!name) return;
@@ -2578,9 +3004,18 @@
                     state.employees[targetOutlet] = [];
                 }
                 const isLeader = cbLeader.checked || isDefaultLeaderName(name);
-                state.employees[targetOutlet].push({ name, isLeader });
+                const rawBadge = inputBadge.value.trim();
+                const badge = rawBadge || (isLeader ? '★ Leader Bar' : '');
+
+                state.employees[targetOutlet].push({
+                    name,
+                    isLeader,
+                    badge,
+                    badgeColor: selectBadgeColor.value || 'amber'
+                });
                 saveEmployees();
                 input.value = '';
+                inputBadge.value = '';
                 cbLeader.checked = false;
                 renderSettingEmployees();
                 renderEmployeeDropdown();
@@ -2592,7 +3027,7 @@
             document.getElementById('btn-reset-default').addEventListener('click', () => {
                 showConfirmModal(
                     'Reset Pengaturan Awal',
-                    'Kembalikan semua poin penilaian dan daftar karyawan akun ini ke bawaan awal?',
+                    `Kembalikan semua poin penilaian dan daftar karyawan akun "${getStorageOwnerUsername()}" ke bawaan awal?`,
                     () => {
                         state.criteriaRegular = [...DEFAULT_CRITERIA_REGULAR];
                         state.criteriaLeader = [...DEFAULT_CRITERIA_LEADER];
