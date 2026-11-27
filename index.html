@@ -1,289 +1,2615 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tes Sertifikasi Karyawan</title>
-<script src="https://cdn.tailwindcss.com/3.4.17"></script>
-<script>tailwind.config={darkMode:'class'}</script>
-<style>
-:root{--b:#D97757;--bg:#f7f5f3;--card:#fff;--tx:#1d1a18;--mu:#6f6862;--ln:#e5e0db;--bt:var(--b)}
-.dark{--bg:#151211;--card:#201c1a;--tx:#f1ece8;--mu:#a49c95;--ln:#3a3330;--bt:color-mix(in srgb,var(--b) 50%,#fff)}
-body{background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-.card{background:var(--card);border:1px solid var(--ln);border-radius:12px}
-.in{width:100%;background:var(--bg);border:1px solid var(--ln);border-radius:8px;padding:.55rem .7rem;color:var(--tx)}
-.in:focus,.btn:focus-visible,.btn2:focus-visible{outline:2px solid var(--bt);outline-offset:1px}
-.btn{background:var(--b);color:#fff;border-radius:8px;padding:.55rem .9rem;font-weight:600;border:1px solid color-mix(in srgb,var(--b) 65%,#fff)}
-.btn2{border:1px solid var(--ln);border-radius:8px;padding:.4rem .7rem;color:var(--tx);background:var(--card)}
-.mu{color:var(--mu)}.ac{color:var(--bt)}
-.tab{padding:.55rem .8rem;border-bottom:2px solid transparent;color:var(--mu);white-space:nowrap}
-.tab.on{color:var(--bt);border-color:var(--bt);font-weight:600}
-.pill{display:inline-block;border-radius:999px;padding:.1rem .6rem;font-size:.75rem;font-weight:600}
-.ok{background:#15803d;color:#fff}.no{background:#b91c1c;color:#fff}
-.chk{width:1.4rem;height:1.4rem;accent-color:var(--b);flex:none}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sertifikasi Karyawan</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Geometric Rounded Sans-Serif (Nunito & Quicksand) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==================== LIGHT MODE PALETTES ==================== */
+        :root,
+        body.theme-chatting-light {
+            --bg-page: #FBF6F3;
+            --bg-surface: #FFFFFF;
+            --bg-soft: #F9EDE6;
+            --primary: #D97757;
+            --primary-hover: #C6613F;
+            --primary-light: #FCE8DF;
+            --text-main: #1F1A17;
+            --text-muted: #75635A;
+            --border-color: #EFD7CB;
+            --badge-text: #FFFFFF;
+            --ring-color: rgba(217, 119, 87, 0.25);
+        }
+
+        body.theme-jolie-light {
+            --bg-page: #FFFFFF;
+            --bg-surface: #FAF6F3;
+            --bg-soft: #F2EAE4;
+            --primary: #4A2C2A;
+            --primary-hover: #3B2314;
+            --primary-light: #EBE0D8;
+            --text-main: #2A1810;
+            --text-muted: #6E584F;
+            --border-color: #DFD2C8;
+            --badge-text: #FFFFFF;
+            --ring-color: rgba(74, 44, 42, 0.22);
+        }
+
+        body.theme-zola-light {
+            --bg-page: #FDF5F6;
+            --bg-surface: #FFFFFF;
+            --bg-soft: #F9E8EB;
+            --primary: #721C24;
+            --primary-hover: #800020;
+            --primary-light: #F6DCE0;
+            --text-main: #2B0B10;
+            --text-muted: #785258;
+            --border-color: #E8C9CE;
+            --badge-text: #FFFFFF;
+            --ring-color: rgba(114, 28, 36, 0.22);
+        }
+
+        /* ==================== DARK MODE PALETTES ==================== */
+        body.theme-chatting-dark {
+            --bg-page: #191311;
+            --bg-surface: #241B18;
+            --bg-soft: #302420;
+            --primary: #E07A5F;
+            --primary-hover: #D97757;
+            --primary-light: #3D2821;
+            --text-main: #F6EFEA;
+            --text-muted: #B8A59C;
+            --border-color: #3D2E29;
+            --badge-text: #FFFFFF;
+            --ring-color: rgba(224, 122, 95, 0.3);
+        }
+
+        body.theme-jolie-dark {
+            --bg-page: #160E0A;
+            --bg-surface: #231711;
+            --bg-soft: #2F1F17;
+            --primary: #C69C72;
+            --primary-hover: #B3885E;
+            --primary-light: #38251B;
+            --text-main: #F5EDE6;
+            --text-muted: #B8A394;
+            --border-color: #3D291F;
+            --badge-text: #1B100A;
+            --ring-color: rgba(198, 156, 114, 0.3);
+        }
+
+        body.theme-zola-dark {
+            --bg-page: #170A0D;
+            --bg-surface: #251116;
+            --bg-soft: #33171E;
+            --primary: #B83246;
+            --primary-hover: #9E1B32;
+            --primary-light: #421822;
+            --text-main: #F7ECEE;
+            --text-muted: #C29FA6;
+            --border-color: #452029;
+            --badge-text: #FFFFFF;
+            --ring-color: rgba(184, 50, 70, 0.32);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .font-rounded-geo {
+            font-family: 'Nunito', 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .theme-surface {
+            background-color: var(--bg-surface);
+            border-color: var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .theme-soft {
+            background-color: var(--bg-soft);
+            border-color: var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .theme-primary-bg {
+            background-color: var(--primary);
+            color: var(--badge-text);
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.1s ease;
+        }
+        .theme-primary-bg:active {
+            transform: scale(0.98);
+        }
+
+        .theme-primary-light {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .theme-primary-text {
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+
+        .theme-muted-text {
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+        }
+
+        .theme-border {
+            border-color: var(--border-color);
+            transition: border-color 0.3s ease;
+        }
+
+        .theme-input {
+            background-color: var(--bg-surface);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-main);
+            transition: background-color 0.3s ease, border-color 0.25s ease, box-shadow 0.25s ease, color 0.3s ease;
+        }
+        .theme-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--ring-color);
+        }
+
+        body.is-dark input[type="date"] {
+            color-scheme: dark;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 9999px;
+        }
+    </style>
 </head>
-<body>
-<div id="app"></div>
-<div id="toast" class="fixed bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-lg text-sm text-white bg-black/85 hidden z-50"></div>
-<script>
-const API='https://wzcndcncyqkwoxoyrljf.supabase.co',KEY='sb_publishable_6nKlo9QMJOqBhDyApl_3cw_TFo-TJAY';
-const OUTLETS=['Chatting 2 S.Parman','Chatting 3 Ampera','Chatting 4 Paris II','Chatting 5 Untan','Chatting 6 Tanray II','Chatting 7 Sumatra','Chatting 8 Karet','Jolie Sumatra','Zola Sulawesi'];
-const COL={amber:['Amber/Emas','#F59E0B'],emerald:['Hijau/Emerald','#10B981'],sky:['Biru/Sky','#0EA5E9'],rose:['Merah/Rose','#F43F5E'],violet:['Ungu/Violet','#8B5CF6']};
-const ERR={LOGIN_GAGAL:'Username atau password salah.',USERNAME_TERPAKAI:'Username sudah dipakai.',USERNAME_3_30_KARAKTER:'Username harus 3-30 karakter.',PASSWORD_MIN_4_KARAKTER:'Password minimal 4 karakter.',DATA_TIDAK_VALID:'Data tidak valid.',AKUN_DEVELOPER_TERKUNCI:'Akun Developer tidak bisa diubah/dihapus.',TIDAK_DIIZINKAN:'Tidak diizinkan.',NAMA_KOSONG:'Nama tidak boleh kosong.','Failed to fetch':'Tidak ada koneksi internet.'};
-const $=s=>document.querySelector(s);
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const ls={get:k=>{try{return JSON.parse(localStorage.getItem(k))}catch{return null}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
-const today=()=>new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);
-const fmtDate=d=>new Date(d+'T00:00').toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-const brand=o=>/^Jolie/.test(o)?'#4A2C2A':/^Zola/.test(o)?'#721C24':'#D97757';
-const catL=c=>c==='leader'?'Leader Bar':'Reguler';
-const errM=e=>ERR[e.message]||e.message||'Terjadi kesalahan.';
-const chip=b=>{const h=(COL[b.c]||COL.amber)[1];return `<span class="pill" style="background:${h};color:${b.c==='amber'?'#1d1a18':'#fff'}">${esc(b.t)}</span>`};
-const newForm=()=>({emp:'',manual:'',cat:null,checks:{},note:'',date:today()});
-let S={me:ls.get('me'),data:null,hash:'',tab:'tes',outlet:OUTLETS[0],target:null,theme:ls.get('theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'),mode:'login',err:'',u:'',rdate:today(),form:newForm()};
+<body class="min-h-screen select-none theme-chatting-light">
 
-async function rpc(fn,a){
-  const r=await fetch(`${API}/rest/v1/rpc/${fn}`,{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify(a||{})});
-  const t=await r.json().catch(()=>({}));
-  if(!r.ok)throw new Error((t.message||'').trim()||'Terjadi kesalahan.');
-  return t;
-}
-function toast(m){const t=$('#toast');t.textContent=m;t.classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.add('hidden'),2800)}
-async function load(force){
-  if(!S.me)return;
-  try{
-    const d=await rpc('sert_get_all',{p_token:S.me.token,p_target:S.target});
-    const h=JSON.stringify(d);
-    if(force||h!==S.hash){S.hash=h;S.data=d;render()}
-  }catch(e){
-    if(/SESI_TIDAK_VALID/.test(e.message))logout(true);
-    else if(/AKUN_TIDAK_ADA/.test(e.message)){S.target=null;load(true)}
-    else if(!S.data)toast(errM(e));
-  }
-}
-async function act(fn,a){
-  try{await rpc(fn,{p_token:S.me.token,...a});await load(true);return true}
-  catch(e){toast(errM(e));return false}
-}
-const T=()=>({p_target:S.target});
-function logout(silent){
-  if(!silent&&S.me)rpc('sert_logout',{p_token:S.me.token}).catch(()=>{});
-  S.me=null;S.data=null;S.hash='';S.target=null;ls.set('me',null);render();
-}
+    <!-- ==================== HALAMAN LOGIN / DAFTAR ==================== -->
+    <section id="auth-screen" class="min-h-screen flex flex-col items-center justify-center px-4 py-8 font-rounded-geo relative">
+        <button type="button" id="btn-auth-toggle-dark" aria-label="Ganti Mode Terang atau Gelap" title="Ganti Mode Terang / Gelap" class="fixed top-4 right-4 w-10 h-10 rounded-2xl border theme-border theme-surface shadow-xs flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
+            <svg id="auth-icon-sun" class="w-4 h-4 hidden text-amber-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <svg id="auth-icon-moon" class="w-4 h-4 theme-primary-text" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+        </button>
 
-/* ---------- Views ---------- */
-function authV(){
-  const reg=S.mode==='register';
-  return `<div class="min-h-screen grid place-items-center p-4"><div class="card p-6 w-full max-w-sm">
-  <h1 class="text-xl font-bold mb-1">Tes Sertifikasi Karyawan</h1>
-  <p class="mu text-sm mb-4">${reg?'Buat akun penguji baru.':'Masuk sebagai penguji.'}</p>
-  ${S.err?`<p class="text-sm mb-3" style="color:#dc2626">${esc(S.err)}</p>`:''}
-  <label class="text-sm mu">Username</label><input id="u" class="in mb-3" autocomplete="username" value="${esc(S.u)}">
-  <label class="text-sm mu">Password</label><input id="p" type="password" class="in mb-4" autocomplete="${reg?'new-password':'current-password'}">
-  <button class="btn w-full" data-a="auth">${reg?'Daftar':'Masuk'}</button>
-  <button class="w-full text-sm mt-3 ac" data-a="mode">${reg?'Sudah punya akun? Masuk':'Belum punya akun? Daftar'}</button>
-  </div></div>`;
-}
-function shell(){
-  const d=S.data,dev=S.me.is_dev;
-  const tabs=[['tes','Tes'],['rekap','Rekap & Unduh'],['poin','Poin Penilaian'],['kary','Karyawan']];
-  if(dev)tabs.push(['akun','Akun']);
-  const viewing=S.target&&S.target!==S.me.id;
-  const body={tes:vTes,rekap:vRekap,poin:vPoin,kary:vKary,akun:vAkun}[S.tab]();
-  return `<div class="max-w-2xl mx-auto p-3 pb-24">
-  <header class="flex items-center justify-between py-2">
-   <div><div class="font-bold text-lg">Tes Sertifikasi</div><div class="text-xs mu">${esc(S.me.username)}${dev?' (Developer)':''}</div></div>
-   <div class="flex gap-2"><button class="btn2" data-a="theme">${S.theme==='dark'?'Mode Terang':'Mode Gelap'}</button><button class="btn2" data-a="logout">Keluar</button></div>
-  </header>
-  ${dev?`<div class="card p-3 mb-3"><label class="text-xs mu">Akun target (data yang dikelola)</label>
-   <select class="in mt-1" data-c="target">${d.users.map(u=>`<option value="${u.id}" ${(S.target||S.me.id)===u.id?'selected':''}>${esc(u.username)}${u.is_dev?' (Developer)':''}</option>`).join('')}</select>
-   ${viewing?`<p class="text-xs mt-2 ac">Anda sedang mengelola data milik ${esc(d.owner_name)}.</p>`:''}</div>`:''}
-  <nav class="flex overflow-x-auto border-b mb-3" style="border-color:var(--ln)">${tabs.map(([k,l])=>`<button class="tab ${S.tab===k?'on':''}" data-a="tab" data-t="${k}">${l}</button>`).join('')}</nav>
-  ${(S.tab==='tes'||S.tab==='kary')?`<select class="in mb-3" data-c="outlet" style="border-color:var(--b)">${OUTLETS.map(o=>`<option ${o===S.outlet?'selected':''}>${esc(o)}</option>`).join('')}</select>`:''}
-  ${body()}</div>`;
-}
-function vTes(){
-  const d=S.data,f=S.form,emps=d.employees.filter(e=>e.outlet===S.outlet);
-  const man=f.emp==='__m',emp=emps.find(e=>e.id===f.emp);
-  const cat=f.cat||(emp?emp.category:'reguler'),items=d.criteria[cat]||[];
-  const sc=items.filter((_,i)=>f.checks[i]).length,tot=items.length,pct=tot?Math.round(sc*1000/tot)/10:0,pass=pct>=80;
-  return `<div class="card p-4 space-y-3">
-   <div><label class="text-sm mu">Tanggal</label><input type="date" class="in" data-c="fdate" value="${f.date}"></div>
-   <div><label class="text-sm mu">Karyawan</label><select class="in" data-c="emp"><option value="">Pilih karyawan</option>
-    ${emps.map(e=>`<option value="${e.id}" ${f.emp===e.id?'selected':''}>${esc(e.name)}</option>`).join('')}<option value="__m" ${man?'selected':''}>+ Input Manual</option></select></div>
-   ${man?`<input class="in" data-i="manual" placeholder="Nama karyawan" value="${esc(f.manual)}">`:''}
-   ${emp&&emp.badges.length?`<div class="flex flex-wrap gap-1">${emp.badges.map(chip).join('')}</div>`:''}
-   <div class="flex gap-2">${['reguler','leader'].map(c=>`<button class="${cat===c?'btn':'btn2'} flex-1" data-a="fcat" data-v="${c}">${catL(c)}</button>`).join('')}</div>
-   <p class="text-xs mu">Centang poin yang sudah sesuai standar.</p>
-   <div class="space-y-1">${items.map((t,i)=>`<label class="flex gap-3 items-center py-2 border-b" style="border-color:var(--ln)"><input type="checkbox" class="chk" data-c="chk" data-i="${i}" ${f.checks[i]?'checked':''}><span>${esc(t)}</span></label>`).join('')||'<p class="mu text-sm">Belum ada poin. Tambahkan di tab Poin Penilaian.</p>'}</div>
-   <div class="flex items-center justify-between"><div class="text-2xl font-bold">${sc}/${tot} <span class="text-base mu">(${pct}%)</span></div><span class="pill ${pass?'ok':'no'}">${pass?'LULUS':'EVALUASI'}</span></div>
-   <textarea class="in" rows="2" data-i="note" placeholder="Catatan penguji (opsional)">${esc(f.note)}</textarea>
-   <button class="btn w-full" data-a="save">Simpan hasil tes</button></div>`;
-}
-function vRekap(){
-  const rs=S.data.results.filter(r=>r.tested_on===S.rdate);
-  const gs=OUTLETS.map(o=>[o,rs.filter(r=>r.outlet===o)]).filter(g=>g[1].length);
-  const ps=rs.filter(r=>r.status==='LULUS').length;
-  return `<div class="card p-4 mb-3 space-y-3"><input type="date" class="in" data-c="rdate" value="${S.rdate}">
-   <p class="text-sm mu">${rs.length} hasil, ${ps} lulus, ${rs.length-ps} evaluasi</p>
-   <div class="flex gap-2"><button class="btn flex-1" data-a="png">Unduh Laporan PNG</button><button class="btn2" data-a="delday">Hapus hari ini</button></div></div>
-   ${gs.map(([o,a])=>`<div class="card p-3 mb-3" style="border-left:4px solid ${brand(o)}"><div class="font-semibold mb-2">${esc(o)}</div>
-    ${a.map(r=>`<div class="py-2 border-t" style="border-color:var(--ln)"><div class="flex justify-between gap-2"><div><div class="font-medium">${esc(r.employee_name)}</div><div class="text-xs mu">${catL(r.category)}</div></div>
-     <div class="text-right"><div class="font-semibold">${r.score}/${r.total} (${r.pct}%)</div><span class="pill ${r.status==='LULUS'?'ok':'no'}">${r.status}</span></div></div>
-     ${r.badges.length?`<div class="flex flex-wrap gap-1 mt-1">${r.badges.map(chip).join('')}</div>`:''}
-     ${r.note?`<p class="text-sm mu mt-1">${esc(r.note)}</p>`:''}
-     <button class="text-xs mt-1" style="color:#dc2626" data-a="delres" data-id="${r.id}">Hapus</button></div>`).join('')}</div>`).join('')||'<p class="mu text-center py-8">Belum ada hasil tes di tanggal ini.</p>'}`;
-}
-function vPoin(){
-  return ['reguler','leader'].map(c=>{const a=S.data.criteria[c];return `<div class="card p-4 mb-3"><div class="font-semibold mb-2">Poin ${catL(c)} (${a.length})</div>
-   ${a.map((t,i)=>`<div class="flex gap-1 items-center mb-2"><input class="in" data-c="crit" data-cat="${c}" data-i="${i}" value="${esc(t)}">
-    <button class="btn2" data-a="cmove" data-cat="${c}" data-i="${i}" data-d="-1" aria-label="Naik" ${i===0?'disabled':''}>↑</button>
-    <button class="btn2" data-a="cmove" data-cat="${c}" data-i="${i}" data-d="1" aria-label="Turun" ${i===a.length-1?'disabled':''}>↓</button>
-    <button class="btn2" style="color:#dc2626" data-a="cdel" data-cat="${c}" data-i="${i}" aria-label="Hapus">✕</button></div>`).join('')}
-   <div class="flex gap-2 mt-3"><input class="in" id="new-${c}" placeholder="Poin baru"><button class="btn" data-a="cadd" data-cat="${c}">Tambah</button></div></div>`}).join('');
-}
-function vKary(){
-  const es=S.data.employees.filter(e=>e.outlet===S.outlet);
-  return `<div class="card p-4 mb-3"><div class="font-semibold mb-2">Tambah karyawan</div>
-   <div class="flex gap-2"><input class="in" id="enew" placeholder="Nama karyawan"><select class="in" id="ecat" style="width:9rem"><option value="reguler">Reguler</option><option value="leader">Leader Bar</option></select></div>
-   <button class="btn w-full mt-2" data-a="eadd">Tambah</button></div>
-   ${es.map(e=>`<div class="card p-3 mb-3"><div class="flex gap-2 mb-2"><input class="in" data-c="ename" data-id="${e.id}" value="${esc(e.name)}">
-    <button class="btn2" style="color:#dc2626" data-a="edel" data-id="${e.id}">Hapus</button></div>
-    <div class="flex gap-2 mb-2">${['reguler','leader'].map(c=>`<button class="${e.category===c?'btn':'btn2'} flex-1" data-a="ecat" data-id="${e.id}" data-v="${c}">${catL(c)}</button>`).join('')}</div>
-    ${e.badges.map((b,i)=>`<div class="flex gap-2 items-center mb-2">${chip(b)}<input class="in" data-c="bt" data-id="${e.id}" data-i="${i}" value="${esc(b.t)}">
-     <select class="in" style="width:9rem" data-c="bc" data-id="${e.id}" data-i="${i}">${Object.entries(COL).map(([k,v])=>`<option value="${k}" ${b.c===k?'selected':''}>${v[0]}</option>`).join('')}</select>
-     <button class="btn2" style="color:#dc2626" data-a="bdel" data-id="${e.id}" data-i="${i}" aria-label="Hapus badge">✕</button></div>`).join('')}
-    <button class="btn2 text-sm" data-a="badd" data-id="${e.id}">+ Badge</button></div>`).join('')||'<p class="mu text-center py-8">Belum ada karyawan di outlet ini.</p>'}`;
-}
-function vAkun(){
-  return `<div class="card p-4 mb-3"><div class="font-semibold mb-2">Buat akun penguji</div>
-   <div class="flex gap-2"><input class="in" id="nu" placeholder="Username"><input class="in" id="np" placeholder="Password"></div>
-   <button class="btn w-full mt-2" data-a="acreate">Buat akun</button></div>
-   ${S.data.users.map(u=>`<div class="card p-3 mb-2"><div class="font-medium mb-2">${esc(u.username)}${u.is_dev?' (Developer)':''}</div>
-    <div class="flex flex-wrap gap-2"><button class="btn2" data-a="akelola" data-id="${u.id}">Kelola data</button>
-    ${u.is_dev?'':`<button class="btn2" data-a="aname" data-id="${u.id}" data-n="${esc(u.username)}">Ubah nama</button>`}
-    <button class="btn2" data-a="apass" data-id="${u.id}">Ubah password</button>
-    ${u.is_dev?'':`<button class="btn2" style="color:#dc2626" data-a="adel" data-id="${u.id}" data-n="${esc(u.username)}">Hapus</button>`}</div></div>`).join('')}`;
-}
-function render(){
-  const y=scrollY;
-  document.documentElement.classList.toggle('dark',S.theme==='dark');
-  document.documentElement.style.setProperty('--b',brand(S.outlet));
-  $('#app').innerHTML=S.me?(S.data?shell():'<p class="p-6 mu">Memuat data…</p>'):authV();
-  scrollTo(0,y);
-}
+        <div class="w-full max-w-sm space-y-6">
+            <div class="flex flex-col items-center text-center space-y-3">
+                <div class="w-20 h-20 rounded-3xl theme-primary-bg flex items-center justify-center shadow-lg">
+                    <svg class="w-11 h-11" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-black tracking-tight">Sertifikasi Karyawan</h1>
+                    <p id="auth-subtitle" class="text-sm font-semibold theme-muted-text mt-1">Masuk ke akun penguji atau developer</p>
+                </div>
+            </div>
 
-/* ---------- Laporan PNG (canvas high-DPI) ---------- */
-function rr(x,a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath()}
-function fit(x,t,w){if(x.measureText(t).width<=w)return t;while(t.length>1&&x.measureText(t+'…').width>w)t=t.slice(0,-1);return t+'…'}
-function png(){
-  const rs=S.data.results.filter(r=>r.tested_on===S.rdate);
-  if(!rs.length)return toast('Belum ada hasil di tanggal ini.');
-  const gs=OUTLETS.map(o=>[o,rs.filter(r=>r.outlet===o)]).filter(g=>g[1].length);
-  const W=900,P=32,sc=3,hh=40,rh=r=>58+(r.note?20:0);
-  let H=140;gs.forEach(([,a])=>{H+=hh+a.reduce((s,r)=>s+rh(r),0)+20});
-  const c=document.createElement('canvas');c.width=W*sc;c.height=H*sc;
-  const x=c.getContext('2d');x.scale(sc,sc);
-  const F='system-ui,-apple-system,"Segoe UI",sans-serif';
-  x.fillStyle='#fff';x.fillRect(0,0,W,H);
-  x.fillStyle='#1d1a18';x.font=`700 28px ${F}`;x.fillText('Laporan Tes Sertifikasi',P,56);
-  x.fillStyle='#6f6862';x.font=`400 16px ${F}`;
-  x.fillText(`${fmtDate(S.rdate)} - Penguji: ${S.data.owner_name}`,P,86);
-  const ps=rs.filter(r=>r.status==='LULUS').length;
-  x.fillText(`Total ${rs.length} karyawan: ${ps} lulus, ${rs.length-ps} evaluasi`,P,110);
-  let y=134;
-  gs.forEach(([o,a])=>{
-    x.fillStyle=brand(o);rr(x,P,y,W-2*P,hh,8);x.fill();
-    x.fillStyle='#fff';x.font=`700 17px ${F}`;x.fillText(o,P+14,y+26);y+=hh;
-    a.forEach(r=>{
-      x.fillStyle='#1d1a18';x.font=`600 16px ${F}`;x.fillText(fit(x,r.employee_name,520),P+6,y+26);
-      x.fillStyle='#6f6862';x.font=`400 13px ${F}`;x.fillText(catL(r.category),P+6,y+46);
-      let bx=P+6+x.measureText(catL(r.category)).width+12;
-      r.badges.forEach(b=>{
-        x.font=`600 12px ${F}`;const w=x.measureText(b.t).width+16;
-        x.fillStyle=(COL[b.c]||COL.amber)[1];rr(x,bx,y+34,w,17,8.5);x.fill();
-        x.fillStyle=b.c==='amber'?'#1d1a18':'#fff';x.fillText(b.t,bx+8,y+47);bx+=w+6;
-      });
-      x.textAlign='right';x.fillStyle='#1d1a18';x.font=`700 16px ${F}`;x.fillText(`${r.score}/${r.total} (${r.pct}%)`,W-P-6,y+26);
-      x.fillStyle=r.status==='LULUS'?'#15803d':'#b91c1c';x.font=`700 14px ${F}`;x.fillText(r.status,W-P-6,y+46);
-      x.textAlign='left';
-      if(r.note){x.fillStyle='#6f6862';x.font=`italic 13px ${F}`;x.fillText(fit(x,'Catatan: '+r.note,W-2*P-12),P+6,y+68)}
-      y+=rh(r);x.fillStyle='#e5e0db';x.fillRect(P,y-4,W-2*P,1);
-    });
-    y+=20;
-  });
-  c.toBlob(b=>{const l=document.createElement('a');l.href=URL.createObjectURL(b);l.download=`laporan-sertifikasi-${S.rdate}.png`;l.click();setTimeout(()=>URL.revokeObjectURL(l.href),5e3)});
-}
+            <div class="theme-surface border rounded-3xl p-6 shadow-md space-y-4">
+                <div class="grid grid-cols-2 gap-1.5 p-1 rounded-2xl theme-soft border theme-border">
+                    <button type="button" id="btn-auth-mode-login" class="py-2 rounded-xl text-sm font-extrabold theme-primary-bg transition-all cursor-pointer">
+                        Masuk
+                    </button>
+                    <button type="button" id="btn-auth-mode-register" class="py-2 rounded-xl text-sm font-extrabold theme-muted-text transition-all cursor-pointer">
+                        Daftar Akun
+                    </button>
+                </div>
 
-/* ---------- Events ---------- */
-const emp$=id=>S.data.employees.find(e=>e.id===id);
-const saveEmp=(e,ch)=>{const n={...e,...ch};return act('sert_upsert_employee',{...T(),p_id:n.id,p_outlet:n.outlet,p_name:n.name,p_category:n.category,p_badges:n.badges})};
-const setCrit=(c,arr)=>{S.data.criteria[c]=arr;render();return act('sert_set_criteria',{...T(),p_category:c,p_items:arr})};
-const A={
-  mode(){S.mode=S.mode==='login'?'register':'login';S.err='';render()},
-  async auth(){
-    const u=$('#u').value,p=$('#p').value;S.u=u;S.err='';
-    try{const r=await rpc(S.mode==='register'?'sert_register':'sert_login',{p_username:u,p_password:p});
-      S.me={token:r.token,id:r.id,username:r.username,is_dev:r.is_dev};ls.set('me',S.me);S.u='';await load(true)}
-    catch(e){S.err=errM(e);render()}
-  },
-  theme(){S.theme=S.theme==='dark'?'light':'dark';ls.set('theme',S.theme);render()},
-  logout(){logout()},
-  tab(el){S.tab=el.dataset.t;render()},
-  fcat(el){S.form.cat=el.dataset.v;S.form.checks={};render()},
-  async save(){
-    const d=S.data,f=S.form,man=f.emp==='__m',emp=emp$(f.emp);
-    const name=man?f.manual.trim():emp?emp.name:'';
-    if(!name)return toast('Pilih karyawan atau isi nama manual.');
-    const cat=f.cat||(emp?emp.category:'reguler'),items=d.criteria[cat]||[];
-    if(!items.length)return toast('Belum ada poin penilaian.');
-    const score=items.filter((_,i)=>f.checks[i]).length;
-    const ok=await act('sert_save_result',{...T(),p_data:{tested_on:f.date,outlet:S.outlet,employee_name:name,category:cat,badges:emp?emp.badges:[],scores:items.map((t,i)=>({t,ok:!!f.checks[i]})),score,total:items.length,note:f.note}});
-    if(ok){S.form={...newForm(),date:f.date};S.rdate=f.date;render();toast('Hasil tes disimpan.')}
-  },
-  async delres(el){if(confirm('Hapus hasil tes ini?'))act('sert_delete_results',{...T(),p_ids:[el.dataset.id]})},
-  async delday(){
-    const ids=S.data.results.filter(r=>r.tested_on===S.rdate).map(r=>r.id);
-    if(ids.length&&confirm(`Hapus ${ids.length} hasil pada ${fmtDate(S.rdate)}?`))act('sert_delete_results',{...T(),p_ids:ids});
-  },
-  png,
-  cmove(el){const{cat,i,d}=el.dataset,a=[...S.data.criteria[cat]],j=+i+ +d;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];setCrit(cat,a)},
-  cdel(el){const{cat,i}=el.dataset;if(!confirm('Hapus poin ini?'))return;const a=[...S.data.criteria[cat]];a.splice(+i,1);setCrit(cat,a)},
-  cadd(el){const c=el.dataset.cat,v=$('#new-'+c).value.trim();if(v)setCrit(c,[...S.data.criteria[c],v])},
-  eadd(){const n=$('#enew').value.trim();if(!n)return toast('Isi nama karyawan.');act('sert_upsert_employee',{...T(),p_id:null,p_outlet:S.outlet,p_name:n,p_category:$('#ecat').value,p_badges:[]})},
-  edel(el){const e=emp$(el.dataset.id);if(confirm(`Hapus karyawan ${e.name}?`))act('sert_delete_employee',{...T(),p_id:e.id})},
-  ecat(el){const e=emp$(el.dataset.id);if(e.category!==el.dataset.v)saveEmp(e,{category:el.dataset.v})},
-  badd(el){const e=emp$(el.dataset.id);saveEmp(e,{badges:[...e.badges,{t:'Badge baru',c:'amber'}]})},
-  bdel(el){const e=emp$(el.dataset.id),b=[...e.badges];b.splice(+el.dataset.i,1);saveEmp(e,{badges:b})},
-  acreate(){act('sert_admin_create',{p_username:$('#nu').value,p_password:$('#np').value}).then(ok=>ok&&toast('Akun dibuat.'))},
-  akelola(el){S.target=el.dataset.id===S.me.id?null:el.dataset.id;S.form=newForm();S.tab='poin';load(true)},
-  aname(el){const n=prompt('Username baru untuk '+el.dataset.n+':',el.dataset.n);if(n&&n!==el.dataset.n)act('sert_admin_rename',{p_id:el.dataset.id,p_new:n}).then(ok=>ok&&toast('Nama diubah. Riwayat ikut pindah.'))},
-  apass(el){const n=prompt('Password baru (min. 4 karakter):');if(n)act('sert_admin_password',{p_id:el.dataset.id,p_new:n}).then(ok=>ok&&toast('Password diubah.'))},
-  adel(el){if(confirm(`Hapus akun ${el.dataset.n} beserta seluruh datanya?`))act('sert_admin_delete',{p_id:el.dataset.id}).then(()=>{if(S.target===el.dataset.id){S.target=null;load(true)}})},
-};
-document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(el&&A[el.dataset.a])A[el.dataset.a](el)});
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!S.me&&(e.target.id==='u'||e.target.id==='p'))A.auth()});
-document.addEventListener('input',e=>{const i=e.target.dataset.i;if(e.target.dataset.i&&(i==='manual'||i==='note'))S.form[i]=e.target.value});
-document.addEventListener('change',e=>{
-  const el=e.target,c=el.dataset.c;if(!c)return;
-  const f=S.form,v=el.value;
-  if(c==='outlet'){S.outlet=v;S.form={...newForm(),date:f.date};render()}
-  else if(c==='fdate'){f.date=v;render()}
-  else if(c==='emp'){f.emp=v;f.cat=null;f.checks={};render()}
-  else if(c==='chk'){f.checks[el.dataset.i]=el.checked;render()}
-  else if(c==='rdate'){S.rdate=v||today();render()}
-  else if(c==='target'){S.target=v===S.me.id?null:v;S.form=newForm();load(true)}
-  else if(c==='crit'){const a=[...S.data.criteria[el.dataset.cat]];if(!v.trim())return render();a[+el.dataset.i]=v.trim();setCrit(el.dataset.cat,a)}
-  else if(c==='ename'){const e=emp$(el.dataset.id);if(v.trim())saveEmp(e,{name:v.trim()});else render()}
-  else if(c==='bt'||c==='bc'){const e=emp$(el.dataset.id),b=e.badges.map(x=>({...x}));b[+el.dataset.i][c==='bt'?'t':'c']=v.trim()||b[+el.dataset.i].t;saveEmp(e,{badges:b})}
-});
+                <form id="form-auth" class="space-y-3.5">
+                    <div>
+                        <label for="auth-username" class="block text-xs font-extrabold uppercase tracking-wider theme-muted-text mb-1.5">
+                            Username
+                        </label>
+                        <input type="text" id="auth-username" autocomplete="username" autocapitalize="none" placeholder="Masukkan username..." class="theme-input w-full rounded-2xl px-4 py-3 text-sm font-bold" required>
+                    </div>
 
-/* ---------- Sinkronisasi otomatis lintas perangkat ---------- */
-setInterval(()=>{if(document.hidden||!S.me)return;const a=document.activeElement;if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))return;load()},5000);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)load()});
-addEventListener('online',()=>load());
-render();load(true);
-</script>
+                    <div>
+                        <label for="auth-password" class="block text-xs font-extrabold uppercase tracking-wider theme-muted-text mb-1.5">
+                            Password
+                        </label>
+                        <input type="password" id="auth-password" autocomplete="current-password" placeholder="Masukkan password..." class="theme-input w-full rounded-2xl px-4 py-3 text-sm font-bold" required>
+                    </div>
+
+                    <div id="auth-error-box" class="hidden text-xs font-bold text-red-500 bg-red-500/10 border border-red-500/25 rounded-xl px-3.5 py-2.5 text-center">
+                        Username atau password salah.
+                    </div>
+
+                    <button type="submit" id="btn-auth-submit" class="w-full theme-primary-bg py-3.5 rounded-2xl font-extrabold text-base shadow-md cursor-pointer mt-1">
+                        Masuk Sekarang
+                    </button>
+                </form>
+
+                <div class="text-center pt-1">
+                    <button type="button" id="btn-auth-switch-link" class="text-xs font-bold theme-muted-text hover:underline cursor-pointer">
+                        Belum punya akun? <span class="theme-primary-text font-extrabold">Daftar di sini</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== APLIKASI UTAMA (SETELAH LOGIN) ==================== -->
+    <div id="app-wrapper" class="hidden pb-24">
+        <header class="sticky top-0 z-30 theme-surface border-b px-4 py-3 shadow-xs">
+            <div class="max-w-md md:max-w-2xl mx-auto flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="w-9 h-9 rounded-xl theme-primary-bg flex items-center justify-center shadow-xs shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div class="min-w-0">
+                        <h1 class="text-sm sm:text-base font-bold leading-tight tracking-tight truncate">Tes Sertifikasi Karyawan</h1>
+                        <div class="flex items-center gap-1.5 mt-0.5 flex-wrap">
+                            <span id="header-date-badge" class="text-[11px] font-medium theme-muted-text truncate">Hari Ini</span>
+                            <span class="text-[10px] theme-muted-text">•</span>
+                            <span id="header-brand-pill" class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded theme-primary-light">
+                                Chatting
+                            </span>
+                            <span class="text-[10px] theme-muted-text">•</span>
+                            <span id="header-user-badge" class="text-[10px] font-bold theme-primary-text truncate max-w-[110px]">
+                                @user
+                            </span>
+                            <span id="header-storage-status" class="text-[9px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-500 border border-emerald-500/30">
+                                Local Storage
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <button type="button" id="btn-toggle-dark" aria-label="Ganti Mode Terang atau Gelap" title="Ganti Mode Terang / Gelap" class="w-9 h-9 rounded-xl border theme-border theme-soft flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
+                        <svg id="icon-sun" class="w-4 h-4 hidden text-amber-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg id="icon-moon" class="w-4 h-4 theme-primary-text" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <button type="button" id="btn-header-logout" aria-label="Keluar Akun" title="Keluar Akun" class="w-9 h-9 rounded-xl border theme-border theme-soft flex items-center justify-center text-red-500 cursor-pointer active:scale-95 transition-transform">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-md md:max-w-2xl mx-auto px-4 pt-4">
+
+            <!-- ==================== TAB 1: PENILAIAN ==================== -->
+            <section id="tab-penilaian" class="space-y-4">
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3.5">
+                    <div>
+                        <label for="select-outlet" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text mb-1.5">
+                            Pilih Outlet
+                        </label>
+                        <div class="relative">
+                            <select id="select-outlet" class="theme-input w-full rounded-xl px-3.5 py-3 text-sm font-semibold appearance-none pr-10 cursor-pointer">
+                                <option value="Chatting 2 S.Parman">Chatting 2 S.Parman</option>
+                                <option value="Chatting 3 Ampera">Chatting 3 Ampera</option>
+                                <option value="Chatting 4 Paris II">Chatting 4 Paris II</option>
+                                <option value="Chatting 5 Untan">Chatting 5 Untan</option>
+                                <option value="Chatting 6 Tanray II">Chatting 6 Tanray II</option>
+                                <option value="Chatting 7 Sumatra">Chatting 7 Sumatra</option>
+                                <option value="Chatting 8 Karet">Chatting 8 Karet</option>
+                                <option value="Jolie Sumatra">Jolie Sumatra</option>
+                                <option value="Zola Sulawesi">Zola Sulawesi</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 theme-primary-text">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label for="input-tanggal" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text mb-1.5">
+                                Tanggal Tes
+                            </label>
+                            <input type="date" id="input-tanggal" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-medium">
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1.5">
+                                <label for="select-karyawan" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text">
+                                    Nama Karyawan
+                                </label>
+                                <button type="button" id="btn-toggle-manual-emp" class="text-[11px] font-semibold theme-primary-text underline cursor-pointer">
+                                    + Input Manual
+                                </button>
+                            </div>
+                            <div id="wrapper-select-emp" class="relative">
+                                <select id="select-karyawan" class="theme-input w-full rounded-xl pl-3.5 pr-28 py-2.5 text-sm font-semibold appearance-none cursor-pointer">
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center gap-1.5 pr-3">
+                                    <span id="dropdown-emp-badge" class="hidden text-[9px] font-extrabold uppercase tracking-tight px-1.5 py-0.5 rounded leading-none">
+                                        Leader Bar
+                                    </span>
+                                    <svg class="w-4 h-4 theme-primary-text shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div id="wrapper-manual-emp" class="hidden relative">
+                                <input type="text" id="input-manual-karyawan" placeholder="Ketik nama karyawan..." class="theme-input w-full rounded-xl pl-3.5 pr-24 py-2.5 text-sm font-medium">
+                                <span id="manual-emp-badge" class="pointer-events-none hidden absolute right-3 top-1/2 -translate-y-1/2 text-[9px] font-extrabold uppercase tracking-tight px-1.5 py-0.5 rounded leading-none">
+                                    Leader Bar
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="active-employee-role-bar" class="pt-2.5 border-t theme-border flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span id="active-emp-name-display" class="text-xs font-bold truncate">-</span>
+                            <span id="active-emp-inline-badge" class="hidden text-[10px] font-extrabold px-2 py-0.5 rounded-full shrink-0"></span>
+                        </div>
+                        <span id="active-criteria-mode-label" class="text-[11px] font-semibold theme-muted-text shrink-0">
+                            Kriteria Reguler
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Kartu Poin Penilaian -->
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs">
+                    <div class="flex items-center justify-between mb-3">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 id="checklist-card-title" class="text-sm font-bold">Poin Penilaian</h2>
+                                <span id="checklist-leader-pill" class="hidden text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-600 border border-amber-500/30">
+                                    Leader Bar
+                                </span>
+                            </div>
+                            <p id="checklist-card-subtitle" class="text-xs theme-muted-text">Ketuk kriteria yang lulus / terpenuhi</p>
+                        </div>
+                        <button type="button" id="btn-check-all" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg theme-primary-light cursor-pointer shrink-0">
+                            Pilih Semua
+                        </button>
+                    </div>
+
+                    <div id="checklist-container" class="space-y-2.5"></div>
+
+                    <div class="mt-4 pt-3 border-t theme-border">
+                        <label for="input-catatan" class="block text-xs font-semibold theme-muted-text mb-1">
+                            Catatan Penguji (Opsional)
+                        </label>
+                        <input type="text" id="input-catatan" placeholder="Misal: Perlu tingkatkan kecepatan..." class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm">
+                    </div>
+                </div>
+
+                <!-- Ringkasan Skor Real-Time & Tombol Simpan -->
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs flex items-center justify-between gap-3">
+                    <div>
+                        <span class="text-xs font-medium theme-muted-text block">Skor Sertifikasi</span>
+                        <div class="flex items-baseline gap-2">
+                            <span id="live-score-text" class="text-2xl font-extrabold theme-primary-text">0/5</span>
+                            <span id="live-status-badge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-500">
+                                Perlu Evaluasi
+                            </span>
+                        </div>
+                    </div>
+                    <button type="button" id="btn-simpan-tes" class="theme-primary-bg px-5 py-3.5 rounded-xl font-bold text-sm shadow-md flex items-center gap-2 cursor-pointer">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Simpan Hasil Tes
+                    </button>
+                </div>
+            </section>
+
+            <!-- ==================== TAB 2: REKAP & UNDUH ==================== -->
+            <section id="tab-rekap" class="hidden space-y-4">
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3.5">
+                    <div class="flex items-center justify-between gap-3">
+                        <div class="flex-1">
+                            <label for="rekap-tanggal" class="block text-xs font-semibold uppercase tracking-wider theme-muted-text mb-1">
+                                Tanggal Laporan Harian
+                            </label>
+                            <input type="date" id="rekap-tanggal" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold">
+                        </div>
+                        <div class="text-right pt-4 flex flex-col items-end gap-1">
+                            <span id="rekap-total-count" class="text-xs font-bold px-3 py-2 rounded-xl theme-primary-light inline-block">
+                                0 Peserta
+                            </span>
+                        </div>
+                    </div>
+
+                    <button type="button" id="btn-generate-image" class="w-full theme-primary-bg py-3.5 px-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Buat & Download Gambar (1 Hari)
+                    </button>
+
+                    <div id="wrapper-clear-day" class="hidden pt-1 border-t theme-border flex justify-end">
+                        <button type="button" id="btn-clear-day" class="text-xs font-semibold text-red-500 hover:underline py-1 cursor-pointer">
+                            Hapus Semua Data Tanggal Ini
+                        </button>
+                    </div>
+                </div>
+
+                <div id="rekap-list-container" class="space-y-3"></div>
+            </section>
+
+            <!-- ==================== TAB 3: SETTING / PANEL DEVELOPER ==================== -->
+            <section id="tab-setting" class="hidden space-y-4">
+
+                <!-- Info Akun Aktif -->
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-10 h-10 rounded-xl theme-primary-light flex items-center justify-center font-extrabold text-sm shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                        <div class="min-w-0">
+                            <span id="setting-role-label" class="text-[11px] font-semibold theme-muted-text block">Akun Penguji Aktif</span>
+                            <span id="setting-username-display" class="text-sm font-bold truncate block">-</span>
+                        </div>
+                    </div>
+                    <button type="button" id="btn-setting-logout" class="text-xs font-bold px-3.5 py-2 rounded-xl border border-red-500/30 text-red-500 bg-red-500/10 active:scale-95 cursor-pointer shrink-0">
+                        Keluar Akun
+                    </button>
+                </div>
+
+                <!-- Panel Kontrol Developer (Hanya untuk username: developer) -->
+                <div id="developer-control-panel" class="hidden theme-surface border-2 border-amber-500/40 rounded-2xl p-4 shadow-xs space-y-4">
+                    <div class="flex items-center justify-between gap-2 pb-2.5 border-b theme-border">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 text-amber-500 border border-amber-500/30">
+                                    Developer Mode
+                                </span>
+                                <h2 class="text-sm font-extrabold">Kontrol Seluruh Akun Terdaftar</h2>
+                            </div>
+                            <p class="text-xs theme-muted-text mt-0.5">Buat, ubah nama/username, ganti password, hapus akun, atau pilih target data</p>
+                        </div>
+                    </div>
+
+                    <!-- Pilih Akun Target untuk Diedit -->
+                    <div>
+                        <label for="dev-target-account" class="block text-xs font-bold theme-muted-text mb-1">
+                            Target Akun yang Diedit (Poin Penilaian & Karyawan)
+                        </label>
+                        <select id="dev-target-account" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-bold"></select>
+                    </div>
+
+                    <!-- Form Tambah Akun Baru -->
+                    <form id="form-dev-add-account" class="p-3 rounded-xl theme-soft border theme-border space-y-2.5">
+                        <span class="text-xs font-extrabold block">Tambah Akun Baru</span>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="text" id="dev-new-username" placeholder="Username baru..." class="theme-input rounded-xl px-3 py-2 text-xs font-semibold" required>
+                            <input type="text" id="dev-new-password" placeholder="Password baru..." class="theme-input rounded-xl px-3 py-2 text-xs font-semibold" required>
+                        </div>
+                        <button type="submit" class="w-full theme-primary-bg py-2.5 rounded-xl font-bold text-xs cursor-pointer">
+                            + Buat Akun
+                        </button>
+                    </form>
+
+                    <!-- Daftar Semua Akun Terdaftar -->
+                    <div class="space-y-2">
+                        <span class="text-xs font-extrabold theme-muted-text block">Daftar Akun Terdaftar</span>
+                        <div id="dev-account-list" class="space-y-2"></div>
+                    </div>
+                </div>
+
+                <!-- 1. Kelola Poin Penilaian (Reguler & Leader Bar) -->
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
+                    <div>
+                        <h2 class="text-sm font-bold">1. Kelola Poin Penilaian</h2>
+                        <p class="text-xs theme-muted-text">Tambah, edit, urutkan, atau hapus kriteria Reguler dan Leader Bar</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-1.5 p-1 rounded-xl theme-soft border theme-border">
+                        <button type="button" id="btn-crit-tab-regular" class="py-2 px-3 rounded-lg text-xs font-bold theme-primary-bg transition-all cursor-pointer">
+                            Karyawan Reguler
+                        </button>
+                        <button type="button" id="btn-crit-tab-leader" class="py-2 px-3 rounded-lg text-xs font-bold theme-muted-text transition-all cursor-pointer flex items-center justify-center gap-1">
+                            <span>Leader Bar</span>
+                        </button>
+                    </div>
+
+                    <form id="form-add-criteria" class="flex gap-2">
+                        <input type="text" id="input-new-criteria" placeholder="Nama kriteria baru..." class="theme-input flex-1 rounded-xl px-3.5 py-2.5 text-sm" required>
+                        <button type="submit" class="theme-primary-bg px-4 py-2.5 rounded-xl font-bold text-sm shrink-0 cursor-pointer">
+                            + Tambah
+                        </button>
+                    </form>
+
+                    <div id="setting-criteria-list" class="space-y-2 pt-1"></div>
+                </div>
+
+                <!-- 2. Kelola Daftar Karyawan & Custom Badge per Outlet -->
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
+                    <div>
+                        <h2 class="text-sm font-bold">2. Kelola Daftar Karyawan & Badge</h2>
+                        <p class="text-xs theme-muted-text">Atur daftar nama karyawan, status Leader Bar, serta custom badge</p>
+                    </div>
+
+                    <div>
+                        <label for="setting-select-outlet" class="block text-xs font-semibold theme-muted-text mb-1">
+                            Pilih Outlet Target
+                        </label>
+                        <select id="setting-select-outlet" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold">
+                            <option value="Chatting 2 S.Parman">Chatting 2 S.Parman</option>
+                            <option value="Chatting 3 Ampera">Chatting 3 Ampera</option>
+                            <option value="Chatting 4 Paris II">Chatting 4 Paris II</option>
+                            <option value="Chatting 5 Untan">Chatting 5 Untan</option>
+                            <option value="Chatting 6 Tanray II">Chatting 6 Tanray II</option>
+                            <option value="Chatting 7 Sumatra">Chatting 7 Sumatra</option>
+                            <option value="Chatting 8 Karet">Chatting 8 Karet</option>
+                            <option value="Jolie Sumatra">Jolie Sumatra</option>
+                            <option value="Zola Sulawesi">Zola Sulawesi</option>
+                        </select>
+                    </div>
+
+                    <form id="form-add-employee" class="space-y-2.5">
+                        <div class="flex gap-2">
+                            <input type="text" id="input-new-employee" placeholder="Nama karyawan baru..." class="theme-input flex-1 rounded-xl px-3.5 py-2.5 text-sm" required>
+                            <button type="submit" class="theme-primary-bg px-4 py-2.5 rounded-xl font-bold text-sm shrink-0 cursor-pointer">
+                                + Tambah
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="text" id="input-new-emp-badge" placeholder="Label badge (opsional, misal: Senior)" class="theme-input rounded-xl px-3 py-2 text-xs font-medium">
+                            <select id="select-new-emp-badge-color" class="theme-input rounded-xl px-3 py-2 text-xs font-semibold">
+                                <option value="amber">Warna Badge: Amber / Emas</option>
+                                <option value="emerald">Warna Badge: Hijau / Emerald</option>
+                                <option value="sky">Warna Badge: Biru / Sky</option>
+                                <option value="rose">Warna Badge: Merah / Rose</option>
+                                <option value="violet">Warna Badge: Ungu / Violet</option>
+                            </select>
+                        </div>
+                        <label class="flex items-center gap-2 text-xs font-semibold cursor-pointer select-none px-1">
+                            <input type="checkbox" id="checkbox-new-emp-leader" class="w-4 h-4 rounded accent-amber-500 cursor-pointer">
+                            <span>Gunakan kriteria <span class="text-amber-600 font-bold">Leader Bar</span> (Otomatis beri badge Leader Bar jika label kosong)</span>
+                        </label>
+                    </form>
+
+                    <div id="setting-employee-list" class="space-y-2 pt-1"></div>
+                </div>
+
+                <!-- Reset Data Default -->
+                <div class="theme-surface border rounded-2xl p-4 shadow-xs flex items-center justify-between gap-3">
+                    <div>
+                        <h3 class="text-xs font-bold">Reset Pengaturan Awal</h3>
+                        <p class="text-[11px] theme-muted-text">Kembalikan poin & daftar karyawan ke bawaan awal</p>
+                    </div>
+                    <button type="button" id="btn-reset-default" class="text-xs font-semibold px-3 py-2 rounded-xl border border-red-500/30 text-red-500 bg-red-500/10 active:scale-95 cursor-pointer shrink-0">
+                        Reset Default
+                    </button>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Navigasi Bawah -->
+        <nav class="fixed bottom-0 inset-x-0 z-30 theme-surface border-t shadow-lg">
+            <div class="max-w-md md:max-w-2xl mx-auto grid grid-cols-3 h-16">
+                <button type="button" data-tab="penilaian" class="nav-btn flex flex-col items-center justify-center gap-1 theme-primary-text font-bold text-xs cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                    </svg>
+                    <span>Penilaian</span>
+                </button>
+                <button type="button" data-tab="rekap" class="nav-btn flex flex-col items-center justify-center gap-1 theme-muted-text font-medium text-xs cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>Rekap & Unduh</span>
+                </button>
+                <button type="button" data-tab="setting" class="nav-btn flex flex-col items-center justify-center gap-1 theme-muted-text font-medium text-xs cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span>Setting</span>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Modal Edit Akun oleh Developer -->
+    <div id="modal-dev-edit-account" class="fixed inset-0 z-50 hidden bg-black/65 flex items-center justify-center p-4">
+        <div class="theme-surface border rounded-2xl max-w-xs w-full p-5 shadow-xl space-y-3.5">
+            <h3 class="font-bold text-base">Edit Akun Terdaftar</h3>
+            <div>
+                <label class="block text-xs font-bold theme-muted-text mb-1">Username / Nama Akun</label>
+                <input type="text" id="input-dev-edit-username" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold">
+            </div>
+            <div>
+                <label class="block text-xs font-bold theme-muted-text mb-1">Password Baru</label>
+                <input type="text" id="input-dev-edit-password" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold">
+            </div>
+            <div class="flex gap-2.5 pt-1">
+                <button type="button" id="btn-dev-edit-cancel" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-soft border theme-border cursor-pointer">
+                    Batal
+                </button>
+                <button type="button" id="btn-dev-edit-save" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-primary-bg cursor-pointer">
+                    Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Badge Karyawan -->
+    <div id="modal-edit-emp-badge" class="fixed inset-0 z-50 hidden bg-black/65 flex items-center justify-center p-4">
+        <div class="theme-surface border rounded-2xl max-w-xs w-full p-5 shadow-xl space-y-3.5">
+            <h3 class="font-bold text-base">Atur Badge Karyawan</h3>
+            <p id="edit-badge-emp-name" class="text-xs font-bold theme-primary-text">-</p>
+            <div>
+                <label class="block text-xs font-bold theme-muted-text mb-1">Teks Badge (Kosongkan untuk hapus badge)</label>
+                <input type="text" id="input-edit-emp-badge" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold" placeholder="Misal: Leader Bar, Senior, Trainer...">
+            </div>
+            <div>
+                <label class="block text-xs font-bold theme-muted-text mb-1">Warna Badge</label>
+                <select id="select-edit-emp-badge-color" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-semibold">
+                    <option value="amber">Amber / Emas</option>
+                    <option value="emerald">Hijau / Emerald</option>
+                    <option value="sky">Biru / Sky</option>
+                    <option value="rose">Merah / Rose</option>
+                    <option value="violet">Ungu / Violet</option>
+                </select>
+            </div>
+            <label class="flex items-center gap-2 text-xs font-semibold cursor-pointer select-none">
+                <input type="checkbox" id="checkbox-edit-emp-leader" class="w-4 h-4 rounded accent-amber-500 cursor-pointer">
+                <span>Gunakan Poin Penilaian Leader Bar</span>
+            </label>
+            <div class="flex gap-2.5 pt-1">
+                <button type="button" id="btn-edit-badge-cancel" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-soft border theme-border cursor-pointer">
+                    Batal
+                </button>
+                <button type="button" id="btn-edit-badge-save" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-primary-bg cursor-pointer">
+                    Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Preview Gambar & Download -->
+    <div id="modal-preview" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="theme-surface border rounded-2xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+            <div class="px-4 py-3 border-b theme-border flex items-center justify-between">
+                <h3 class="font-bold text-sm">Preview Laporan Gambar</h3>
+                <button type="button" id="btn-close-modal" class="p-1.5 rounded-lg theme-muted-text hover:opacity-80 cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="p-4 overflow-y-auto theme-soft flex-1 flex justify-center">
+                <img id="preview-img-result" src="" alt="Preview Laporan Sertifikasi" class="max-w-full h-auto rounded-xl shadow-md border theme-border">
+            </div>
+            <div class="p-4 border-t theme-border theme-surface flex gap-2.5">
+                <button type="button" id="btn-download-png" class="flex-1 theme-primary-bg py-3 px-4 rounded-xl font-bold text-sm shadow flex items-center justify-center gap-2 cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Simpan ke Galeri (PNG)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi Custom -->
+    <div id="modal-confirm" class="fixed inset-0 z-50 hidden bg-black/65 flex items-center justify-center p-4">
+        <div class="theme-surface border rounded-2xl max-w-xs w-full p-5 shadow-xl space-y-4">
+            <h3 id="confirm-title" class="font-bold text-base">Konfirmasi</h3>
+            <p id="confirm-message" class="text-sm theme-muted-text">Apakah Anda yakin?</p>
+            <div class="flex gap-2.5 pt-1">
+                <button type="button" id="btn-confirm-cancel" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-soft border theme-border cursor-pointer">
+                    Batal
+                </button>
+                <button type="button" id="btn-confirm-ok" class="flex-1 py-2.5 rounded-xl font-semibold text-sm bg-red-600 text-white cursor-pointer">
+                    Ya, Lanjutkan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Kriteria -->
+    <div id="modal-edit-criteria" class="fixed inset-0 z-50 hidden bg-black/65 flex items-center justify-center p-4">
+        <div class="theme-surface border rounded-2xl max-w-xs w-full p-5 shadow-xl space-y-4">
+            <h3 class="font-bold text-base">Edit Poin Penilaian</h3>
+            <input type="text" id="input-edit-criteria" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-medium" placeholder="Nama kriteria...">
+            <div class="flex gap-2.5 pt-1">
+                <button type="button" id="btn-edit-crit-cancel" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-soft border theme-border cursor-pointer">
+                    Batal
+                </button>
+                <button type="button" id="btn-edit-crit-save" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-primary-bg cursor-pointer">
+                    Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifikasi -->
+    <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-opacity duration-300">
+        <div class="bg-neutral-900 text-white border border-white/15 text-xs font-semibold px-4 py-2.5 rounded-full shadow-lg flex items-center gap-2">
+            <span id="toast-text">Tersimpan!</span>
+        </div>
+    </div>
+
+    <!-- Hidden Canvas untuk Render Gambar Laporan -->
+    <canvas id="export-canvas" class="hidden"></canvas>
+
+    <script>
+        /* ==================== KONFIGURASI LOCAL STORAGE ==================== */
+        const ACCOUNTS_KEY = "sertifikasi_accounts_v1";
+        const ACTIVE_USER_KEY = "sertifikasi_active_user_v1";
+        const DATA_PREFIX = "sertifikasi_data_v1_";
+        const DARK_MODE_KEY = "sertifikasi_dark_mode_v1";
+
+        const OUTLETS = [
+            "Chatting 2 S.Parman",
+            "Chatting 3 Ampera",
+            "Chatting 4 Paris II",
+            "Chatting 5 Untan",
+            "Chatting 6 Tanray II",
+            "Chatting 7 Sumatra",
+            "Chatting 8 Karet",
+            "Jolie Sumatra",
+            "Zola Sulawesi"
+        ];
+
+        const DEFAULT_LEADER_BAR_NAMES = [
+            "Alip", "Kamira", "Mayang", "Farhan", "Fatur", "Hesti",
+            "Fajar", "Rafli", "Zeka", "Subhan", "Lan", "Lisa",
+            "Irham", "Selvira", "Umi", "Haru", "Rito", "Vivi"
+        ];
+
+        const DEFAULT_LEADER_SET = new Set(DEFAULT_LEADER_BAR_NAMES.map(n => n.toLowerCase()));
+
+        const BADGE_PALETTES = {
+            amber: {
+                lightBg: '#FEF3C7', lightText: '#B45309', lightBorder: '#FDE68A',
+                darkBg: 'rgba(245, 158, 11, 0.22)', darkText: '#FBBF24', darkBorder: 'rgba(251, 191, 36, 0.35)'
+            },
+            emerald: {
+                lightBg: '#DCFCE7', lightText: '#166534', lightBorder: '#BBF7D0',
+                darkBg: 'rgba(16, 185, 129, 0.22)', darkText: '#6EE7B7', darkBorder: 'rgba(52, 211, 153, 0.35)'
+            },
+            sky: {
+                lightBg: '#E0F2FE', lightText: '#0369A1', lightBorder: '#BAE6FD',
+                darkBg: 'rgba(14, 165, 233, 0.22)', darkText: '#7DD3FC', darkBorder: 'rgba(56, 189, 248, 0.35)'
+            },
+            rose: {
+                lightBg: '#FFE4E6', lightText: '#BE123C', lightBorder: '#FECDD3',
+                darkBg: 'rgba(244, 63, 94, 0.22)', darkText: '#FDA4AF', darkBorder: 'rgba(251, 113, 133, 0.35)'
+            },
+            violet: {
+                lightBg: '#EDE9FE', lightText: '#6D28D9', lightBorder: '#DDD6FE',
+                darkBg: 'rgba(139, 92, 246, 0.22)', darkText: '#C4B5FD', darkBorder: 'rgba(167, 139, 250, 0.35)'
+            }
+        };
+
+        const BRAND_THEMES = {
+            chatting: {
+                light: {
+                    key: 'chatting', label: 'Chatting', bodyClass: 'theme-chatting-light',
+                    primary: '#D97757', headerText: '#FFFFFF', bgSoft: '#FBF6F3',
+                    bgCard: '#FFFFFF', rowBg: '#FFFFFF', border: '#EFD7CB',
+                    pillBg: '#FCE8DF', pillText: '#C6613F', textMain: '#1F1A17', textMuted: '#75635A'
+                },
+                dark: {
+                    key: 'chatting', label: 'Chatting', bodyClass: 'theme-chatting-dark is-dark',
+                    primary: '#E07A5F', headerText: '#FFFFFF', bgSoft: '#191311',
+                    bgCard: '#241B18', rowBg: '#302420', border: '#3D2E29',
+                    pillBg: '#3D2821', pillText: '#F4A28C', textMain: '#F6EFEA', textMuted: '#B8A59C'
+                }
+            },
+            jolie: {
+                light: {
+                    key: 'jolie', label: 'Jolie', bodyClass: 'theme-jolie-light',
+                    primary: '#4A2C2A', headerText: '#FFFFFF', bgSoft: '#FAF6F3',
+                    bgCard: '#FFFFFF', rowBg: '#FFFFFF', border: '#DFD2C8',
+                    pillBg: '#EBE0D8', pillText: '#3B2314', textMain: '#2A1810', textMuted: '#6E584F'
+                },
+                dark: {
+                    key: 'jolie', label: 'Jolie', bodyClass: 'theme-jolie-dark is-dark',
+                    primary: '#C69C72', headerText: '#1B100A', bgSoft: '#160E0A',
+                    bgCard: '#231711', rowBg: '#2F1F17', border: '#3D291F',
+                    pillBg: '#38251B', pillText: '#EAD7C3', textMain: '#F5EDE6', textMuted: '#B8A394'
+                }
+            },
+            zola: {
+                light: {
+                    key: 'zola', label: 'Zola', bodyClass: 'theme-zola-light',
+                    primary: '#721C24', headerText: '#FFFFFF', bgSoft: '#FDF5F6',
+                    bgCard: '#FFFFFF', rowBg: '#FFFFFF', border: '#E8C9CE',
+                    pillBg: '#F6DCE0', pillText: '#800020', textMain: '#2B0B10', textMuted: '#785258'
+                },
+                dark: {
+                    key: 'zola', label: 'Zola', bodyClass: 'theme-zola-dark is-dark',
+                    primary: '#B83246', headerText: '#FFFFFF', bgSoft: '#170A0D',
+                    bgCard: '#251116', rowBg: '#33171E', border: '#452029',
+                    pillBg: '#421822', pillText: '#F59AA8', textMain: '#F7ECEE', textMuted: '#C29FA6'
+                }
+            }
+        };
+
+        const DEFAULT_CRITERIA_REGULAR = [
+            "Grooming & Kerapian Seragam",
+            "Salam, Senyum & SOP Pelayanan",
+            "Pengetahuan Produk & Menu",
+            "Kecepatan & Ketepatan Penyajian",
+            "Kebersihan Area Kerja (Clean as You Go)"
+        ];
+
+        const DEFAULT_CRITERIA_LEADER = [
+            "Grooming & Kerapian Seragam",
+            "Salam, Senyum & SOP Pelayanan",
+            "Pengetahuan Produk & Menu",
+            "Kecepatan & Ketepatan Penyajian",
+            "Kebersihan Area Kerja (Clean as You Go)",
+            "Briefing",
+            "Bebas K.O.M.I.B.A",
+            "Penanganan Kebakaran",
+            "Memberikan Teguran",
+            "Problem Solving"
+        ];
+
+        const DEFAULT_EMPLOYEES = {
+            "Chatting 2 S.Parman": [
+                { name: "Fajar", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Alip", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Dina", isLeader: false, badge: "", badgeColor: "amber" }
+            ],
+            "Chatting 3 Ampera": [
+                { name: "Kamira", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Mayang", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Agus", isLeader: false, badge: "", badgeColor: "amber" }
+            ],
+            "Chatting 4 Paris II": [
+                { name: "Farhan", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Fatur", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Bella", isLeader: false, badge: "", badgeColor: "amber" }
+            ],
+            "Chatting 5 Untan": [
+                { name: "Hesti", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Rafli", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Putri", isLeader: false, badge: "", badgeColor: "amber" }
+            ],
+            "Chatting 6 Tanray II": [
+                { name: "Zeka", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Subhan", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Nadia", isLeader: false, badge: "", badgeColor: "amber" }
+            ],
+            "Chatting 7 Sumatra": [
+                { name: "Lan", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Lisa", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Tia", isLeader: false, badge: "", badgeColor: "amber" }
+            ],
+            "Chatting 8 Karet": [
+                { name: "Irham", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Selvira", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Umi", isLeader: true, badge: "Leader Bar", badgeColor: "amber" }
+            ],
+            "Jolie Sumatra": [
+                { name: "Haru", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Vivi", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Clara", isLeader: false, badge: "", badgeColor: "amber" }
+            ],
+            "Zola Sulawesi": [
+                { name: "Rito", isLeader: true, badge: "Leader Bar", badgeColor: "amber" },
+                { name: "Maya", isLeader: false, badge: "", badgeColor: "amber" }
+            ]
+        };
+
+        let state = {
+            currentUser: null,
+            targetUser: null,
+            authMode: "login",
+            criteriaRegular: [...DEFAULT_CRITERIA_REGULAR],
+            criteriaLeader: [...DEFAULT_CRITERIA_LEADER],
+            employees: JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES)),
+            results: [],
+            checkedCriteria: new Set(),
+            isManualEmployee: false,
+            isDarkMode: false,
+            activeTab: "penilaian",
+            settingCriteriaType: "regular",
+            generatedDataUrl: "",
+            editingCriteriaIndex: null,
+            editingBadgeEmpIndex: null,
+            editingDevAccountIndex: null
+        };
+
+        function isDeveloperUser(username) {
+            return String(username || "").trim().toLowerCase() === "developer";
+        }
+
+        function sanitizeBadgeLabel(label, isLeader) {
+            const raw = String(label || "").replace(/★/g, "").trim();
+            if (raw) return raw;
+            return isLeader ? "Leader Bar" : "";
+        }
+
+        function getBadgeInlineStyle(colorKey = 'amber', isDark = state.isDarkMode) {
+            const p = BADGE_PALETTES[colorKey] || BADGE_PALETTES.amber;
+            return isDark
+                ? `background-color: ${p.darkBg}; color: ${p.darkText}; border: 1px solid ${p.darkBorder};`
+                : `background-color: ${p.lightBg}; color: ${p.lightText}; border: 1px solid ${p.lightBorder};`;
+        }
+
+        function getBrandKey(outletName) {
+            if (outletName.toLowerCase().startsWith('jolie')) return 'jolie';
+            if (outletName.toLowerCase().startsWith('zola')) return 'zola';
+            return 'chatting';
+        }
+
+        function getBrandTheme(outletName, isDark = state.isDarkMode) {
+            const brandKey = getBrandKey(outletName);
+            return BRAND_THEMES[brandKey][isDark ? 'dark' : 'light'];
+        }
+
+        function isDefaultLeaderName(name) {
+            if (!name) return false;
+            return DEFAULT_LEADER_SET.has(String(name).trim().toLowerCase());
+        }
+
+        function normalizeEmployeeEntry(entry) {
+            if (typeof entry === 'string') {
+                const isLdr = isDefaultLeaderName(entry);
+                return {
+                    name: entry,
+                    isLeader: isLdr,
+                    badge: isLdr ? 'Leader Bar' : '',
+                    badgeColor: 'amber'
+                };
+            }
+            const isLdr = typeof entry.isLeader === 'boolean' ? entry.isLeader : isDefaultLeaderName(entry.name);
+            return {
+                name: entry.name,
+                isLeader: isLdr,
+                badge: sanitizeBadgeLabel(entry.badge, isLdr),
+                badgeColor: entry.badgeColor || 'amber'
+            };
+        }
+
+        function getEmployeeRecord(outletName, empName) {
+            if (!empName) return null;
+            const cleanName = empName.trim().toLowerCase();
+            const outletList = state.employees[outletName] || [];
+            const found = outletList.find(e => e.name.trim().toLowerCase() === cleanName);
+            if (found) return normalizeEmployeeEntry(found);
+            if (isDefaultLeaderName(empName)) {
+                return { name: empName.trim(), isLeader: true, badge: 'Leader Bar', badgeColor: 'amber' };
+            }
+            return { name: empName.trim(), isLeader: false, badge: '', badgeColor: 'amber' };
+        }
+
+        /* ==================== MANAJEMEN AKUN & DATA DI LOCAL STORAGE ==================== */
+        function getAccounts() {
+            let accounts = [];
+            try {
+                const raw = localStorage.getItem(ACCOUNTS_KEY);
+                accounts = raw ? JSON.parse(raw) : [];
+            } catch (e) {
+                accounts = [];
+            }
+            if (!Array.isArray(accounts)) accounts = [];
+
+            const hasDev = accounts.some(a => isDeveloperUser(a.username));
+            if (!hasDev) {
+                accounts.unshift({ username: "developer", password: "dev123" });
+                localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts));
+            }
+            return accounts;
+        }
+
+        function saveAccounts(accounts) {
+            localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts));
+        }
+
+        function getUserDataKey(username) {
+            return `${DATA_PREFIX}${String(username || "").trim().toLowerCase()}`;
+        }
+
+        function getDefaultUserData() {
+            const nextEmployees = {};
+            OUTLETS.forEach(o => {
+                nextEmployees[o] = (DEFAULT_EMPLOYEES[o] || []).map(normalizeEmployeeEntry);
+            });
+            return {
+                criteriaRegular: [...DEFAULT_CRITERIA_REGULAR],
+                criteriaLeader: [...DEFAULT_CRITERIA_LEADER],
+                employees: nextEmployees,
+                results: []
+            };
+        }
+
+        function loadUserData(username) {
+            const key = getUserDataKey(username);
+            let parsed = null;
+            try {
+                const raw = localStorage.getItem(key);
+                parsed = raw ? JSON.parse(raw) : null;
+            } catch (e) {
+                parsed = null;
+            }
+
+            if (!parsed) return getDefaultUserData();
+
+            const nextEmployees = {};
+            OUTLETS.forEach(o => {
+                const list = (parsed.employees && Array.isArray(parsed.employees[o]))
+                    ? parsed.employees[o]
+                    : (DEFAULT_EMPLOYEES[o] || []);
+                nextEmployees[o] = list.map(normalizeEmployeeEntry);
+            });
+
+            return {
+                criteriaRegular: Array.isArray(parsed.criteriaRegular) ? [...parsed.criteriaRegular] : [...DEFAULT_CRITERIA_REGULAR],
+                criteriaLeader: Array.isArray(parsed.criteriaLeader) ? [...parsed.criteriaLeader] : [...DEFAULT_CRITERIA_LEADER],
+                employees: nextEmployees,
+                results: Array.isArray(parsed.results) ? [...parsed.results] : []
+            };
+        }
+
+        function saveUserData(username, payload) {
+            if (!username) return;
+            localStorage.setItem(getUserDataKey(username), JSON.stringify(payload));
+        }
+
+        function saveCurrentStateToLocalStorage() {
+            const owner = state.targetUser || state.currentUser;
+            if (!owner) return;
+            saveUserData(owner, {
+                criteriaRegular: state.criteriaRegular,
+                criteriaLeader: state.criteriaLeader,
+                employees: state.employees,
+                results: state.results
+            });
+        }
+
+        function applyUserDataToState(username) {
+            state.targetUser = username;
+            const d = loadUserData(username);
+            state.criteriaRegular = d.criteriaRegular;
+            state.criteriaLeader = d.criteriaLeader;
+            state.employees = d.employees;
+            state.results = d.results;
+            state.checkedCriteria.clear();
+        }
+
+        function getActiveCriteriaList(isLeader) {
+            return isLeader ? state.criteriaLeader : state.criteriaRegular;
+        }
+
+        function getTodayStr() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function formatTanggalIndo(dateStr) {
+            if (!dateStr) return '-';
+            const [y, m, d] = dateStr.split('-').map(Number);
+            const dateObj = new Date(y, m - 1, d);
+            return dateObj.toLocaleDateString('id-ID', {
+                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+            });
+        }
+
+        function formatTanggalSingkat(dateStr) {
+            if (!dateStr) return '-';
+            const [y, m, d] = dateStr.split('-').map(Number);
+            const dateObj = new Date(y, m - 1, d);
+            return dateObj.toLocaleDateString('id-ID', {
+                day: 'numeric', month: 'short', year: 'numeric'
+            });
+        }
+
+        function loadThemePreference() {
+            const savedDark = localStorage.getItem(DARK_MODE_KEY);
+            if (savedDark !== null) {
+                state.isDarkMode = savedDark === 'true';
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                state.isDarkMode = true;
+            }
+        }
+
+        function saveDarkMode() {
+            localStorage.setItem(DARK_MODE_KEY, String(state.isDarkMode));
+        }
+
+        function applyOutletTheme(outletName) {
+            const theme = getBrandTheme(outletName, state.isDarkMode);
+            document.body.className = `min-h-screen select-none ${theme.bodyClass}`;
+            document.getElementById('header-brand-pill').textContent = theme.label;
+
+            const sunIcon = document.getElementById('icon-sun');
+            const moonIcon = document.getElementById('icon-moon');
+            const authSunIcon = document.getElementById('auth-icon-sun');
+            const authMoonIcon = document.getElementById('auth-icon-moon');
+
+            if (state.isDarkMode) {
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+                authSunIcon.classList.remove('hidden');
+                authMoonIcon.classList.add('hidden');
+            } else {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+                authSunIcon.classList.add('hidden');
+                authMoonIcon.classList.remove('hidden');
+            }
+        }
+
+        /* ==================== AUTH & DEVELOPER ACCOUNT CONTROL ==================== */
+        function setAuthMode(mode) {
+            state.authMode = mode;
+            const btnLogin = document.getElementById('btn-auth-mode-login');
+            const btnRegister = document.getElementById('btn-auth-mode-register');
+            const btnSubmit = document.getElementById('btn-auth-submit');
+            const subtitle = document.getElementById('auth-subtitle');
+            const switchLink = document.getElementById('btn-auth-switch-link');
+            const errBox = document.getElementById('auth-error-box');
+            const passInput = document.getElementById('auth-password');
+
+            errBox.classList.add('hidden');
+
+            if (mode === 'register') {
+                btnRegister.className = 'py-2 rounded-xl text-sm font-extrabold theme-primary-bg transition-all cursor-pointer';
+                btnLogin.className = 'py-2 rounded-xl text-sm font-extrabold theme-muted-text transition-all cursor-pointer';
+                btnSubmit.textContent = 'Daftar & Masuk';
+                subtitle.textContent = 'Buat akun penguji baru di local storage';
+                passInput.setAttribute('autocomplete', 'new-password');
+                switchLink.innerHTML = 'Sudah punya akun? <span class="theme-primary-text font-extrabold">Masuk di sini</span>';
+            } else {
+                btnLogin.className = 'py-2 rounded-xl text-sm font-extrabold theme-primary-bg transition-all cursor-pointer';
+                btnRegister.className = 'py-2 rounded-xl text-sm font-extrabold theme-muted-text transition-all cursor-pointer';
+                btnSubmit.textContent = 'Masuk Sekarang';
+                subtitle.textContent = 'Masuk ke akun penguji atau developer';
+                passInput.setAttribute('autocomplete', 'current-password');
+                switchLink.innerHTML = 'Belum punya akun? <span class="theme-primary-text font-extrabold">Daftar di sini</span>';
+            }
+        }
+
+        function showAuthError(msg) {
+            const errBox = document.getElementById('auth-error-box');
+            errBox.textContent = msg;
+            errBox.classList.remove('hidden');
+        }
+
+        function enterAuthenticatedApp(username) {
+            state.currentUser = username;
+            state.targetUser = username;
+            localStorage.setItem(ACTIVE_USER_KEY, username);
+
+            applyUserDataToState(username);
+            state.isManualEmployee = false;
+            state.activeTab = 'penilaian';
+            document.getElementById('input-catatan').value = '';
+            document.getElementById('input-manual-karyawan').value = '';
+            document.getElementById('wrapper-manual-emp').classList.add('hidden');
+            document.getElementById('wrapper-select-emp').classList.remove('hidden');
+            document.getElementById('btn-toggle-manual-emp').textContent = '+ Input Manual';
+
+            const isDev = isDeveloperUser(username);
+            document.getElementById('header-user-badge').textContent = isDev ? `${username} (Dev)` : username;
+            document.getElementById('setting-username-display').textContent = isDev ? `${username} (Master Developer)` : username;
+            document.getElementById('setting-role-label').textContent = isDev ? 'Akun Developer Aktif' : 'Akun Penguji Aktif';
+            document.getElementById('developer-control-panel').classList.toggle('hidden', !isDev);
+
+            document.getElementById('auth-screen').classList.add('hidden');
+            document.getElementById('app-wrapper').classList.remove('hidden');
+
+            const selectOutlet = document.getElementById('select-outlet');
+            applyOutletTheme(selectOutlet.value);
+            renderEmployeeDropdown();
+            renderChecklist();
+            switchTab('penilaian');
+        }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            const username = document.getElementById('auth-username').value.trim();
+            const password = document.getElementById('auth-password').value;
+
+            if (!username || !password) {
+                showAuthError('Username dan password wajib diisi.');
+                return;
+            }
+
+            const accounts = getAccounts();
+            const matched = accounts.find(a => a.username.toLowerCase() === username.toLowerCase());
+
+            if (state.authMode === 'register') {
+                if (matched) {
+                    showAuthError('Username sudah terdaftar. Silakan masuk.');
+                    return;
+                }
+                const newAcc = { username, password };
+                accounts.push(newAcc);
+                saveAccounts(accounts);
+                saveUserData(username, getDefaultUserData());
+                document.getElementById('auth-error-box').classList.add('hidden');
+                enterAuthenticatedApp(username);
+                showToast(`Akun "${username}" berhasil dibuat!`);
+            } else {
+                if (!matched || matched.password !== password) {
+                    showAuthError('Username atau password salah.');
+                    return;
+                }
+                document.getElementById('auth-error-box').classList.add('hidden');
+                enterAuthenticatedApp(matched.username);
+                showToast(`Masuk sebagai ${matched.username}`);
+            }
+        }
+
+        function logoutSession() {
+            saveCurrentStateToLocalStorage();
+            localStorage.removeItem(ACTIVE_USER_KEY);
+            state.currentUser = null;
+            state.targetUser = null;
+            document.getElementById('app-wrapper').classList.add('hidden');
+            document.getElementById('auth-screen').classList.remove('hidden');
+            document.getElementById('auth-username').value = '';
+            document.getElementById('auth-password').value = '';
+            setAuthMode('login');
+            applyOutletTheme(document.getElementById('select-outlet').value);
+            showToast('Berhasil keluar akun');
+        }
+
+        function renderDeveloperAccountPanel() {
+            if (!isDeveloperUser(state.currentUser)) return;
+            const accounts = getAccounts();
+            const selectTarget = document.getElementById('dev-target-account');
+            const listContainer = document.getElementById('dev-account-list');
+
+            if (!state.targetUser || !accounts.some(a => a.username.toLowerCase() === state.targetUser.toLowerCase())) {
+                state.targetUser = state.currentUser;
+            }
+
+            selectTarget.innerHTML = '';
+            accounts.forEach(acc => {
+                const opt = document.createElement('option');
+                opt.value = acc.username;
+                opt.textContent = isDeveloperUser(acc.username)
+                    ? `${acc.username} (Developer)`
+                    : `${acc.username}`;
+                if (acc.username.toLowerCase() === state.targetUser.toLowerCase()) {
+                    opt.selected = true;
+                }
+                selectTarget.appendChild(opt);
+            });
+
+            listContainer.innerHTML = '';
+            accounts.forEach((acc, idx) => {
+                const isSelfDev = isDeveloperUser(acc.username);
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between gap-2 p-2.5 rounded-xl theme-soft border theme-border';
+                row.innerHTML = `
+                    <div class="min-w-0 flex-1">
+                        <div class="flex items-center gap-1.5 flex-wrap">
+                            <span class="text-xs font-extrabold truncate">${escapeHtml(acc.username)}</span>
+                            ${isSelfDev ? `<span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-500">DEVELOPER</span>` : ''}
+                        </div>
+                        <span class="text-[11px] theme-muted-text block truncate">Password: ${escapeHtml(acc.password)}</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button type="button" data-dev-edit="${idx}" class="text-[11px] font-bold px-2.5 py-1 rounded-lg border theme-border theme-surface cursor-pointer">
+                            Edit
+                        </button>
+                        ${!isSelfDev ? `
+                            <button type="button" data-dev-del="${idx}" class="text-[11px] font-bold px-2.5 py-1 rounded-lg border border-red-500/30 text-red-500 bg-red-500/10 cursor-pointer">
+                                Hapus
+                            </button>
+                        ` : ''}
+                    </div>
+                `;
+                listContainer.appendChild(row);
+            });
+
+            listContainer.querySelectorAll('[data-dev-edit]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = Number(btn.getAttribute('data-dev-edit'));
+                    const acc = accounts[idx];
+                    if (!acc) return;
+                    state.editingDevAccountIndex = idx;
+                    document.getElementById('input-dev-edit-username').value = acc.username;
+                    document.getElementById('input-dev-edit-password').value = acc.password;
+                    document.getElementById('modal-dev-edit-account').classList.remove('hidden');
+                });
+            });
+
+            listContainer.querySelectorAll('[data-dev-del]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = Number(btn.getAttribute('data-dev-del'));
+                    const acc = accounts[idx];
+                    if (!acc || isDeveloperUser(acc.username)) return;
+
+                    showConfirmModal(
+                        'Hapus Akun Terdaftar',
+                        `Hapus akun "${acc.username}" beserta data miliknya di local storage?`,
+                        () => {
+                            const updated = getAccounts().filter((_, i) => i !== idx);
+                            saveAccounts(updated);
+                            localStorage.removeItem(getUserDataKey(acc.username));
+                            if (state.targetUser && state.targetUser.toLowerCase() === acc.username.toLowerCase()) {
+                                applyUserDataToState(state.currentUser);
+                                renderEmployeeDropdown();
+                                renderChecklist();
+                            }
+                            renderDeveloperAccountPanel();
+                            renderSettingCriteria();
+                            renderSettingEmployees();
+                            showToast(`Akun "${acc.username}" dihapus`);
+                        }
+                    );
+                });
+            });
+        }
+
+        /* ==================== TAB 1: FORM PENILAIAN ==================== */
+        function getSelectedEmployeeInfo() {
+            const outlet = document.getElementById('select-outlet').value;
+            let empName = '';
+            if (state.isManualEmployee) {
+                empName = document.getElementById('input-manual-karyawan').value.trim();
+            } else {
+                empName = document.getElementById('select-karyawan').value || '';
+            }
+            const empRecord = getEmployeeRecord(outlet, empName);
+            const isLeader = empRecord ? Boolean(empRecord.isLeader) : false;
+            const badge = empRecord ? sanitizeBadgeLabel(empRecord.badge, isLeader) : '';
+            const badgeColor = empRecord ? empRecord.badgeColor : 'amber';
+            return { outlet, empName, isLeader, badge, badgeColor };
+        }
+
+        function updateActiveEmployeeRoleIndicator() {
+            const { empName, isLeader, badge, badgeColor } = getSelectedEmployeeInfo();
+            const nameDisplay = document.getElementById('active-emp-name-display');
+            const inlineBadge = document.getElementById('active-emp-inline-badge');
+            const dropdownBadge = document.getElementById('dropdown-emp-badge');
+            const manualBadge = document.getElementById('manual-emp-badge');
+            const modeLabel = document.getElementById('active-criteria-mode-label');
+            const checklistLeaderPill = document.getElementById('checklist-leader-pill');
+            const checklistSubtitle = document.getElementById('checklist-card-subtitle');
+
+            nameDisplay.textContent = empName || 'Belum pilih karyawan';
+
+            const badgeText = sanitizeBadgeLabel(badge, isLeader);
+            if (badgeText && empName) {
+                const styleStr = getBadgeInlineStyle(badgeColor);
+                inlineBadge.textContent = badgeText;
+                inlineBadge.setAttribute('style', styleStr);
+                inlineBadge.classList.remove('hidden');
+
+                if (!state.isManualEmployee) {
+                    dropdownBadge.textContent = badgeText;
+                    dropdownBadge.setAttribute('style', styleStr);
+                    dropdownBadge.classList.remove('hidden');
+                    manualBadge.classList.add('hidden');
+                } else {
+                    manualBadge.textContent = badgeText;
+                    manualBadge.setAttribute('style', styleStr);
+                    manualBadge.classList.remove('hidden');
+                    dropdownBadge.classList.add('hidden');
+                }
+            } else {
+                inlineBadge.classList.add('hidden');
+                dropdownBadge.classList.add('hidden');
+                manualBadge.classList.add('hidden');
+            }
+
+            if (isLeader) {
+                checklistLeaderPill.textContent = badgeText || 'Leader Bar';
+                checklistLeaderPill.classList.remove('hidden');
+                modeLabel.textContent = 'Kriteria Leader Bar';
+                modeLabel.className = 'text-[11px] font-bold text-amber-600 shrink-0';
+                checklistSubtitle.textContent = `Penilaian khusus Leader Bar (${getActiveCriteriaList(true).length} poin)`;
+            } else {
+                checklistLeaderPill.classList.add('hidden');
+                modeLabel.textContent = 'Kriteria Reguler';
+                modeLabel.className = 'text-[11px] font-semibold theme-muted-text shrink-0';
+                checklistSubtitle.textContent = 'Ketuk kriteria yang lulus / terpenuhi';
+            }
+        }
+
+        function renderEmployeeDropdown() {
+            const outlet = document.getElementById('select-outlet').value;
+            const selectEl = document.getElementById('select-karyawan');
+            const list = state.employees[outlet] || [];
+
+            selectEl.innerHTML = '';
+
+            if (list.length === 0) {
+                const opt = document.createElement('option');
+                opt.value = '';
+                opt.textContent = '-- Belum ada karyawan --';
+                selectEl.appendChild(opt);
+            } else {
+                list.forEach(emp => {
+                    const opt = document.createElement('option');
+                    opt.value = emp.name;
+                    opt.textContent = emp.name;
+                    selectEl.appendChild(opt);
+                });
+            }
+
+            updateActiveEmployeeRoleIndicator();
+        }
+
+        function renderChecklist() {
+            const { isLeader } = getSelectedEmployeeInfo();
+            const criteriaList = getActiveCriteriaList(isLeader);
+            const container = document.getElementById('checklist-container');
+            container.innerHTML = '';
+
+            updateActiveEmployeeRoleIndicator();
+
+            if (criteriaList.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-6 px-3 rounded-xl theme-soft border theme-border">
+                        <p class="text-xs theme-muted-text">Belum ada poin penilaian (${isLeader ? 'Leader Bar' : 'Reguler'}). Tambahkan di menu <b>Setting</b>.</p>
+                    </div>
+                `;
+                updateLiveScore();
+                return;
+            }
+
+            criteriaList.forEach((item, index) => {
+                const isChecked = state.checkedCriteria.has(index);
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between gap-3 cursor-pointer ${
+                    isChecked
+                        ? 'theme-primary-light border-current font-semibold shadow-2xs'
+                        : 'theme-soft theme-border hover:opacity-90'
+                }`;
+
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3 min-w-0">
+                        <span class="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${
+                            isChecked ? 'theme-primary-bg' : 'theme-surface theme-muted-text border theme-border'
+                        }">
+                            ${index + 1}
+                        </span>
+                        <span class="text-sm leading-snug break-words">${escapeHtml(item)}</span>
+                    </div>
+                    <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                        isChecked ? 'theme-primary-bg' : 'border-2 theme-border theme-surface'
+                    }">
+                        ${isChecked ? `
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                        ` : ''}
+                    </div>
+                `;
+
+                btn.addEventListener('click', () => {
+                    if (state.checkedCriteria.has(index)) {
+                        state.checkedCriteria.delete(index);
+                    } else {
+                        state.checkedCriteria.add(index);
+                    }
+                    renderChecklist();
+                });
+
+                container.appendChild(btn);
+            });
+
+            updateLiveScore();
+        }
+
+        function updateLiveScore() {
+            const { isLeader } = getSelectedEmployeeInfo();
+            const criteriaList = getActiveCriteriaList(isLeader);
+            const total = criteriaList.length;
+            const score = Array.from(state.checkedCriteria).filter(idx => idx < total).length;
+
+            document.getElementById('live-score-text').textContent = `${score}/${total}`;
+
+            const badge = document.getElementById('live-status-badge');
+            const btnCheckAll = document.getElementById('btn-check-all');
+
+            if (total > 0 && score === total) {
+                btnCheckAll.textContent = 'Batal Semua';
+            } else {
+                btnCheckAll.textContent = 'Pilih Semua';
+            }
+
+            if (total === 0) {
+                badge.textContent = '-';
+                badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md theme-soft theme-muted-text';
+            } else if (score >= Math.ceil(total * 0.8)) {
+                badge.textContent = 'Lulus Sertifikasi';
+                badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-500';
+            } else {
+                badge.textContent = 'Perlu Evaluasi';
+                badge.className = 'text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-500';
+            }
+        }
+
+        function handleSaveTestResult() {
+            const { outlet, empName, isLeader, badge, badgeColor } = getSelectedEmployeeInfo();
+            const date = document.getElementById('input-tanggal').value || getTodayStr();
+            const note = document.getElementById('input-catatan').value.trim();
+
+            if (!empName) {
+                showToast('Pilih atau isi nama karyawan terlebih dahulu!');
+                return;
+            }
+
+            const criteriaList = getActiveCriteriaList(isLeader);
+            const total = criteriaList.length;
+            if (total === 0) {
+                showToast('Tambahkan poin penilaian di menu Setting!');
+                return;
+            }
+
+            const validChecked = Array.from(state.checkedCriteria).filter(idx => idx < total);
+            const score = validChecked.length;
+
+            const existingIndex = state.results.findIndex(
+                r => r.date === date && r.outlet === outlet && r.employee.toLowerCase() === empName.toLowerCase()
+            );
+
+            const record = {
+                id: existingIndex >= 0 ? state.results[existingIndex].id : Date.now().toString(),
+                date,
+                outlet,
+                employee: empName,
+                isLeader,
+                badge: sanitizeBadgeLabel(badge, isLeader),
+                badgeColor: badgeColor || 'amber',
+                score,
+                total,
+                passedCriteria: validChecked.map(i => criteriaList[i]),
+                note,
+                examiner: state.targetUser || state.currentUser || '-',
+                timestamp: existingIndex >= 0 ? state.results[existingIndex].timestamp : Date.now()
+            };
+
+            if (existingIndex >= 0) {
+                state.results[existingIndex] = record;
+                showToast(`Nilai ${empName} (${score}/${total}) diperbarui!`);
+            } else {
+                state.results.push(record);
+                showToast(`Tersimpan: ${empName} (${score}/${total})`);
+            }
+
+            saveCurrentStateToLocalStorage();
+
+            state.checkedCriteria.clear();
+            document.getElementById('input-catatan').value = '';
+            if (state.isManualEmployee) {
+                document.getElementById('input-manual-karyawan').value = '';
+            }
+            renderChecklist();
+        }
+
+        function getChronologicalOutletGroups(dailyResults) {
+            const sortedResults = [...dailyResults].sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+            const outletOrder = [];
+
+            sortedResults.forEach(item => {
+                if (!outletOrder.includes(item.outlet)) {
+                    outletOrder.push(item.outlet);
+                }
+            });
+
+            return outletOrder.map(outletName => ({
+                outletName,
+                theme: getBrandTheme(outletName, state.isDarkMode),
+                items: sortedResults.filter(r => r.outlet === outletName)
+            }));
+        }
+
+        /* ==================== TAB 2: REKAP HARIAN ==================== */
+        function renderRekapList() {
+            const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
+            const container = document.getElementById('rekap-list-container');
+            const clearWrapper = document.getElementById('wrapper-clear-day');
+
+            const dailyResults = state.results.filter(r => r.date === selectedDate);
+            document.getElementById('rekap-total-count').textContent = `${dailyResults.length} Peserta`;
+
+            if (dailyResults.length === 0) {
+                clearWrapper.classList.add('hidden');
+                container.innerHTML = `
+                    <div class="theme-surface border rounded-2xl p-8 text-center space-y-2">
+                        <div class="w-12 h-12 rounded-2xl theme-soft mx-auto flex items-center justify-center theme-muted-text">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <p class="text-sm font-bold">Belum Ada Data Sertifikasi</p>
+                        <p class="text-xs theme-muted-text">Belum ada tes karyawan yang disimpan untuk tanggal ${formatTanggalSingkat(selectedDate)}.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            clearWrapper.classList.remove('hidden');
+            container.innerHTML = '';
+
+            const grouped = getChronologicalOutletGroups(dailyResults);
+
+            grouped.forEach(({ outletName, theme, items }) => {
+                const card = document.createElement('div');
+                card.className = 'rounded-2xl overflow-hidden border shadow-xs';
+                card.style.borderColor = theme.border;
+                card.style.backgroundColor = theme.bgCard;
+
+                let rowsHtml = items.map(item => {
+                    const isPass = item.total > 0 && item.score >= Math.ceil(item.total * 0.8);
+                    const empRec = getEmployeeRecord(outletName, item.employee);
+                    const isLeader = typeof item.isLeader === 'boolean' ? item.isLeader : (empRec ? empRec.isLeader : false);
+                    const customBadge = sanitizeBadgeLabel(item.badge || (empRec && empRec.badge) || '', isLeader);
+                    const customBadgeColor = item.badgeColor || (empRec && empRec.badgeColor) || 'amber';
+
+                    const passBadgeStyle = state.isDarkMode
+                        ? (isPass ? 'background-color: rgba(16, 185, 129, 0.18); color: #6EE7B7;' : 'background-color: rgba(245, 158, 11, 0.18); color: #FCD34D;')
+                        : (isPass ? 'background-color: #DCFCE7; color: #166534;' : 'background-color: #FEF3C7; color: #92400E;');
+
+                    const customBadgeStyle = getBadgeInlineStyle(customBadgeColor, state.isDarkMode);
+
+                    return `
+                        <div class="px-4 py-3 flex items-center justify-between gap-3 border-t" style="border-color: ${theme.border}">
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-center flex-wrap gap-1.5">
+                                    <span class="font-bold text-sm truncate" style="color: ${theme.textMain}">${escapeHtml(item.employee)}</span>
+                                    ${customBadge ? `
+                                        <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full shrink-0" style="${customBadgeStyle}">
+                                            ${escapeHtml(customBadge)}
+                                        </span>
+                                    ` : ''}
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0" style="${passBadgeStyle}">
+                                        ${isPass ? 'LULUS' : 'EVALUASI'}
+                                    </span>
+                                </div>
+                                ${item.note ? `<p class="text-xs mt-0.5 truncate" style="color: ${theme.textMuted}">Catatan: ${escapeHtml(item.note)}</p>` : ''}
+                            </div>
+                            <div class="flex items-center gap-2.5 shrink-0">
+                                <span class="text-base font-extrabold px-2.5 py-1 rounded-lg" style="background-color: ${theme.pillBg}; color: ${theme.pillText}">
+                                    ${item.score}/${item.total}
+                                </span>
+                                <button type="button" data-delete-id="${item.id}" class="btn-del-result p-1.5 rounded-lg opacity-60 hover:opacity-100 hover:text-red-500 cursor-pointer" style="color: ${theme.textMuted}" title="Hapus">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                card.innerHTML = `
+                    <div class="px-4 py-2.5 flex items-center justify-between" style="background-color: ${theme.primary}; color: ${theme.headerText};">
+                        <span class="font-bold text-xs tracking-wide uppercase">${escapeHtml(outletName)}</span>
+                        <span class="text-[11px] font-semibold opacity-90">${items.length} Karyawan</span>
+                    </div>
+                    <div>${rowsHtml}</div>
+                `;
+
+                container.appendChild(card);
+            });
+
+            container.querySelectorAll('.btn-del-result').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = btn.getAttribute('data-delete-id');
+                    showConfirmModal(
+                        'Hapus Hasil Tes',
+                        'Hapus data nilai karyawan ini dari laporan hari ini?',
+                        () => {
+                            state.results = state.results.filter(r => r.id !== id);
+                            saveCurrentStateToLocalStorage();
+                            renderRekapList();
+                            showToast('Data dihapus');
+                        }
+                    );
+                });
+            });
+        }
+
+        /* ==================== GENERATOR GAMBAR LAPORAN 1 HARI ==================== */
+        function generateDailyReportImage() {
+            const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
+            const dailyResults = state.results.filter(r => r.date === selectedDate);
+
+            if (dailyResults.length === 0) {
+                showToast('Belum ada data tes di tanggal ini!');
+                return;
+            }
+
+            const grouped = getChronologicalOutletGroups(dailyResults);
+            const canvas = document.getElementById('export-canvas');
+            const ctx = canvas.getContext('2d');
+            const isDark = state.isDarkMode;
+
+            const scale = 2;
+            const width = 720;
+            const padding = 32;
+            const cardW = width - padding * 2;
+            const itemMarginX = 12;
+            const itemW = cardW - itemMarginX * 2;
+            const headerHeight = 135;
+            const cardHeaderH = 48;
+            const baseRowHeight = 62;
+            const cardGap = 20;
+            const footerHeight = 56;
+
+            function getWrappedNoteLines(ctxRef, noteText, maxWidth) {
+                const fullText = `Catatan: ${String(noteText || '').trim()}`;
+                const words = fullText.split(/\s+/);
+                const lines = [];
+                let currentLine = '';
+
+                for (let i = 0; i < words.length; i++) {
+                    const testLine = currentLine ? `${currentLine} ${words[i]}` : words[i];
+                    if (ctxRef.measureText(testLine).width <= maxWidth) {
+                        currentLine = testLine;
+                    } else {
+                        if (currentLine) lines.push(currentLine);
+                        currentLine = words[i];
+                        if (lines.length === 2) break;
+                    }
+                }
+
+                if (lines.length < 2 && currentLine) {
+                    lines.push(currentLine);
+                }
+
+                if (lines.length === 2) {
+                    let lastLine = lines[1];
+                    while (lastLine.length > 3 && ctxRef.measureText(`${lastLine}...`).width > maxWidth) {
+                        lastLine = lastLine.slice(0, -1).trimEnd();
+                    }
+                    if (ctxRef.measureText(lines[1]).width > maxWidth) {
+                        lines[1] = `${lastLine}...`;
+                    }
+                }
+
+                return lines;
+            }
+
+            ctx.font = '500 13px Inter, sans-serif';
+            const noteMaxW = itemW - 36;
+
+            const groupLayouts = grouped.map(group => {
+                let itemsTotalH = 0;
+                const itemLayouts = group.items.map(emp => {
+                    const hasNote = Boolean(emp.note && String(emp.note).trim());
+                    const noteLines = hasNote ? getWrappedNoteLines(ctx, emp.note, noteMaxW) : [];
+                    const extraH = hasNote ? (10 + noteLines.length * 17) : 0;
+                    const rowH = baseRowHeight + extraH;
+                    itemsTotalH += rowH;
+                    return { emp, hasNote, noteLines, rowH };
+                });
+
+                const cardH = cardHeaderH + itemsTotalH + 12;
+                return { ...group, itemLayouts, cardH };
+            });
+
+            let totalHeight = padding + headerHeight;
+            groupLayouts.forEach(gl => {
+                totalHeight += gl.cardH + cardGap;
+            });
+            totalHeight += footerHeight;
+
+            canvas.width = width * scale;
+            canvas.height = totalHeight * scale;
+            ctx.scale(scale, scale);
+
+            function roundRect(x, y, w, h, r) {
+                ctx.beginPath();
+                ctx.moveTo(x + r, y);
+                ctx.lineTo(x + w - r, y);
+                ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+                ctx.lineTo(x + w, y + h - r);
+                ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                ctx.lineTo(x + r, y + h);
+                ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+                ctx.lineTo(x, y + r);
+                ctx.quadraticCurveTo(x, y, x + r, y);
+                ctx.closePath();
+            }
+
+            ctx.fillStyle = isDark ? '#12100F' : '#F8FAFC';
+            ctx.fillRect(0, 0, width, totalHeight);
+
+            const topOutletTheme = groupLayouts[0].theme;
+            roundRect(padding, padding, cardW, 105, 20);
+            ctx.fillStyle = topOutletTheme.primary;
+            ctx.fill();
+
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = topOutletTheme.border;
+            ctx.stroke();
+
+            ctx.fillStyle = topOutletTheme.headerText;
+            ctx.font = '800 21px Inter, sans-serif';
+            ctx.fillText('HASIL TES SERTIFIKASI KARYAWAN', padding + 24, padding + 44);
+
+            const examinerLabel = `Penguji : ${state.targetUser || state.currentUser || '-'}`;
+            ctx.font = '600 13px Inter, sans-serif';
+            const examinerW = ctx.measureText(examinerLabel).width;
+            ctx.fillStyle = isDark && topOutletTheme.key === 'jolie'
+                ? 'rgba(27, 16, 10, 0.85)'
+                : 'rgba(255, 255, 255, 0.92)';
+            ctx.fillText(examinerLabel, padding + cardW - examinerW - 22, padding + 32);
+
+            ctx.fillStyle = isDark && topOutletTheme.key === 'jolie'
+                ? 'rgba(27, 16, 10, 0.78)'
+                : 'rgba(255, 255, 255, 0.88)';
+            ctx.font = '500 15px Inter, sans-serif';
+            ctx.fillText(`${formatTanggalIndo(selectedDate)}  •  Total ${dailyResults.length} Karyawan`, padding + 24, padding + 74);
+
+            let currentY = padding + headerHeight;
+
+            groupLayouts.forEach(group => {
+                const { outletName, theme, items, itemLayouts, cardH } = group;
+
+                roundRect(padding, currentY, cardW, cardH, 18);
+                ctx.fillStyle = theme.bgSoft;
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = theme.border;
+                ctx.stroke();
+
+                ctx.save();
+                roundRect(padding, currentY, cardW, cardH, 18);
+                ctx.clip();
+                ctx.fillStyle = theme.primary;
+                ctx.fillRect(padding, currentY, cardW, cardHeaderH);
+                ctx.restore();
+
+                ctx.fillStyle = theme.headerText;
+                ctx.font = '800 16px Inter, sans-serif';
+                ctx.fillText(outletName.toUpperCase(), padding + 20, currentY + 30);
+
+                const countLabel = `${items.length} Peserta`;
+                ctx.font = '600 13px Inter, sans-serif';
+                const countMetrics = ctx.measureText(countLabel);
+                ctx.fillStyle = isDark && theme.key === 'jolie' ? 'rgba(27, 16, 10, 0.75)' : 'rgba(255, 255, 255, 0.88)';
+                ctx.fillText(countLabel, padding + cardW - countMetrics.width - 20, currentY + 29);
+
+                let rowY = currentY + cardHeaderH + 4;
+                itemLayouts.forEach(({ emp, hasNote, noteLines, rowH }) => {
+                    const itemH = rowH - 8;
+                    const empRec = getEmployeeRecord(outletName, emp.employee);
+                    const isLeader = typeof emp.isLeader === 'boolean' ? emp.isLeader : (empRec ? empRec.isLeader : false);
+                    const customBadge = sanitizeBadgeLabel(emp.badge || (empRec && empRec.badge) || '', isLeader);
+                    const customBadgeColor = emp.badgeColor || (empRec && empRec.badgeColor) || 'amber';
+
+                    roundRect(padding + itemMarginX, rowY + 4, itemW, itemH, 12);
+                    ctx.fillStyle = theme.rowBg;
+                    ctx.fill();
+
+                    ctx.fillStyle = theme.textMain;
+                    ctx.font = '700 18px Inter, sans-serif';
+                    const nameStartX = padding + itemMarginX + 18;
+                    const nameTopY = rowY + 35;
+                    ctx.fillText(emp.employee, nameStartX, nameTopY);
+                    const nameWidth = ctx.measureText(emp.employee).width;
+
+                    if (customBadge) {
+                        const palette = BADGE_PALETTES[customBadgeColor] || BADGE_PALETTES.amber;
+                        ctx.font = '800 11px Inter, sans-serif';
+                        const ldrW = ctx.measureText(customBadge).width + 18;
+                        const ldrH = 24;
+                        const ldrX = nameStartX + nameWidth + 10;
+                        const ldrY = rowY + 18;
+
+                        roundRect(ldrX, ldrY, ldrW, ldrH, 8);
+                        if (isDark) {
+                            ctx.fillStyle = palette.darkBg;
+                            ctx.fill();
+                            ctx.lineWidth = 1;
+                            ctx.strokeStyle = palette.darkBorder;
+                            ctx.stroke();
+                            ctx.fillStyle = palette.darkText;
+                        } else {
+                            ctx.fillStyle = palette.lightBg;
+                            ctx.fill();
+                            ctx.lineWidth = 1;
+                            ctx.strokeStyle = palette.lightBorder;
+                            ctx.stroke();
+                            ctx.fillStyle = palette.lightText;
+                        }
+                        ctx.fillText(customBadge, ldrX + 9, ldrY + 16);
+                    }
+
+                    const scoreText = `${emp.score}/${emp.total}`;
+                    ctx.font = '800 18px Inter, sans-serif';
+                    const scoreW = ctx.measureText(scoreText).width + 28;
+                    const scoreH = 34;
+                    const scoreX = padding + itemMarginX + itemW - scoreW - 14;
+                    const scoreY = rowY + 13;
+
+                    roundRect(scoreX, scoreY, scoreW, scoreH, 10);
+                    ctx.fillStyle = theme.pillBg;
+                    ctx.fill();
+
+                    ctx.fillStyle = theme.pillText;
+                    ctx.fillText(scoreText, scoreX + 14, scoreY + 23);
+
+                    const isPass = emp.total > 0 && emp.score >= Math.ceil(emp.total * 0.8);
+                    const statusLabel = isPass ? 'LULUS' : 'EVALUASI';
+                    ctx.font = '700 12px Inter, sans-serif';
+                    const stW = ctx.measureText(statusLabel).width + 18;
+                    const stX = scoreX - stW - 10;
+                    const stY = rowY + 17;
+
+                    roundRect(stX, stY, stW, 26, 8);
+                    if (isDark) {
+                        ctx.fillStyle = isPass ? 'rgba(16, 185, 129, 0.2)' : 'rgba(245, 158, 11, 0.2)';
+                        ctx.fill();
+                        ctx.fillStyle = isPass ? '#6EE7B7' : '#FCD34D';
+                    } else {
+                        ctx.fillStyle = isPass ? '#DCFCE7' : '#FEF3C7';
+                        ctx.fill();
+                        ctx.fillStyle = isPass ? '#166534' : '#92400E';
+                    }
+                    ctx.fillText(statusLabel, stX + 9, stY + 17);
+
+                    if (hasNote && noteLines.length > 0) {
+                        ctx.fillStyle = theme.textMuted;
+                        ctx.font = '500 13px Inter, sans-serif';
+                        let noteY = nameTopY + 21;
+                        noteLines.forEach(line => {
+                            ctx.fillText(line, nameStartX, noteY);
+                            noteY += 17;
+                        });
+                    }
+
+                    rowY += rowH;
+                });
+
+                currentY += cardH + cardGap;
+            });
+
+            ctx.fillStyle = isDark ? '#78716C' : '#94A3B8';
+            ctx.font = '500 12px Inter, sans-serif';
+            const footerText = 'Laporan Otomatis • Sistem Tes Sertifikasi Karyawan';
+            const footerW = ctx.measureText(footerText).width;
+            ctx.fillText(footerText, (width - footerW) / 2, totalHeight - 22);
+
+            state.generatedDataUrl = canvas.toDataURL('image/png');
+            document.getElementById('preview-img-result').src = state.generatedDataUrl;
+            document.getElementById('modal-preview').classList.remove('hidden');
+        }
+
+        function downloadGeneratedImage() {
+            if (!state.generatedDataUrl) return;
+            const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
+            const link = document.createElement('a');
+            link.download = `Sertifikasi_Karyawan_${selectedDate}.png`;
+            link.href = state.generatedDataUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast('Gambar laporan berhasil diunduh!');
+        }
+
+        /* ==================== TAB 3: SETTING (KRITERIA & KARYAWAN + BADGE) ==================== */
+        function renderSettingCriteria() {
+            const container = document.getElementById('setting-criteria-list');
+            const btnReg = document.getElementById('btn-crit-tab-regular');
+            const btnLdr = document.getElementById('btn-crit-tab-leader');
+            const isLeaderTab = state.settingCriteriaType === 'leader';
+
+            if (isLeaderTab) {
+                btnLdr.className = 'py-2 px-3 rounded-lg text-xs font-bold theme-primary-bg transition-all cursor-pointer flex items-center justify-center gap-1';
+                btnReg.className = 'py-2 px-3 rounded-lg text-xs font-bold theme-muted-text transition-all cursor-pointer';
+            } else {
+                btnReg.className = 'py-2 px-3 rounded-lg text-xs font-bold theme-primary-bg transition-all cursor-pointer';
+                btnLdr.className = 'py-2 px-3 rounded-lg text-xs font-bold theme-muted-text transition-all cursor-pointer flex items-center justify-center gap-1';
+            }
+
+            const targetList = isLeaderTab ? state.criteriaLeader : state.criteriaRegular;
+            container.innerHTML = '';
+
+            if (targetList.length === 0) {
+                container.innerHTML = `<p class="text-xs theme-muted-text text-center py-4">Belum ada poin penilaian untuk kategori ini.</p>`;
+                return;
+            }
+
+            targetList.forEach((crit, index) => {
+                const isFirst = index === 0;
+                const isLast = index === targetList.length - 1;
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between gap-2 p-2.5 rounded-xl theme-soft border theme-border';
+                row.innerHTML = `
+                    <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                        <span class="w-6 h-6 rounded-lg theme-primary-light text-xs font-bold flex items-center justify-center shrink-0">
+                            ${index + 1}
+                        </span>
+                        <span class="text-xs font-semibold truncate">${escapeHtml(crit)}</span>
+                    </div>
+                    <div class="flex items-center gap-0.5 shrink-0">
+                        <button type="button" data-move-crit="${index}" data-dir="-1" ${isFirst ? 'disabled' : ''} class="p-1.5 rounded-lg theme-surface border theme-border ${isFirst ? 'opacity-30 cursor-not-allowed' : 'theme-muted-text hover:opacity-80 cursor-pointer active:scale-95'}" title="Geser ke Atas">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                            </svg>
+                        </button>
+                        <button type="button" data-move-crit="${index}" data-dir="1" ${isLast ? 'disabled' : ''} class="p-1.5 rounded-lg theme-surface border theme-border ${isLast ? 'opacity-30 cursor-not-allowed' : 'theme-muted-text hover:opacity-80 cursor-pointer active:scale-95'}" title="Geser ke Bawah">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <button type="button" data-edit-crit="${index}" class="p-1.5 rounded-lg theme-muted-text hover:opacity-80 cursor-pointer" title="Edit">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                        </button>
+                        <button type="button" data-del-crit="${index}" class="p-1.5 rounded-lg text-red-500 hover:opacity-80 cursor-pointer" title="Hapus">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+
+            container.querySelectorAll('[data-move-crit]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (btn.disabled) return;
+                    const idx = Number(btn.getAttribute('data-move-crit'));
+                    const dir = Number(btn.getAttribute('data-dir'));
+                    const targetIdx = idx + dir;
+                    if (targetIdx < 0 || targetIdx >= targetList.length) return;
+
+                    const temp = targetList[idx];
+                    targetList[idx] = targetList[targetIdx];
+                    targetList[targetIdx] = temp;
+
+                    saveCurrentStateToLocalStorage();
+                    renderSettingCriteria();
+                    state.checkedCriteria.clear();
+                    renderChecklist();
+                });
+            });
+
+            container.querySelectorAll('[data-edit-crit]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = Number(btn.getAttribute('data-edit-crit'));
+                    state.editingCriteriaIndex = idx;
+                    document.getElementById('input-edit-criteria').value = targetList[idx];
+                    document.getElementById('modal-edit-criteria').classList.remove('hidden');
+                });
+            });
+
+            container.querySelectorAll('[data-del-crit]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = Number(btn.getAttribute('data-del-crit'));
+                    targetList.splice(idx, 1);
+                    saveCurrentStateToLocalStorage();
+                    renderSettingCriteria();
+                    state.checkedCriteria.clear();
+                    renderChecklist();
+                    showToast('Poin penilaian dihapus');
+                });
+            });
+        }
+
+        function renderSettingEmployees() {
+            const targetOutlet = document.getElementById('setting-select-outlet').value;
+            const container = document.getElementById('setting-employee-list');
+            const list = state.employees[targetOutlet] || [];
+            container.innerHTML = '';
+
+            if (list.length === 0) {
+                container.innerHTML = `<p class="text-xs theme-muted-text text-center py-4">Belum ada daftar karyawan untuk outlet ini.</p>`;
+                return;
+            }
+
+            list.forEach((emp, index) => {
+                const badgeText = sanitizeBadgeLabel(emp.badge, emp.isLeader);
+                const badgeStyle = getBadgeInlineStyle(emp.badgeColor || 'amber', state.isDarkMode);
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between gap-2 p-2.5 rounded-xl theme-soft border theme-border';
+                row.innerHTML = `
+                    <div class="flex items-center gap-2 min-w-0 flex-1 flex-wrap">
+                        <span class="text-xs font-bold truncate">${escapeHtml(emp.name)}</span>
+                        ${badgeText ? `
+                            <span class="shrink-0 text-[10px] font-extrabold px-2 py-0.5 rounded-full" style="${badgeStyle}">
+                                ${escapeHtml(badgeText)}
+                            </span>
+                        ` : ''}
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button type="button" data-edit-badge="${index}" class="text-[11px] font-semibold px-2 py-1 rounded-lg border theme-border theme-surface cursor-pointer" title="Ganti / Tambah Badge">
+                            Badge
+                        </button>
+                        <button type="button" data-del-emp="${index}" class="p-1.5 rounded-lg text-red-500 hover:opacity-80 cursor-pointer" title="Hapus">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+
+            container.querySelectorAll('[data-edit-badge]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = Number(btn.getAttribute('data-edit-badge'));
+                    const emp = list[idx];
+                    if (!emp) return;
+                    state.editingBadgeEmpIndex = idx;
+                    document.getElementById('edit-badge-emp-name').textContent = `${emp.name} (${targetOutlet})`;
+                    document.getElementById('input-edit-emp-badge').value = sanitizeBadgeLabel(emp.badge, emp.isLeader);
+                    document.getElementById('select-edit-emp-badge-color').value = emp.badgeColor || 'amber';
+                    document.getElementById('checkbox-edit-emp-leader').checked = Boolean(emp.isLeader);
+                    document.getElementById('modal-edit-emp-badge').classList.remove('hidden');
+                });
+            });
+
+            container.querySelectorAll('[data-del-emp]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = Number(btn.getAttribute('data-del-emp'));
+                    const removedName = list[idx].name;
+                    list.splice(idx, 1);
+                    saveCurrentStateToLocalStorage();
+                    renderSettingEmployees();
+                    renderEmployeeDropdown();
+                    renderChecklist();
+                    showToast(`${removedName} dihapus`);
+                });
+            });
+        }
+
+        /* ==================== NAVIGASI TAB & UTILITAS ==================== */
+        function switchTab(tabName) {
+            state.activeTab = tabName;
+
+            ['penilaian', 'rekap', 'setting'].forEach(t => {
+                const sec = document.getElementById(`tab-${t}`);
+                if (t === tabName) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+            });
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                const t = btn.getAttribute('data-tab');
+                if (t === tabName) {
+                    btn.classList.remove('theme-muted-text', 'font-medium');
+                    btn.classList.add('theme-primary-text', 'font-bold');
+                } else {
+                    btn.classList.remove('theme-primary-text', 'font-bold');
+                    btn.classList.add('theme-muted-text', 'font-medium');
+                }
+            });
+
+            if (tabName === 'rekap') {
+                renderRekapList();
+            } else if (tabName === 'setting') {
+                renderDeveloperAccountPanel();
+                renderSettingCriteria();
+                renderSettingEmployees();
+            }
+        }
+
+        let toastTimer = null;
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-text').textContent = msg;
+            toast.classList.remove('opacity-0');
+            toast.classList.add('opacity-100');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0');
+            }, 2400);
+        }
+
+        let confirmCallback = null;
+        function showConfirmModal(title, message, onConfirm) {
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-message').textContent = message;
+            confirmCallback = onConfirm;
+            document.getElementById('modal-confirm').classList.remove('hidden');
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        /* ==================== INISIALISASI ==================== */
+        function initApp() {
+            getAccounts();
+            loadThemePreference();
+
+            const today = getTodayStr();
+            const inputTanggal = document.getElementById('input-tanggal');
+            const rekapTanggal = document.getElementById('rekap-tanggal');
+            inputTanggal.value = today;
+            rekapTanggal.value = today;
+            document.getElementById('header-date-badge').textContent = formatTanggalSingkat(today);
+
+            const selectOutlet = document.getElementById('select-outlet');
+            applyOutletTheme(selectOutlet.value);
+
+            // Developer Panel Events
+            document.getElementById('dev-target-account').addEventListener('change', (e) => {
+                const chosen = e.target.value;
+                if (!chosen) return;
+                applyUserDataToState(chosen);
+                renderSettingCriteria();
+                renderSettingEmployees();
+                renderEmployeeDropdown();
+                renderChecklist();
+                showToast(`Target data diubah ke "${chosen}"`);
+            });
+
+            document.getElementById('form-dev-add-account').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const uInput = document.getElementById('dev-new-username');
+                const pInput = document.getElementById('dev-new-password');
+                const uname = uInput.value.trim();
+                const pass = pInput.value;
+                if (!uname || !pass) return;
+
+                const accounts = getAccounts();
+                if (accounts.some(a => a.username.toLowerCase() === uname.toLowerCase())) {
+                    showToast('Username sudah terdaftar!');
+                    return;
+                }
+
+                accounts.push({ username: uname, password: pass });
+                saveAccounts(accounts);
+                saveUserData(uname, getDefaultUserData());
+                uInput.value = '';
+                pInput.value = '';
+                renderDeveloperAccountPanel();
+                showToast(`Akun "${uname}" ditambahkan`);
+            });
+
+            document.getElementById('btn-dev-edit-cancel').addEventListener('click', () => {
+                document.getElementById('modal-dev-edit-account').classList.add('hidden');
+                state.editingDevAccountIndex = null;
+            });
+
+            document.getElementById('btn-dev-edit-save').addEventListener('click', () => {
+                const idx = state.editingDevAccountIndex;
+                const accounts = getAccounts();
+                if (idx === null || !accounts[idx]) return;
+
+                const oldName = accounts[idx].username;
+                const nextName = document.getElementById('input-dev-edit-username').value.trim();
+                const nextPass = document.getElementById('input-dev-edit-password').value;
+
+                if (!nextName || !nextPass) {
+                    showToast('Username dan password tidak boleh kosong');
+                    return;
+                }
+
+                const duplicate = accounts.some((a, i) => i !== idx && a.username.toLowerCase() === nextName.toLowerCase());
+                if (duplicate) {
+                    showToast('Username sudah dipakai akun lain!');
+                    return;
+                }
+
+                if (oldName.toLowerCase() !== nextName.toLowerCase()) {
+                    const oldPayload = loadUserData(oldName);
+                    saveUserData(nextName, oldPayload);
+                    localStorage.removeItem(getUserDataKey(oldName));
+                }
+
+                accounts[idx].username = nextName;
+                accounts[idx].password = nextPass;
+                saveAccounts(accounts);
+
+                if (state.currentUser && state.currentUser.toLowerCase() === oldName.toLowerCase()) {
+                    state.currentUser = nextName;
+                    localStorage.setItem(ACTIVE_USER_KEY, nextName);
+                    document.getElementById('header-user-badge').textContent = isDeveloperUser(nextName) ? `${nextName} (Dev)` : nextName;
+                    document.getElementById('setting-username-display').textContent = isDeveloperUser(nextName) ? `${nextName} (Master Developer)` : nextName;
+                }
+
+                if (state.targetUser && state.targetUser.toLowerCase() === oldName.toLowerCase()) {
+                    state.targetUser = nextName;
+                }
+
+                document.getElementById('modal-dev-edit-account').classList.add('hidden');
+                state.editingDevAccountIndex = null;
+                renderDeveloperAccountPanel();
+                showToast(`Akun "${nextName}" diperbarui`);
+            });
+
+            // Badge Modal Events
+            document.getElementById('btn-edit-badge-cancel').addEventListener('click', () => {
+                document.getElementById('modal-edit-emp-badge').classList.add('hidden');
+                state.editingBadgeEmpIndex = null;
+            });
+
+            document.getElementById('btn-edit-badge-save').addEventListener('click', () => {
+                const targetOutlet = document.getElementById('setting-select-outlet').value;
+                const list = state.employees[targetOutlet] || [];
+                const idx = state.editingBadgeEmpIndex;
+
+                if (idx !== null && list[idx]) {
+                    const isLdr = document.getElementById('checkbox-edit-emp-leader').checked;
+                    const badgeText = sanitizeBadgeLabel(document.getElementById('input-edit-emp-badge').value, isLdr);
+                    const badgeColor = document.getElementById('select-edit-emp-badge-color').value;
+
+                    list[idx].badge = badgeText;
+                    list[idx].badgeColor = badgeColor;
+                    list[idx].isLeader = isLdr;
+
+                    saveCurrentStateToLocalStorage();
+                    renderSettingEmployees();
+                    renderEmployeeDropdown();
+                    state.checkedCriteria.clear();
+                    renderChecklist();
+                    showToast(`Badge ${list[idx].name} diperbarui!`);
+                }
+
+                document.getElementById('modal-edit-emp-badge').classList.add('hidden');
+                state.editingBadgeEmpIndex = null;
+            });
+
+            // Auth Events
+            document.getElementById('btn-auth-mode-login').addEventListener('click', () => setAuthMode('login'));
+            document.getElementById('btn-auth-mode-register').addEventListener('click', () => setAuthMode('register'));
+            document.getElementById('btn-auth-switch-link').addEventListener('click', () => {
+                setAuthMode(state.authMode === 'login' ? 'register' : 'login');
+            });
+            document.getElementById('form-auth').addEventListener('submit', handleAuthSubmit);
+
+            document.getElementById('btn-auth-toggle-dark').addEventListener('click', () => {
+                state.isDarkMode = !state.isDarkMode;
+                saveDarkMode();
+                applyOutletTheme('Chatting 2 S.Parman');
+            });
+
+            const handleLogoutPrompt = () => {
+                showConfirmModal(
+                    'Keluar Akun',
+                    `Keluar dari akun "${state.currentUser}"?`,
+                    logoutSession
+                );
+            };
+            document.getElementById('btn-header-logout').addEventListener('click', handleLogoutPrompt);
+            document.getElementById('btn-setting-logout').addEventListener('click', handleLogoutPrompt);
+
+            document.getElementById('btn-toggle-dark').addEventListener('click', () => {
+                state.isDarkMode = !state.isDarkMode;
+                saveDarkMode();
+                applyOutletTheme(selectOutlet.value);
+                if (state.activeTab === 'rekap') {
+                    renderRekapList();
+                } else if (state.activeTab === 'setting') {
+                    renderSettingEmployees();
+                    renderDeveloperAccountPanel();
+                }
+            });
+
+            selectOutlet.addEventListener('change', () => {
+                applyOutletTheme(selectOutlet.value);
+                state.checkedCriteria.clear();
+                renderEmployeeDropdown();
+                renderChecklist();
+            });
+
+            inputTanggal.addEventListener('change', () => {
+                const val = inputTanggal.value || today;
+                document.getElementById('header-date-badge').textContent = formatTanggalSingkat(val);
+                rekapTanggal.value = val;
+            });
+
+            document.getElementById('select-karyawan').addEventListener('change', () => {
+                state.checkedCriteria.clear();
+                renderChecklist();
+            });
+
+            document.getElementById('btn-toggle-manual-emp').addEventListener('click', (e) => {
+                state.isManualEmployee = !state.isManualEmployee;
+                const wrapSelect = document.getElementById('wrapper-select-emp');
+                const wrapManual = document.getElementById('wrapper-manual-emp');
+                if (state.isManualEmployee) {
+                    wrapSelect.classList.add('hidden');
+                    wrapManual.classList.remove('hidden');
+                    e.target.textContent = 'Pilih dari Daftar';
+                    document.getElementById('input-manual-karyawan').focus();
+                } else {
+                    wrapManual.classList.add('hidden');
+                    wrapSelect.classList.remove('hidden');
+                    e.target.textContent = '+ Input Manual';
+                }
+                state.checkedCriteria.clear();
+                renderChecklist();
+            });
+
+            document.getElementById('input-manual-karyawan').addEventListener('input', () => {
+                renderChecklist();
+            });
+
+            document.getElementById('btn-check-all').addEventListener('click', () => {
+                const { isLeader } = getSelectedEmployeeInfo();
+                const criteriaList = getActiveCriteriaList(isLeader);
+                if (state.checkedCriteria.size === criteriaList.length) {
+                    state.checkedCriteria.clear();
+                } else {
+                    criteriaList.forEach((_, idx) => state.checkedCriteria.add(idx));
+                }
+                renderChecklist();
+            });
+
+            document.getElementById('btn-simpan-tes').addEventListener('click', handleSaveTestResult);
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    switchTab(btn.getAttribute('data-tab'));
+                });
+            });
+
+            rekapTanggal.addEventListener('change', renderRekapList);
+            document.getElementById('btn-generate-image').addEventListener('click', generateDailyReportImage);
+            document.getElementById('btn-clear-day').addEventListener('click', () => {
+                const targetDate = rekapTanggal.value || getTodayStr();
+                showConfirmModal(
+                    'Hapus Data Harian',
+                    `Hapus semua hasil sertifikasi pada tanggal ${formatTanggalSingkat(targetDate)}?`,
+                    () => {
+                        state.results = state.results.filter(r => r.date !== targetDate);
+                        saveCurrentStateToLocalStorage();
+                        renderRekapList();
+                        showToast('Data tanggal ini dibersihkan');
+                    }
+                );
+            });
+
+            document.getElementById('btn-close-modal').addEventListener('click', () => {
+                document.getElementById('modal-preview').classList.add('hidden');
+            });
+            document.getElementById('btn-download-png').addEventListener('click', downloadGeneratedImage);
+
+            document.getElementById('btn-confirm-cancel').addEventListener('click', () => {
+                document.getElementById('modal-confirm').classList.add('hidden');
+                confirmCallback = null;
+            });
+            document.getElementById('btn-confirm-ok').addEventListener('click', () => {
+                document.getElementById('modal-confirm').classList.add('hidden');
+                if (typeof confirmCallback === 'function') {
+                    confirmCallback();
+                    confirmCallback = null;
+                }
+            });
+
+            document.getElementById('btn-crit-tab-regular').addEventListener('click', () => {
+                state.settingCriteriaType = 'regular';
+                renderSettingCriteria();
+            });
+            document.getElementById('btn-crit-tab-leader').addEventListener('click', () => {
+                state.settingCriteriaType = 'leader';
+                renderSettingCriteria();
+            });
+
+            document.getElementById('form-add-criteria').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = document.getElementById('input-new-criteria');
+                const val = input.value.trim();
+                if (!val) return;
+                const targetList = state.settingCriteriaType === 'leader' ? state.criteriaLeader : state.criteriaRegular;
+                targetList.push(val);
+                saveCurrentStateToLocalStorage();
+                input.value = '';
+                renderSettingCriteria();
+                renderChecklist();
+                showToast('Poin penilaian ditambahkan');
+            });
+
+            document.getElementById('btn-edit-crit-cancel').addEventListener('click', () => {
+                document.getElementById('modal-edit-criteria').classList.add('hidden');
+                state.editingCriteriaIndex = null;
+            });
+            document.getElementById('btn-edit-crit-save').addEventListener('click', () => {
+                const newVal = document.getElementById('input-edit-criteria').value.trim();
+                if (newVal && state.editingCriteriaIndex !== null) {
+                    const targetList = state.settingCriteriaType === 'leader' ? state.criteriaLeader : state.criteriaRegular;
+                    targetList[state.editingCriteriaIndex] = newVal;
+                    saveCurrentStateToLocalStorage();
+                    renderSettingCriteria();
+                    renderChecklist();
+                    showToast('Poin penilaian diperbarui');
+                }
+                document.getElementById('modal-edit-criteria').classList.add('hidden');
+                state.editingCriteriaIndex = null;
+            });
+
+            document.getElementById('setting-select-outlet').addEventListener('change', renderSettingEmployees);
+            document.getElementById('form-add-employee').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const targetOutlet = document.getElementById('setting-select-outlet').value;
+                const input = document.getElementById('input-new-employee');
+                const inputBadge = document.getElementById('input-new-emp-badge');
+                const selectBadgeColor = document.getElementById('select-new-emp-badge-color');
+                const cbLeader = document.getElementById('checkbox-new-emp-leader');
+                const name = input.value.trim();
+                if (!name) return;
+
+                if (!state.employees[targetOutlet]) {
+                    state.employees[targetOutlet] = [];
+                }
+                const isLeader = cbLeader.checked || isDefaultLeaderName(name);
+                const badge = sanitizeBadgeLabel(inputBadge.value, isLeader);
+
+                state.employees[targetOutlet].push({
+                    name,
+                    isLeader,
+                    badge,
+                    badgeColor: selectBadgeColor.value || 'amber'
+                });
+                saveCurrentStateToLocalStorage();
+                input.value = '';
+                inputBadge.value = '';
+                cbLeader.checked = false;
+                renderSettingEmployees();
+                renderEmployeeDropdown();
+                renderChecklist();
+                showToast(`${name} ditambahkan ke ${targetOutlet}`);
+            });
+
+            document.getElementById('btn-reset-default').addEventListener('click', () => {
+                showConfirmModal(
+                    'Reset Pengaturan Awal',
+                    'Kembalikan semua poin penilaian dan daftar karyawan ke bawaan awal?',
+                    () => {
+                        const def = getDefaultUserData();
+                        state.criteriaRegular = def.criteriaRegular;
+                        state.criteriaLeader = def.criteriaLeader;
+                        state.employees = def.employees;
+                        saveCurrentStateToLocalStorage();
+                        state.checkedCriteria.clear();
+                        renderSettingCriteria();
+                        renderSettingEmployees();
+                        renderEmployeeDropdown();
+                        renderChecklist();
+                        showToast('Pengaturan dikembalikan ke default');
+                    }
+                );
+            });
+
+            const savedUser = localStorage.getItem(ACTIVE_USER_KEY);
+            const accounts = getAccounts();
+            if (savedUser && accounts.some(a => a.username.toLowerCase() === savedUser.toLowerCase())) {
+                const matchedAcc = accounts.find(a => a.username.toLowerCase() === savedUser.toLowerCase());
+                enterAuthenticatedApp(matchedAcc.username);
+            } else {
+                document.getElementById('auth-screen').classList.remove('hidden');
+                document.getElementById('app-wrapper').classList.add('hidden');
+                setAuthMode('login');
+            }
+        }
+
+        window.onload = initApp;
+    </script>
 </body>
 </html>
