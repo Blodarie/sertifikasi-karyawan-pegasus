@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sertikasi Karyawan</title>
+    <title>Sertifikasi Karyawan</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Inter & Geometric Rounded Sans-Serif (Nunito & Quicksand) -->
@@ -200,8 +200,8 @@
                     </svg>
                 </div>
                 <div>
-                    <h1 class="text-2xl sm:text-3xl font-black tracking-tight">Sertikasi Karyawan</h1>
-                    <p id="auth-subtitle" class="text-sm font-semibold theme-muted-text mt-1">Masuk ke akun penguji untuk melanjutkan</p>
+                    <h1 class="text-2xl sm:text-3xl font-black tracking-tight">Sertifikasi Karyawan</h1>
+                    <p id="auth-subtitle" class="text-sm font-semibold theme-muted-text mt-1">Masuk ke akun Supabase untuk menyamakan data di HP & PC</p>
                 </div>
             </div>
 
@@ -220,7 +220,7 @@
                         <label for="auth-username" class="block text-xs font-extrabold uppercase tracking-wider theme-muted-text mb-1.5">
                             Username
                         </label>
-                        <input type="text" id="auth-username" autocomplete="username" placeholder="Masukkan username..." class="theme-input w-full rounded-2xl px-4 py-3 text-sm font-bold" required>
+                        <input type="text" id="auth-username" autocomplete="username" autocapitalize="none" placeholder="Masukkan username..." class="theme-input w-full rounded-2xl px-4 py-3 text-sm font-bold" required>
                     </div>
 
                     <div>
@@ -238,19 +238,6 @@
                         Masuk Sekarang
                     </button>
                 </form>
-
-                <!-- Salin & Tempel Kode Data Pendek -->
-                <div class="pt-2 border-t theme-border space-y-2">
-                    <span class="block text-[11px] font-bold theme-muted-text text-center">Sinkronisasi Antar Perangkat (HP / Tablet / PC)</span>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button type="button" id="btn-auth-copy-code" class="py-2 px-3 rounded-xl text-xs font-bold theme-soft border theme-border cursor-pointer">
-                            Salin Kode Data
-                        </button>
-                        <button type="button" id="btn-auth-paste-code" class="py-2 px-3 rounded-xl text-xs font-bold theme-primary-light cursor-pointer">
-                            Tempel Kode Data
-                        </button>
-                    </div>
-                </div>
 
                 <div class="text-center pt-1">
                     <button type="button" id="btn-auth-switch-link" class="text-xs font-bold theme-muted-text hover:underline cursor-pointer">
@@ -283,14 +270,20 @@
                             <span id="header-user-badge" class="text-[10px] font-bold theme-primary-text truncate max-w-[110px]">
                                 @user
                             </span>
-                            <span id="header-dev-pill" class="hidden text-[9px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-500 border border-violet-500/35">
-                                DEV
+                            <span id="header-sync-status" class="text-[9px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-500 border border-emerald-500/30">
+                                Supabase
                             </span>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-1.5 shrink-0">
+                    <button type="button" id="btn-manual-sync" aria-label="Sinkronkan Data Sekarang" title="Sinkronkan Data Sekarang" class="w-9 h-9 rounded-xl border theme-border theme-soft flex items-center justify-center theme-primary-text cursor-pointer active:scale-95 transition-transform">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                    </button>
+
                     <button type="button" id="btn-toggle-dark" aria-label="Ganti Mode Terang atau Gelap" title="Ganti Mode Terang / Gelap" class="w-9 h-9 rounded-xl border theme-border theme-soft flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
                         <svg id="icon-sun" class="w-4 h-4 hidden text-amber-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -488,57 +481,6 @@
                     </button>
                 </div>
 
-                <!-- ==================== KHUSUS DEVELOPER: KELOLA SEMUA AKUN PENGUJI ==================== -->
-                <div id="dev-accounts-panel" class="hidden theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
-                    <div class="flex items-center justify-between gap-2">
-                        <div>
-                            <div class="flex items-center gap-1.5">
-                                <h2 class="text-sm font-bold">Panel Developer: Kelola Akun Penguji</h2>
-                                <span class="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-violet-500/15 text-violet-500 border border-violet-500/30">Master</span>
-                            </div>
-                            <p class="text-xs theme-muted-text">Ubah nama penguji (username), ubah password, atau tambah/hapus akun terdaftar</p>
-                        </div>
-                    </div>
-
-                    <!-- Form Tambah Akun Baru oleh Developer -->
-                    <form id="form-dev-add-account" class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                        <input type="text" id="dev-new-acc-username" placeholder="Username baru..." class="theme-input rounded-xl px-3 py-2 text-xs font-semibold" required>
-                        <input type="text" id="dev-new-acc-password" placeholder="Password..." class="theme-input rounded-xl px-3 py-2 text-xs font-semibold" required>
-                        <button type="submit" class="theme-primary-bg py-2 px-3 rounded-xl font-bold text-xs cursor-pointer">
-                            + Buat Akun
-                        </button>
-                    </form>
-
-                    <!-- Daftar Semua Akun Terdaftar -->
-                    <div id="dev-accounts-list" class="space-y-2 pt-1"></div>
-                </div>
-
-                <!-- ==================== KHUSUS DEVELOPER: PILIH AKUN TARGET YANG DIEDIT ==================== -->
-                <div id="dev-target-account-bar" class="hidden theme-surface border rounded-2xl p-4 shadow-xs space-y-2">
-                    <div class="flex items-center justify-between gap-2">
-                        <label for="dev-select-target-account" class="text-xs font-extrabold uppercase tracking-wider theme-primary-text">
-                            Edit Poin, Karyawan & Badge Milik Akun:
-                        </label>
-                    </div>
-                    <select id="dev-select-target-account" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-bold cursor-pointer"></select>
-                    <p class="text-[11px] theme-muted-text">
-                        Semua perubahan poin penilaian, daftar karyawan, dan badge di bawah ini akan langsung diterapkan ke akun penguji yang dipilih di atas.
-                    </p>
-                </div>
-
-                <!-- Card Khusus Akun Okta: Sinkron Template dari Akun Abrar -->
-                <div id="card-copy-from-abrar" class="hidden theme-surface border rounded-2xl p-4 shadow-xs space-y-2.5">
-                    <div>
-                        <h2 class="text-sm font-bold">Salin Data Karyawan & Poin dari Akun Abrar</h2>
-                        <p class="text-xs theme-muted-text mt-0.5">
-                            Menyalin seluruh nama karyawan tiap outlet beserta 10 poin Leader & 5 poin Reguler dari akun <b>abrar</b> ke akun <b>okta</b> (tanpa hasil penilaian).
-                        </p>
-                    </div>
-                    <button type="button" id="btn-sync-from-abrar" class="w-full py-2.5 px-4 rounded-xl text-xs font-bold theme-primary-light border border-current/20 cursor-pointer active:scale-98">
-                        Salin Ulang Data Karyawan & Poin dari Abrar
-                    </button>
-                </div>
-                
                 <!-- 1. Kelola Poin Penilaian (Reguler & Leader Bar) -->
                 <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
                     <div>
@@ -615,27 +557,11 @@
                     <div id="setting-employee-list" class="space-y-2 pt-1"></div>
                 </div>
 
-                <!-- 3. Salin & Tempel Kode Data Pendek Antar Perangkat -->
-                <div class="theme-surface border rounded-2xl p-4 shadow-xs space-y-3">
-                    <div>
-                        <h2 class="text-sm font-bold">3. Salin & Tempel Kode Data (Terkompresi)</h2>
-                        <p class="text-xs theme-muted-text">Salin kode data ringkas lalu tempel di HP, Tablet, atau PC lain agar seluruh akun & data sama</p>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2.5">
-                        <button type="button" id="btn-export-sync-code" class="theme-primary-bg py-3 px-4 rounded-xl font-bold text-xs shadow-xs cursor-pointer">
-                            Salin Kode Data
-                        </button>
-                        <button type="button" id="btn-open-import-modal" class="py-3 px-4 rounded-xl font-bold text-xs theme-primary-light cursor-pointer">
-                            Tempel Kode Data
-                        </button>
-                    </div>
-                </div>
-
                 <!-- Reset Data Default -->
                 <div class="theme-surface border rounded-2xl p-4 shadow-xs flex items-center justify-between gap-3">
                     <div>
                         <h3 class="text-xs font-bold">Reset Pengaturan Awal</h3>
-                        <p class="text-[11px] theme-muted-text">Kembalikan poin & daftar karyawan akun target ke bawaan awal</p>
+                        <p class="text-[11px] theme-muted-text">Kembalikan poin & daftar karyawan ke bawaan awal</p>
                     </div>
                     <button type="button" id="btn-reset-default" class="text-xs font-semibold px-3 py-2 rounded-xl border border-red-500/30 text-red-500 bg-red-500/10 active:scale-95 cursor-pointer shrink-0">
                         Reset Default
@@ -665,50 +591,10 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    <span id="nav-setting-label">Setting</span>
+                    <span>Setting</span>
                 </button>
             </div>
         </nav>
-    </div>
-
-    <!-- Modal Import Kode Data -->
-    <div id="modal-import-sync" class="fixed inset-0 z-50 hidden bg-black/65 flex items-center justify-center p-4">
-        <div class="theme-surface border rounded-2xl max-w-sm w-full p-5 shadow-xl space-y-3.5">
-            <h3 class="font-bold text-base">Tempel Kode Data</h3>
-            <p class="text-xs theme-muted-text">Tempel kode data yang sudah disalin dari HP, Tablet, atau PC lain lalu klik Terapkan Data.</p>
-            <textarea id="textarea-import-sync" rows="4" class="theme-input w-full rounded-xl p-3 text-xs font-mono" placeholder="Tempel kode data (GZ:...) di sini..."></textarea>
-            <div class="flex gap-2.5 pt-1">
-                <button type="button" id="btn-import-sync-cancel" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-soft border theme-border cursor-pointer">
-                    Batal
-                </button>
-                <button type="button" id="btn-import-sync-apply" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-primary-bg cursor-pointer">
-                    Terapkan Data
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Edit Akun Penguji (Khusus Developer) -->
-    <div id="modal-dev-edit-account" class="fixed inset-0 z-50 hidden bg-black/65 flex items-center justify-center p-4">
-        <div class="theme-surface border rounded-2xl max-w-xs w-full p-5 shadow-xl space-y-3.5">
-            <h3 class="font-bold text-base">Edit Akun Penguji</h3>
-            <div>
-                <label class="block text-xs font-bold theme-muted-text mb-1">Nama Penguji / Username</label>
-                <input type="text" id="input-dev-edit-username" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-bold" placeholder="Username...">
-            </div>
-            <div>
-                <label class="block text-xs font-bold theme-muted-text mb-1">Password Baru</label>
-                <input type="text" id="input-dev-edit-password" class="theme-input w-full rounded-xl px-3.5 py-2.5 text-sm font-bold" placeholder="Password...">
-            </div>
-            <div class="flex gap-2.5 pt-1">
-                <button type="button" id="btn-dev-edit-acc-cancel" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-soft border theme-border cursor-pointer">
-                    Batal
-                </button>
-                <button type="button" id="btn-dev-edit-acc-save" class="flex-1 py-2.5 rounded-xl font-semibold text-sm theme-primary-bg cursor-pointer">
-                    Simpan
-                </button>
-            </div>
-        </div>
     </div>
 
     <!-- Modal Edit Badge Karyawan -->
@@ -813,14 +699,48 @@
     <canvas id="export-canvas" class="hidden"></canvas>
 
     <script>
-        /**
-         * KONFIGURASI OUTLET, AKUN DEVELOPER, BADGE & TEMA WARNA
-         */
-        const DEVELOPER_ACCOUNT = {
-            username: 'developer',
-            defaultPassword: 'dev123'
-        };
+        /* ==================== KONFIGURASI SUPABASE EDGE FUNCTION ("jlb") ==================== */
+        const SUPABASE_API = "https://pwyrgjffbyhtoyafhjxp.supabase.co/functions/v1/jlb";
+        const TOKEN_KEY = "jlb:t";
+        const CACHE_PREFIX = "sertifikasi_sb_cache_v1_";
+        const DARK_MODE_KEY = "sertifikasi_dark_mode_v1";
 
+        let SESSION_TOKEN = null;
+        let SESSION_PROFILE = null;
+        let isSavingRemote = false;
+        let isDirtyRemote = false;
+        let saveRetryTimer = null;
+        let pollTimer = null;
+
+        function sbRequest(body) {
+            return fetch(SUPABASE_API, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            }).then(function(res) {
+                return res.json().catch(function() { return {}; }).then(function(json) {
+                    if (!res.ok) {
+                        const err = new Error(json.error || "Terjadi kesalahan pada server.");
+                        err.status = res.status;
+                        throw err;
+                    }
+                    return json;
+                });
+            });
+        }
+
+        function setSyncIndicator(label, isError) {
+            const el = document.getElementById("header-sync-status");
+            if (!el) return;
+            el.textContent = label;
+            if (isError) {
+                el.className = "text-[9px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-500 border border-amber-500/35";
+            } else {
+                el.className = "text-[9px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-500 border border-emerald-500/30";
+            }
+        }
+
+        /* ==================== KONFIGURASI OUTLET, BADGE & TEMA WARNA ==================== */
         const OUTLETS = [
             "Chatting 2 S.Parman",
             "Chatting 3 Ampera",
@@ -863,13 +783,6 @@
                 darkBg: 'rgba(139, 92, 246, 0.22)', darkText: '#C4B5FD', darkBorder: 'rgba(167, 139, 250, 0.35)'
             }
         };
-
-        function getBadgeInlineStyle(colorKey = 'amber', isDark = state.isDarkMode) {
-            const p = BADGE_PALETTES[colorKey] || BADGE_PALETTES.amber;
-            return isDark
-                ? `background-color: ${p.darkBg}; color: ${p.darkText}; border: 1px solid ${p.darkBorder};`
-                : `background-color: ${p.lightBg}; color: ${p.lightText}; border: 1px solid ${p.lightBorder};`;
-        }
 
         const BRAND_THEMES = {
             chatting: {
@@ -915,37 +828,6 @@
                 }
             }
         };
-
-        function getBrandKey(outletName) {
-            if (outletName.toLowerCase().startsWith('jolie')) return 'jolie';
-            if (outletName.toLowerCase().startsWith('zola')) return 'zola';
-            return 'chatting';
-        }
-
-        function getBrandTheme(outletName, isDark = state.isDarkMode) {
-            const brandKey = getBrandKey(outletName);
-            return BRAND_THEMES[brandKey][isDark ? 'dark' : 'light'];
-        }
-
-        /**
-         * MANAJEMEN AKUN & LOCALSTORAGE PER PENGGUNA
-         */
-        const GLOBAL_STORAGE_KEYS = {
-            ACCOUNTS: 'sertifikasi_accounts_v1',
-            CURRENT_SESSION: 'sertifikasi_current_user_v1',
-            DARK_MODE: 'sertifikasi_dark_mode_v1',
-            OKTA_INIT_COPIED: 'sertifikasi_okta_copied_from_abrar_v1'
-        };
-
-        function getUserStorageKeys(username) {
-            const safeKey = String(username || 'default').trim().toLowerCase();
-            return {
-                CRITERIA_REGULAR: `sertifikasi_user_${safeKey}_criteria_reg_v2`,
-                CRITERIA_LEADER: `sertifikasi_user_${safeKey}_criteria_ldr_v2`,
-                EMPLOYEES: `sertifikasi_user_${safeKey}_employees_v2`,
-                RESULTS: `sertifikasi_user_${safeKey}_results_v2`
-            };
-        }
 
         const DEFAULT_CRITERIA_REGULAR = [
             "Grooming & Kerapian Seragam",
@@ -1016,53 +898,39 @@
         };
 
         let state = {
-            currentUser: null, // { username: string, isDeveloper: boolean }
-            targetUsername: '', // Akun yang sedang diedit (untuk developer bisa pilih akun lain)
-            authMode: 'login',
-            criteriaRegular: [],
-            criteriaLeader: [],
-            employees: {},
+            username: "",
+            authMode: "login",
+            criteriaRegular: [...DEFAULT_CRITERIA_REGULAR],
+            criteriaLeader: [...DEFAULT_CRITERIA_LEADER],
+            employees: JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES)),
             results: [],
             checkedCriteria: new Set(),
             isManualEmployee: false,
             isDarkMode: false,
-            activeTab: 'penilaian',
-            settingCriteriaType: 'regular',
-            generatedDataUrl: '',
+            activeTab: "penilaian",
+            settingCriteriaType: "regular",
+            generatedDataUrl: "",
             editingCriteriaIndex: null,
-            editingAccountUsername: null,
-            editingBadgeEmpIndex: null
+            editingBadgeEmpIndex: null,
+            updatedAt: 0
         };
 
-        function isDeveloperUser(username) {
-            return String(username || '').trim().toLowerCase() === DEVELOPER_ACCOUNT.username;
+        function getBadgeInlineStyle(colorKey = 'amber', isDark = state.isDarkMode) {
+            const p = BADGE_PALETTES[colorKey] || BADGE_PALETTES.amber;
+            return isDark
+                ? `background-color: ${p.darkBg}; color: ${p.darkText}; border: 1px solid ${p.darkBorder};`
+                : `background-color: ${p.lightBg}; color: ${p.lightText}; border: 1px solid ${p.lightBorder};`;
         }
 
-        function ensureDeveloperAccountExists() {
-            const accounts = getAccounts();
-            const hasDev = accounts.some(a => a.username.toLowerCase() === DEVELOPER_ACCOUNT.username);
-            if (!hasDev) {
-                accounts.unshift({
-                    username: DEVELOPER_ACCOUNT.username,
-                    password: DEVELOPER_ACCOUNT.defaultPassword,
-                    isDeveloper: true,
-                    createdAt: Date.now()
-                });
-                saveAccounts(accounts);
-            }
+        function getBrandKey(outletName) {
+            if (outletName.toLowerCase().startsWith('jolie')) return 'jolie';
+            if (outletName.toLowerCase().startsWith('zola')) return 'zola';
+            return 'chatting';
         }
 
-        function getAccounts() {
-            try {
-                const raw = localStorage.getItem(GLOBAL_STORAGE_KEYS.ACCOUNTS);
-                return raw ? JSON.parse(raw) : [];
-            } catch (e) {
-                return [];
-            }
-        }
-
-        function saveAccounts(accounts) {
-            localStorage.setItem(GLOBAL_STORAGE_KEYS.ACCOUNTS, JSON.stringify(accounts));
+        function getBrandTheme(outletName, isDark = state.isDarkMode) {
+            const brandKey = getBrandKey(outletName);
+            return BRAND_THEMES[brandKey][isDark ? 'dark' : 'light'];
         }
 
         function isDefaultLeaderName(name) {
@@ -1102,202 +970,158 @@
             return { name: empName.trim(), isLeader: false, badge: '', badgeColor: 'amber' };
         }
 
-        function isEmployeeLeader(outletName, empName) {
-            const rec = getEmployeeRecord(outletName, empName);
-            return rec ? Boolean(rec.isLeader) : false;
+        function buildPayload() {
+            return {
+                app: "sertifikasi_karyawan",
+                updatedAt: state.updatedAt || Date.now(),
+                criteriaRegular: state.criteriaRegular,
+                criteriaLeader: state.criteriaLeader,
+                employees: state.employees,
+                results: state.results
+            };
         }
 
-        /**
-         * SALIN DATA KARYAWAN & POIN DARI AKUN 'abrar' KE AKUN 'okta'
-         */
-        function copyMasterDataFromAbrarToOkta(force = false) {
-            const abrarKeys = getUserStorageKeys('abrar');
-            const oktaKeys = getUserStorageKeys('okta');
-
-            const alreadyCopied = localStorage.getItem(GLOBAL_STORAGE_KEYS.OKTA_INIT_COPIED) === 'true';
-            if (alreadyCopied && !force) return false;
-
-            let sourceEmployees = null;
-            let sourceCriteriaLeader = null;
-            let sourceCriteriaRegular = null;
-
+        function writeLocalCache(payload) {
+            if (!state.username) return;
             try {
-                const rawEmp = localStorage.getItem(abrarKeys.EMPLOYEES);
-                if (rawEmp) sourceEmployees = JSON.parse(rawEmp);
-            } catch (e) { sourceEmployees = null; }
+                localStorage.setItem(CACHE_PREFIX + state.username.toLowerCase(), JSON.stringify(payload));
+            } catch (e) {}
+        }
 
+        function readLocalCache(username) {
+            if (!username) return null;
             try {
-                const rawLdr = localStorage.getItem(abrarKeys.CRITERIA_LEADER);
-                if (rawLdr) sourceCriteriaLeader = JSON.parse(rawLdr);
-            } catch (e) { sourceCriteriaLeader = null; }
+                const raw = localStorage.getItem(CACHE_PREFIX + username.toLowerCase());
+                return raw ? JSON.parse(raw) : null;
+            } catch (e) {
+                return null;
+            }
+        }
 
-            try {
-                const rawReg = localStorage.getItem(abrarKeys.CRITERIA_REGULAR);
-                if (rawReg) sourceCriteriaRegular = JSON.parse(rawReg);
-            } catch (e) { sourceCriteriaRegular = null; }
+        function applyRemotePayload(rawData, forceApply) {
+            // Jika data dari Supabase berasal dari aplikasi lain (misal Fitku) dan tidak punya field sertifikasi, biarkan default sertifikasi
+            const src = (rawData && typeof rawData === "object" && rawData.sertifikasi && typeof rawData.sertifikasi === "object")
+                ? rawData.sertifikasi
+                : (rawData && typeof rawData === "object" ? rawData : null);
 
-            const finalEmployees = {};
-            OUTLETS.forEach(outlet => {
-                const list = (sourceEmployees && Array.isArray(sourceEmployees[outlet]))
-                    ? sourceEmployees[outlet]
-                    : (DEFAULT_EMPLOYEES[outlet] || []);
-                finalEmployees[outlet] = list.map(normalizeEmployeeEntry);
-            });
+            if (!src) return false;
 
-            const finalCriteriaLeader = (Array.isArray(sourceCriteriaLeader) && sourceCriteriaLeader.length > 0)
-                ? [...sourceCriteriaLeader]
-                : [...DEFAULT_CRITERIA_LEADER];
+            const hasCertFields = Array.isArray(src.criteriaRegular) || Array.isArray(src.criteriaLeader) || (src.employees && typeof src.employees === "object") || Array.isArray(src.results);
+            if (!hasCertFields && !forceApply) return false;
 
-            const finalCriteriaRegular = (Array.isArray(sourceCriteriaRegular) && sourceCriteriaRegular.length > 0)
-                ? [...sourceCriteriaRegular]
+            const remoteTs = Number(src.updatedAt || 0);
+            if (!forceApply && remoteTs > 0 && state.updatedAt > 0 && remoteTs <= state.updatedAt) {
+                return false;
+            }
+
+            state.criteriaRegular = Array.isArray(src.criteriaRegular) && src.criteriaRegular.length > 0
+                ? [...src.criteriaRegular]
                 : [...DEFAULT_CRITERIA_REGULAR];
 
-            localStorage.setItem(oktaKeys.EMPLOYEES, JSON.stringify(finalEmployees));
-            localStorage.setItem(oktaKeys.CRITERIA_LEADER, JSON.stringify(finalCriteriaLeader));
-            localStorage.setItem(oktaKeys.CRITERIA_REGULAR, JSON.stringify(finalCriteriaRegular));
+            state.criteriaLeader = Array.isArray(src.criteriaLeader) && src.criteriaLeader.length > 0
+                ? [...src.criteriaLeader]
+                : [...DEFAULT_CRITERIA_LEADER];
 
-            if (!localStorage.getItem(oktaKeys.RESULTS)) {
-                localStorage.setItem(oktaKeys.RESULTS, JSON.stringify([]));
-            }
-
-            localStorage.setItem(GLOBAL_STORAGE_KEYS.OKTA_INIT_COPIED, 'true');
-
-            if (state.targetUsername && state.targetUsername.trim().toLowerCase() === 'okta') {
-                state.employees = finalEmployees;
-                state.criteriaLeader = finalCriteriaLeader;
-                state.criteriaRegular = finalCriteriaRegular;
-            }
-
-            return true;
-        }
-
-        /**
-         * KOMPRESI KODE DATA PENDEK (GZIP + BASE64URL)
-         */
-        async function buildShortSyncCode() {
-            const accounts = getAccounts();
-            const usersData = {};
-            const usernames = new Set(accounts.map(a => a.username.trim().toLowerCase()));
-            usernames.add('abrar');
-            usernames.add('okta');
-            if (state.currentUser) {
-                usernames.add(state.currentUser.username.trim().toLowerCase());
-            }
-
-            usernames.forEach(uname => {
-                const keys = getUserStorageKeys(uname);
-                try {
-                    const reg = JSON.parse(localStorage.getItem(keys.CRITERIA_REGULAR) || 'null');
-                    const ldr = JSON.parse(localStorage.getItem(keys.CRITERIA_LEADER) || 'null');
-                    const emp = JSON.parse(localStorage.getItem(keys.EMPLOYEES) || 'null');
-                    const res = JSON.parse(localStorage.getItem(keys.RESULTS) || 'null');
-                    if (reg || ldr || emp || (res && res.length > 0)) {
-                        usersData[uname] = { r: reg, l: ldr, e: emp, s: res };
-                    }
-                } catch (e) {}
+            const nextEmployees = {};
+            OUTLETS.forEach(o => {
+                const list = (src.employees && Array.isArray(src.employees[o]))
+                    ? src.employees[o]
+                    : (DEFAULT_EMPLOYEES[o] || []);
+                nextEmployees[o] = list.map(normalizeEmployeeEntry);
             });
+            state.employees = nextEmployees;
 
-            const payload = {
-                v: 2,
-                a: accounts.map(acc => ({ u: acc.username, p: acc.password, d: acc.isDeveloper ? 1 : 0 })),
-                u: usersData
-            };
+            state.results = Array.isArray(src.results) ? [...src.results] : [];
+            if (remoteTs > 0) state.updatedAt = remoteTs;
 
-            const jsonStr = JSON.stringify(payload);
-            if (typeof CompressionStream !== 'undefined') {
-                const stream = new Blob([jsonStr]).stream().pipeThrough(new CompressionStream('gzip'));
-                const buf = await new Response(stream).arrayBuffer();
-                const bytes = new Uint8Array(buf);
-                let bin = '';
-                for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
-                return 'GZ:' + btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-            }
-            return 'RAW:' + btoa(unescape(encodeURIComponent(jsonStr)));
-        }
-
-        async function applyShortSyncCode(encodedCode) {
-            const clean = encodedCode.trim();
-            let jsonStr = '';
-
-            if (clean.startsWith('GZ:') && typeof DecompressionStream !== 'undefined') {
-                let b64 = clean.slice(3).replace(/-/g, '+').replace(/_/g, '/');
-                while (b64.length % 4) b64 += '=';
-                const bin = atob(b64);
-                const bytes = new Uint8Array(bin.length);
-                for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-                const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
-                jsonStr = await new Response(stream).text();
-            } else {
-                const rawPart = clean.startsWith('RAW:') ? clean.slice(4) : clean;
-                jsonStr = decodeURIComponent(escape(atob(rawPart)));
-            }
-
-            const payload = JSON.parse(jsonStr);
-            if (!payload || typeof payload !== 'object') return false;
-
-            const incomingAccs = Array.isArray(payload.a)
-                ? payload.a.map(x => ({ username: x.u, password: x.p, isDeveloper: Boolean(x.d) }))
-                : (Array.isArray(payload.accounts) ? payload.accounts : []);
-
-            if (incomingAccs.length > 0) {
-                const localAccs = getAccounts();
-                const mergedMap = new Map();
-                localAccs.forEach(a => mergedMap.set(a.username.toLowerCase(), a));
-                incomingAccs.forEach(a => {
-                    if (a && a.username) mergedMap.set(a.username.toLowerCase(), a);
-                });
-                localStorage.setItem(GLOBAL_STORAGE_KEYS.ACCOUNTS, JSON.stringify(Array.from(mergedMap.values())));
-            }
-
-            const incomingUsers = payload.u || payload.usersData;
-            if (incomingUsers && typeof incomingUsers === 'object') {
-                Object.entries(incomingUsers).forEach(([uname, udata]) => {
-                    if (!udata || typeof udata !== 'object') return;
-                    const keys = getUserStorageKeys(uname);
-                    const reg = udata.r || udata.criteriaRegular;
-                    const ldr = udata.l || udata.criteriaLeader;
-                    const emp = udata.e || udata.employees;
-                    const res = udata.s || udata.results;
-
-                    if (Array.isArray(reg)) localStorage.setItem(keys.CRITERIA_REGULAR, JSON.stringify(reg));
-                    if (Array.isArray(ldr)) localStorage.setItem(keys.CRITERIA_LEADER, JSON.stringify(ldr));
-                    if (emp && typeof emp === 'object') localStorage.setItem(keys.EMPLOYEES, JSON.stringify(emp));
-                    if (Array.isArray(res)) localStorage.setItem(keys.RESULTS, JSON.stringify(res));
-                });
-            }
-
-            ensureDeveloperAccountExists();
-            copyMasterDataFromAbrarToOkta(false);
-
-            if (state.currentUser) {
-                loadUserState(state.targetUsername || state.currentUser.username);
-                renderEmployeeDropdown();
-                renderChecklist();
-                if (state.activeTab === 'rekap') renderRekapList();
-                if (state.activeTab === 'setting') {
-                    renderDeveloperTargetAccountSelect();
-                    renderDeveloperAccountsList();
-                    renderSettingCriteria();
-                    renderSettingEmployees();
-                }
-            }
-
+            writeLocalCache(buildPayload());
             return true;
         }
 
-        async function handleCopySyncCode() {
-            const code = await buildShortSyncCode();
-            try {
-                await navigator.clipboard.writeText(code);
-                showToast(`Kode data disalin (${code.length} karakter)!`);
-            } catch (e) {
-                prompt('Salin kode data berikut:', code);
-            }
+        function flushSupabaseSave() {
+            if (!SESSION_TOKEN || isSavingRemote || !isDirtyRemote) return;
+            isSavingRemote = true;
+            isDirtyRemote = false;
+            state.updatedAt = Date.now();
+
+            const payload = buildPayload();
+            writeLocalCache(payload);
+            setSyncIndicator("Menyimpan...", false);
+
+            sbRequest({ action: "save", t: SESSION_TOKEN, data: payload })
+                .then(function() {
+                    setSyncIndicator("Supabase", false);
+                })
+                .catch(function(err) {
+                    if (err.status === 401) {
+                        toAuthScreen("Sesi berakhir. Silakan masuk kembali.");
+                    } else {
+                        isDirtyRemote = true;
+                        setSyncIndicator("Retry Sync", true);
+                        clearTimeout(saveRetryTimer);
+                        saveRetryTimer = setTimeout(flushSupabaseSave, 4000);
+                    }
+                })
+                .then(function() {
+                    isSavingRemote = false;
+                    if (isDirtyRemote) {
+                        flushSupabaseSave();
+                    }
+                });
         }
 
-        function handleOpenImportModal() {
-            document.getElementById('textarea-import-sync').value = '';
-            document.getElementById('modal-import-sync').classList.remove('hidden');
+        function persistState() {
+            state.updatedAt = Date.now();
+            writeLocalCache(buildPayload());
+            if (!SESSION_TOKEN) return;
+            isDirtyRemote = true;
+            clearTimeout(saveRetryTimer);
+            saveRetryTimer = setTimeout(flushSupabaseSave, 350);
+        }
+
+        function pullLatestFromSupabase(showFeedback) {
+            if (!SESSION_TOKEN) return Promise.resolve();
+            return sbRequest({ action: "load", t: SESSION_TOKEN })
+                .then(function(res) {
+                    if (res && res.profile) {
+                        SESSION_PROFILE = res.profile;
+                        const displayName = res.profile.name || res.profile.username || state.username;
+                        state.username = displayName;
+                        document.getElementById("header-user-badge").textContent = displayName;
+                        document.getElementById("setting-username-display").textContent = displayName;
+                    }
+                    const changed = applyRemotePayload(res && res.data, false);
+                    setSyncIndicator("Supabase", false);
+                    if (changed) {
+                        renderEmployeeDropdown();
+                        renderChecklist();
+                        if (state.activeTab === "rekap") renderRekapList();
+                        if (state.activeTab === "setting") {
+                            renderSettingCriteria();
+                            renderSettingEmployees();
+                        }
+                    }
+                    if (showFeedback) {
+                        showToast("Data tersinkron dengan Supabase!");
+                    }
+                })
+                .catch(function(err) {
+                    if (err.status === 401) {
+                        toAuthScreen("Sesi berakhir. Silakan masuk kembali.");
+                    } else {
+                        setSyncIndicator("Offline", true);
+                        if (showFeedback) showToast("Gagal sinkron, cek koneksi.");
+                    }
+                });
+        }
+
+        function startSupabasePolling() {
+            clearInterval(pollTimer);
+            pollTimer = setInterval(function() {
+                if (SESSION_TOKEN && !isDirtyRemote && !isSavingRemote) {
+                    pullLatestFromSupabase(false);
+                }
+            }, 6000);
         }
 
         function getActiveCriteriaList(isLeader) {
@@ -1331,7 +1155,7 @@
         }
 
         function loadThemePreference() {
-            const savedDark = localStorage.getItem(GLOBAL_STORAGE_KEYS.DARK_MODE);
+            const savedDark = localStorage.getItem(DARK_MODE_KEY);
             if (savedDark !== null) {
                 state.isDarkMode = savedDark === 'true';
             } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -1339,72 +1163,10 @@
             }
         }
 
-        function loadUserState(username) {
-            const targetUser = username || (state.currentUser ? state.currentUser.username : 'default');
-            state.targetUsername = targetUser;
-            const cleanLower = String(targetUser).trim().toLowerCase();
-
-            if (cleanLower === 'okta') {
-                copyMasterDataFromAbrarToOkta(false);
-            }
-
-            const keys = getUserStorageKeys(targetUser);
-            try {
-                const savedReg = localStorage.getItem(keys.CRITERIA_REGULAR);
-                state.criteriaRegular = savedReg ? JSON.parse(savedReg) : [...DEFAULT_CRITERIA_REGULAR];
-
-                const savedLdr = localStorage.getItem(keys.CRITERIA_LEADER);
-                state.criteriaLeader = savedLdr ? JSON.parse(savedLdr) : [...DEFAULT_CRITERIA_LEADER];
-
-                const savedEmployees = localStorage.getItem(keys.EMPLOYEES);
-                const rawEmployees = savedEmployees ? JSON.parse(savedEmployees) : JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES));
-
-                state.employees = {};
-                OUTLETS.forEach(o => {
-                    const list = Array.isArray(rawEmployees[o]) ? rawEmployees[o] : (DEFAULT_EMPLOYEES[o] || []);
-                    state.employees[o] = list.map(normalizeEmployeeEntry);
-                });
-
-                const savedResults = localStorage.getItem(keys.RESULTS);
-                state.results = savedResults ? JSON.parse(savedResults) : [];
-            } catch (e) {
-                state.criteriaRegular = [...DEFAULT_CRITERIA_REGULAR];
-                state.criteriaLeader = [...DEFAULT_CRITERIA_LEADER];
-                state.employees = JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES));
-                state.results = [];
-            }
-        }
-
-        function getStorageOwnerUsername() {
-            return state.targetUsername || (state.currentUser ? state.currentUser.username : 'default');
-        }
-
-        function saveCriteria() {
-            if (!state.currentUser) return;
-            const keys = getUserStorageKeys(getStorageOwnerUsername());
-            localStorage.setItem(keys.CRITERIA_REGULAR, JSON.stringify(state.criteriaRegular));
-            localStorage.setItem(keys.CRITERIA_LEADER, JSON.stringify(state.criteriaLeader));
-        }
-
-        function saveEmployees() {
-            if (!state.currentUser) return;
-            const keys = getUserStorageKeys(getStorageOwnerUsername());
-            localStorage.setItem(keys.EMPLOYEES, JSON.stringify(state.employees));
-        }
-
-        function saveResults() {
-            if (!state.currentUser) return;
-            const keys = getUserStorageKeys(getStorageOwnerUsername());
-            localStorage.setItem(keys.RESULTS, JSON.stringify(state.results));
-        }
-
         function saveDarkMode() {
-            localStorage.setItem(GLOBAL_STORAGE_KEYS.DARK_MODE, String(state.isDarkMode));
+            localStorage.setItem(DARK_MODE_KEY, String(state.isDarkMode));
         }
 
-        /**
-         * MENERAPKAN TEMA WARNA OUTLET + LIGHT/DARK MODE
-         */
         function applyOutletTheme(outletName) {
             const theme = getBrandTheme(outletName, state.isDarkMode);
             document.body.className = `min-h-screen select-none ${theme.bodyClass}`;
@@ -1428,9 +1190,7 @@
             }
         }
 
-        /**
-         * LOGIKA HALAMAN LOGIN & DAFTAR AKUN
-         */
+        /* ==================== AUTH VIA SUPABASE ("jlb") ==================== */
         function setAuthMode(mode) {
             state.authMode = mode;
             const btnLogin = document.getElementById('btn-auth-mode-login');
@@ -1447,14 +1207,14 @@
                 btnRegister.className = 'py-2 rounded-xl text-sm font-extrabold theme-primary-bg transition-all cursor-pointer';
                 btnLogin.className = 'py-2 rounded-xl text-sm font-extrabold theme-muted-text transition-all cursor-pointer';
                 btnSubmit.textContent = 'Daftar & Masuk';
-                subtitle.textContent = 'Buat akun penguji baru untuk mulai';
+                subtitle.textContent = 'Buat akun baru di Supabase untuk sync antar perangkat';
                 passInput.setAttribute('autocomplete', 'new-password');
                 switchLink.innerHTML = 'Sudah punya akun? <span class="theme-primary-text font-extrabold">Masuk di sini</span>';
             } else {
                 btnLogin.className = 'py-2 rounded-xl text-sm font-extrabold theme-primary-bg transition-all cursor-pointer';
                 btnRegister.className = 'py-2 rounded-xl text-sm font-extrabold theme-muted-text transition-all cursor-pointer';
                 btnSubmit.textContent = 'Masuk Sekarang';
-                subtitle.textContent = 'Masuk ke akun penguji untuk melanjutkan';
+                subtitle.textContent = 'Masuk ke akun Supabase untuk menyamakan data di HP & PC';
                 passInput.setAttribute('autocomplete', 'current-password');
                 switchLink.innerHTML = 'Belum punya akun? <span class="theme-primary-text font-extrabold">Daftar di sini</span>';
             }
@@ -1466,11 +1226,34 @@
             errBox.classList.remove('hidden');
         }
 
-        function enterAppSession(username) {
-            const cleanUsername = username.trim();
-            const isDev = isDeveloperUser(cleanUsername);
-            state.currentUser = { username: cleanUsername, isDeveloper: isDev };
-            localStorage.setItem(GLOBAL_STORAGE_KEYS.CURRENT_SESSION, cleanUsername);
+        function toAuthScreen(msg, keepToken) {
+            SESSION_TOKEN = null;
+            SESSION_PROFILE = null;
+            isDirtyRemote = false;
+            clearTimeout(saveRetryTimer);
+            clearInterval(pollTimer);
+            if (!keepToken) {
+                try { localStorage.removeItem(TOKEN_KEY); } catch (e) {}
+            }
+            document.getElementById('app-wrapper').classList.add('hidden');
+            document.getElementById('auth-screen').classList.remove('hidden');
+            setAuthMode('login');
+            if (msg) showAuthError(msg);
+            applyOutletTheme(document.getElementById('select-outlet').value);
+        }
+
+        function enterAuthenticatedApp(token, profile, remoteData) {
+            SESSION_TOKEN = token;
+            SESSION_PROFILE = profile || {};
+            try { localStorage.setItem(TOKEN_KEY, token); } catch (e) {}
+
+            const uname = (profile && (profile.name || profile.username)) || document.getElementById('auth-username').value.trim() || "Penguji";
+            state.username = uname;
+
+            // Muat cache lokal dulu jika ada, lalu timpa dengan data terbaru dari Supabase
+            const cached = readLocalCache(uname);
+            if (cached) applyRemotePayload(cached, true);
+            applyRemotePayload(remoteData, false);
 
             state.checkedCriteria.clear();
             state.isManualEmployee = false;
@@ -1481,43 +1264,9 @@
             document.getElementById('wrapper-select-emp').classList.remove('hidden');
             document.getElementById('btn-toggle-manual-emp').textContent = '+ Input Manual';
 
-            if (isDev) {
-                const accounts = getAccounts().filter(a => !isDeveloperUser(a.username));
-                const defaultTarget = accounts.length > 0 ? accounts[0].username : 'abrar';
-                loadUserState(defaultTarget);
-            } else {
-                loadUserState(cleanUsername);
-            }
-
-            const devPill = document.getElementById('header-dev-pill');
-            const devAccountsPanel = document.getElementById('dev-accounts-panel');
-            const devTargetBar = document.getElementById('dev-target-account-bar');
-            const navSettingLabel = document.getElementById('nav-setting-label');
-            const settingRoleLabel = document.getElementById('setting-role-label');
-
-            if (isDev) {
-                devPill.classList.remove('hidden');
-                devAccountsPanel.classList.remove('hidden');
-                devTargetBar.classList.remove('hidden');
-                navSettingLabel.textContent = 'Developer';
-                settingRoleLabel.textContent = 'Mode Developer (Master Akses)';
-            } else {
-                devPill.classList.add('hidden');
-                devAccountsPanel.classList.add('hidden');
-                devTargetBar.classList.add('hidden');
-                navSettingLabel.textContent = 'Setting';
-                settingRoleLabel.textContent = 'Akun Penguji Aktif';
-            }
-
-            const cardCopyAbrar = document.getElementById('card-copy-from-abrar');
-            if (!isDev && cleanUsername.toLowerCase() === 'okta') {
-                cardCopyAbrar.classList.remove('hidden');
-            } else {
-                cardCopyAbrar.classList.add('hidden');
-            }
-
-            document.getElementById('header-user-badge').textContent = cleanUsername;
-            document.getElementById('setting-username-display').textContent = cleanUsername;
+            document.getElementById('header-user-badge').textContent = uname;
+            document.getElementById('setting-username-display').textContent = uname;
+            setSyncIndicator("Supabase", false);
 
             document.getElementById('auth-screen').classList.add('hidden');
             document.getElementById('app-wrapper').classList.remove('hidden');
@@ -1526,218 +1275,64 @@
             applyOutletTheme(selectOutlet.value);
             renderEmployeeDropdown();
             renderChecklist();
-            switchTab(isDev ? 'setting' : 'penilaian');
+            switchTab('penilaian');
+            startSupabasePolling();
         }
 
-        function logoutSession() {
-            state.currentUser = null;
-            state.targetUsername = '';
-            state.results = [];
-            state.checkedCriteria.clear();
-            localStorage.removeItem(GLOBAL_STORAGE_KEYS.CURRENT_SESSION);
-
-            document.getElementById('auth-username').value = '';
-            document.getElementById('auth-password').value = '';
-            document.getElementById('auth-error-box').classList.add('hidden');
-            setAuthMode('login');
-
-            document.getElementById('app-wrapper').classList.add('hidden');
-            document.getElementById('auth-screen').classList.remove('hidden');
-            applyOutletTheme('Chatting 2 S.Parman');
-            showToast('Berhasil keluar akun');
+        function startSupabaseSession(token) {
+            return sbRequest({ action: "load", t: token }).then(function(res) {
+                enterAuthenticatedApp(token, res.profile, res.data);
+            });
         }
 
         function handleAuthSubmit(e) {
             e.preventDefault();
-            const rawUsername = document.getElementById('auth-username').value.trim();
+            const username = document.getElementById('auth-username').value.trim();
             const password = document.getElementById('auth-password').value;
+            const btnSubmit = document.getElementById('btn-auth-submit');
 
-            if (!rawUsername || !password) {
+            if (!username || !password) {
                 showAuthError('Username dan password wajib diisi.');
                 return;
             }
 
-            if (rawUsername.length < 3) {
-                showAuthError('Username minimal 3 karakter.');
-                return;
-            }
+            document.getElementById('auth-error-box').classList.add('hidden');
+            btnSubmit.disabled = true;
 
-            if (password.length < 4) {
-                showAuthError('Password minimal 4 karakter.');
-                return;
-            }
+            const body = state.authMode === "register"
+                ? { action: "signup", name: username, username: username, password: password }
+                : { action: "login", username: username, password: password };
 
-            ensureDeveloperAccountExists();
-            const accounts = getAccounts();
-            const existingAccount = accounts.find(
-                acc => acc.username.toLowerCase() === rawUsername.toLowerCase()
-            );
-
-            if (state.authMode === 'register') {
-                if (existingAccount) {
-                    showAuthError('Username sudah terdaftar. Silakan gunakan username lain atau masuk.');
-                    return;
-                }
-
-                accounts.push({
-                    username: rawUsername,
-                    password: password,
-                    isDeveloper: isDeveloperUser(rawUsername),
-                    createdAt: Date.now()
+            sbRequest(body)
+                .then(function(res) {
+                    return startSupabaseSession(res.token);
+                })
+                .then(function() {
+                    showToast(state.authMode === "register" ? `Akun "${username}" terdaftar!` : `Masuk sebagai ${username}`);
+                })
+                .catch(function(err) {
+                    showAuthError(err.status ? err.message : "Tidak bisa terhubung ke Supabase. Coba lagi.");
+                })
+                .then(function() {
+                    btnSubmit.disabled = false;
                 });
-                saveAccounts(accounts);
+        }
 
-                if (rawUsername.toLowerCase() === 'okta') {
-                    copyMasterDataFromAbrarToOkta(true);
-                }
-
-                enterAppSession(rawUsername);
-                showToast(`Akun "${rawUsername}" berhasil dibuat!`);
-            } else {
-                if (!existingAccount || existingAccount.password !== password) {
-                    showAuthError('Username atau password salah.');
-                    return;
-                }
-
-                enterAppSession(existingAccount.username);
-                showToast(`Selamat datang, ${existingAccount.username}!`);
+        function logoutSession() {
+            const tokenToClose = SESSION_TOKEN;
+            if (isDirtyRemote && tokenToClose) {
+                sbRequest({ action: "save", t: tokenToClose, data: buildPayload() }).catch(function() {});
             }
-        }
-
-        /**
-         * FITUR KHUSUS DEVELOPER: KELOLA SEMUA AKUN, RENAME PENGUJI & GANTI PASSWORD
-         */
-        function renderDeveloperTargetAccountSelect() {
-            const selectEl = document.getElementById('dev-select-target-account');
-            if (!selectEl) return;
-
-            const accounts = getAccounts();
-            const usernames = new Set(accounts.map(a => a.username));
-            if (!Array.from(usernames).some(u => u.toLowerCase() === 'abrar')) usernames.add('abrar');
-            if (!Array.from(usernames).some(u => u.toLowerCase() === 'okta')) usernames.add('okta');
-
-            selectEl.innerHTML = '';
-            Array.from(usernames).forEach(uname => {
-                if (isDeveloperUser(uname)) return;
-                const opt = document.createElement('option');
-                opt.value = uname;
-                opt.textContent = `Akun: ${uname}`;
-                if (state.targetUsername && state.targetUsername.toLowerCase() === uname.toLowerCase()) {
-                    opt.selected = true;
-                }
-                selectEl.appendChild(opt);
-            });
-        }
-
-        function renderDeveloperAccountsList() {
-            const container = document.getElementById('dev-accounts-list');
-            if (!container) return;
-
-            const accounts = getAccounts();
-            container.innerHTML = '';
-
-            if (accounts.length === 0) {
-                container.innerHTML = `<p class="text-xs theme-muted-text text-center py-3">Belum ada akun terdaftar.</p>`;
-                return;
+            toAuthScreen("");
+            if (tokenToClose) {
+                sbRequest({ action: "logout", t: tokenToClose }).catch(function() {});
             }
-
-            accounts.forEach(acc => {
-                const isDev = isDeveloperUser(acc.username);
-                const row = document.createElement('div');
-                row.className = 'flex items-center justify-between gap-2 p-2.5 rounded-xl theme-soft border theme-border';
-                row.innerHTML = `
-                    <div class="min-w-0 flex-1">
-                        <div class="flex items-center gap-1.5">
-                            <span class="text-xs font-extrabold truncate">${escapeHtml(acc.username)}</span>
-                            ${isDev ? `<span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-500">DEVELOPER</span>` : ''}
-                        </div>
-                        <span class="text-[11px] theme-muted-text block">Password: <b class="font-mono">${escapeHtml(acc.password)}</b></span>
-                    </div>
-                    <div class="flex items-center gap-1.5 shrink-0">
-                        <button type="button" data-dev-edit-acc="${escapeHtml(acc.username)}" class="text-[11px] font-bold px-2.5 py-1.5 rounded-lg theme-primary-light cursor-pointer">
-                            Edit Nama / Pass
-                        </button>
-                        ${!isDev ? `
-                            <button type="button" data-dev-del-acc="${escapeHtml(acc.username)}" class="p-1.5 rounded-lg text-red-500 hover:opacity-80 cursor-pointer" title="Hapus Akun">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                </svg>
-                            </button>
-                        ` : ''}
-                    </div>
-                `;
-                container.appendChild(row);
-            });
-
-            container.querySelectorAll('[data-dev-edit-acc]').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const targetUname = btn.getAttribute('data-dev-edit-acc');
-                    const accountsList = getAccounts();
-                    const found = accountsList.find(a => a.username === targetUname);
-                    if (!found) return;
-
-                    state.editingAccountUsername = found.username;
-                    const inputUname = document.getElementById('input-dev-edit-username');
-                    const inputPass = document.getElementById('input-dev-edit-password');
-                    inputUname.value = found.username;
-                    inputUname.disabled = isDeveloperUser(found.username);
-                    inputPass.value = found.password;
-                    document.getElementById('modal-dev-edit-account').classList.remove('hidden');
-                });
-            });
-
-            container.querySelectorAll('[data-dev-del-acc]').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const targetUname = btn.getAttribute('data-dev-del-acc');
-                    showConfirmModal(
-                        'Hapus Akun Penguji',
-                        `Hapus akun "${targetUname}" beserta seluruh datanya?`,
-                        () => {
-                            const updated = getAccounts().filter(a => a.username !== targetUname);
-                            saveAccounts(updated);
-                            const oldKeys = getUserStorageKeys(targetUname);
-                            Object.values(oldKeys).forEach(k => localStorage.removeItem(k));
-                            renderDeveloperTargetAccountSelect();
-                            renderDeveloperAccountsList();
-                            showToast(`Akun ${targetUname} dihapus`);
-                        }
-                    );
-                });
-            });
+            document.getElementById('auth-username').value = '';
+            document.getElementById('auth-password').value = '';
+            showToast('Berhasil keluar akun');
         }
 
-        function migrateUserAccountData(oldUsername, newUsername) {
-            if (!oldUsername || !newUsername) return;
-            const oldKeys = getUserStorageKeys(oldUsername);
-            const newKeys = getUserStorageKeys(newUsername);
-            if (oldKeys.EMPLOYEES === newKeys.EMPLOYEES) return;
-
-            ['CRITERIA_REGULAR', 'CRITERIA_LEADER', 'EMPLOYEES', 'RESULTS'].forEach(k => {
-                const rawVal = localStorage.getItem(oldKeys[k]);
-                if (rawVal !== null) {
-                    if (k === 'RESULTS') {
-                        try {
-                            const parsed = JSON.parse(rawVal);
-                            if (Array.isArray(parsed)) {
-                                parsed.forEach(item => { item.examiner = newUsername; });
-                                localStorage.setItem(newKeys[k], JSON.stringify(parsed));
-                            } else {
-                                localStorage.setItem(newKeys[k], rawVal);
-                            }
-                        } catch (e) {
-                            localStorage.setItem(newKeys[k], rawVal);
-                        }
-                    } else {
-                        localStorage.setItem(newKeys[k], rawVal);
-                    }
-                    localStorage.removeItem(oldKeys[k]);
-                }
-            });
-        }
-
-        /**
-         * RENDER TAB 1: FORM PENILAIAN
-         */
+        /* ==================== TAB 1: FORM PENILAIAN ==================== */
         function getSelectedEmployeeInfo() {
             const outlet = document.getElementById('select-outlet').value;
             let empName = '';
@@ -1943,10 +1538,6 @@
                 r => r.date === date && r.outlet === outlet && r.employee.toLowerCase() === empName.toLowerCase()
             );
 
-            const examinerName = state.currentUser && state.currentUser.isDeveloper
-                ? getStorageOwnerUsername()
-                : (state.currentUser ? state.currentUser.username : '-');
-
             const record = {
                 id: existingIndex >= 0 ? state.results[existingIndex].id : Date.now().toString(),
                 date,
@@ -1959,7 +1550,7 @@
                 total,
                 passedCriteria: validChecked.map(i => criteriaList[i]),
                 note,
-                examiner: examinerName,
+                examiner: state.username || '-',
                 timestamp: existingIndex >= 0 ? state.results[existingIndex].timestamp : Date.now()
             };
 
@@ -1971,7 +1562,7 @@
                 showToast(`Tersimpan: ${empName} (${score}/${total})`);
             }
 
-            saveResults();
+            persistState();
 
             state.checkedCriteria.clear();
             document.getElementById('input-catatan').value = '';
@@ -1998,9 +1589,7 @@
             }));
         }
 
-        /**
-         * RENDER TAB 2: REKAP HARIAN
-         */
+        /* ==================== TAB 2: REKAP HARIAN ==================== */
         function renderRekapList() {
             const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
             const container = document.getElementById('rekap-list-container');
@@ -2098,7 +1687,7 @@
                         'Hapus data nilai karyawan ini dari laporan hari ini?',
                         () => {
                             state.results = state.results.filter(r => r.id !== id);
-                            saveResults();
+                            persistState();
                             renderRekapList();
                             showToast('Data dihapus');
                         }
@@ -2107,9 +1696,7 @@
             });
         }
 
-        /**
-         * GENERATOR GAMBAR LAPORAN 1 HARI (HTML5 CANVAS HIGH-DPI)
-         */
+        /* ==================== GENERATOR GAMBAR LAPORAN 1 HARI ==================== */
         function generateDailyReportImage() {
             const selectedDate = document.getElementById('rekap-tanggal').value || getTodayStr();
             const dailyResults = state.results.filter(r => r.date === selectedDate);
@@ -2120,7 +1707,6 @@
             }
 
             const grouped = getChronologicalOutletGroups(dailyResults);
-
             const canvas = document.getElementById('export-canvas');
             const ctx = canvas.getContext('2d');
             const isDark = state.isDarkMode;
@@ -2229,10 +1815,7 @@
             ctx.font = '800 21px Inter, sans-serif';
             ctx.fillText('HASIL TES SERTIFIKASI KARYAWAN', padding + 24, padding + 44);
 
-            const examinerName = state.currentUser && state.currentUser.isDeveloper
-                ? getStorageOwnerUsername()
-                : (state.currentUser ? state.currentUser.username : '-');
-            const examinerLabel = `Penguji : ${examinerName}`;
+            const examinerLabel = `Penguji : ${state.username || '-'}`;
             ctx.font = '600 13px Inter, sans-serif';
             const examinerW = ctx.measureText(examinerLabel).width;
             ctx.fillStyle = isDark && topOutletTheme.key === 'jolie'
@@ -2393,9 +1976,7 @@
             showToast('Gambar laporan berhasil diunduh!');
         }
 
-        /**
-         * RENDER TAB 3: SETTING (KRITERIA & KARYAWAN + BADGE)
-         */
+        /* ==================== TAB 3: SETTING (KRITERIA & KARYAWAN + BADGE) ==================== */
         function renderSettingCriteria() {
             const container = document.getElementById('setting-criteria-list');
             const btnReg = document.getElementById('btn-crit-tab-regular');
@@ -2468,7 +2049,7 @@
                     targetList[idx] = targetList[targetIdx];
                     targetList[targetIdx] = temp;
 
-                    saveCriteria();
+                    persistState();
                     renderSettingCriteria();
                     state.checkedCriteria.clear();
                     renderChecklist();
@@ -2488,7 +2069,7 @@
                 btn.addEventListener('click', () => {
                     const idx = Number(btn.getAttribute('data-del-crit'));
                     targetList.splice(idx, 1);
-                    saveCriteria();
+                    persistState();
                     renderSettingCriteria();
                     state.checkedCriteria.clear();
                     renderChecklist();
@@ -2555,7 +2136,7 @@
                     const idx = Number(btn.getAttribute('data-del-emp'));
                     const removedName = list[idx].name;
                     list.splice(idx, 1);
-                    saveEmployees();
+                    persistState();
                     renderSettingEmployees();
                     renderEmployeeDropdown();
                     renderChecklist();
@@ -2564,9 +2145,7 @@
             });
         }
 
-        /**
-         * NAVIGASI TAB
-         */
+        /* ==================== NAVIGASI TAB & UTILITAS ==================== */
         function switchTab(tabName) {
             state.activeTab = tabName;
 
@@ -2593,18 +2172,11 @@
             if (tabName === 'rekap') {
                 renderRekapList();
             } else if (tabName === 'setting') {
-                if (state.currentUser && state.currentUser.isDeveloper) {
-                    renderDeveloperTargetAccountSelect();
-                    renderDeveloperAccountsList();
-                }
                 renderSettingCriteria();
                 renderSettingEmployees();
             }
         }
 
-        /**
-         * UTILITAS UI (TOAST, MODAL CONFIRM, ESCAPE HTML)
-         */
         let toastTimer = null;
         function showToast(msg) {
             const toast = document.getElementById('toast');
@@ -2632,13 +2204,9 @@
             return div.innerHTML;
         }
 
-        /**
-         * INISIALISASI APLIKASI & EVENT LISTENERS
-         */
+        /* ==================== INISIALISASI ==================== */
         function initApp() {
             loadThemePreference();
-            ensureDeveloperAccountExists();
-            copyMasterDataFromAbrarToOkta(false);
 
             const today = getTodayStr();
             const inputTanggal = document.getElementById('input-tanggal');
@@ -2650,120 +2218,15 @@
             const selectOutlet = document.getElementById('select-outlet');
             applyOutletTheme(selectOutlet.value);
 
-            // Salin & Tempel Kode Data Pendek
-            document.getElementById('btn-auth-copy-code').addEventListener('click', handleCopySyncCode);
-            document.getElementById('btn-auth-paste-code').addEventListener('click', handleOpenImportModal);
-            document.getElementById('btn-export-sync-code').addEventListener('click', handleCopySyncCode);
-            document.getElementById('btn-open-import-modal').addEventListener('click', handleOpenImportModal);
-
-            document.getElementById('btn-import-sync-cancel').addEventListener('click', () => {
-                document.getElementById('modal-import-sync').classList.add('hidden');
-            });
-
-            document.getElementById('btn-import-sync-apply').addEventListener('click', async () => {
-                const rawCode = document.getElementById('textarea-import-sync').value.trim();
-                if (!rawCode) {
-                    showToast('Tempel kode data terlebih dahulu!');
-                    return;
-                }
-                try {
-                    if (await applyShortSyncCode(rawCode)) {
-                        document.getElementById('modal-import-sync').classList.add('hidden');
-                        showToast('Data berhasil ditempel & disamakan!');
-                    } else {
-                        showToast('Format kode data tidak valid.');
-                    }
-                } catch (e) {
-                    showToast('Kode data tidak valid.');
+            document.getElementById('btn-manual-sync').addEventListener('click', () => {
+                if (isDirtyRemote) {
+                    flushSupabaseSave();
+                    showToast("Menyimpan perubahan ke Supabase...");
+                } else {
+                    pullLatestFromSupabase(true);
                 }
             });
 
-            // Khusus Developer: Pilih akun target yang diedit
-            document.getElementById('dev-select-target-account').addEventListener('change', (e) => {
-                const targetUname = e.target.value;
-                loadUserState(targetUname);
-                state.checkedCriteria.clear();
-                renderSettingCriteria();
-                renderSettingEmployees();
-                renderEmployeeDropdown();
-                renderChecklist();
-                showToast(`Mengedit data akun: ${targetUname}`);
-            });
-
-            // Khusus Developer: Tambah akun penguji baru
-            document.getElementById('form-dev-add-account').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const uname = document.getElementById('dev-new-acc-username').value.trim();
-                const pass = document.getElementById('dev-new-acc-password').value.trim();
-                if (uname.length < 3 || pass.length < 4) {
-                    showToast('Username min. 3 huruf & password min. 4 karakter');
-                    return;
-                }
-                const accounts = getAccounts();
-                if (accounts.some(a => a.username.toLowerCase() === uname.toLowerCase())) {
-                    showToast('Username sudah terdaftar!');
-                    return;
-                }
-                accounts.push({ username: uname, password: pass, isDeveloper: false, createdAt: Date.now() });
-                saveAccounts(accounts);
-                if (uname.toLowerCase() === 'okta') {
-                    copyMasterDataFromAbrarToOkta(true);
-                }
-                document.getElementById('dev-new-acc-username').value = '';
-                document.getElementById('dev-new-acc-password').value = '';
-                renderDeveloperTargetAccountSelect();
-                renderDeveloperAccountsList();
-                showToast(`Akun "${uname}" berhasil dibuat!`);
-            });
-
-            // Khusus Developer: Simpan perubahan username / password akun
-            document.getElementById('btn-dev-edit-acc-cancel').addEventListener('click', () => {
-                document.getElementById('modal-dev-edit-account').classList.add('hidden');
-                state.editingAccountUsername = null;
-            });
-
-            document.getElementById('btn-dev-edit-acc-save').addEventListener('click', () => {
-                const oldUname = state.editingAccountUsername;
-                const newUname = document.getElementById('input-dev-edit-username').value.trim();
-                const newPass = document.getElementById('input-dev-edit-password').value.trim();
-
-                if (!oldUname || newUname.length < 3 || newPass.length < 4) {
-                    showToast('Username min. 3 karakter & password min. 4 karakter');
-                    return;
-                }
-
-                const accounts = getAccounts();
-                const duplicate = accounts.find(
-                    a => a.username.toLowerCase() === newUname.toLowerCase() && a.username !== oldUname
-                );
-                if (duplicate) {
-                    showToast('Username sudah dipakai akun lain!');
-                    return;
-                }
-
-                const idx = accounts.findIndex(a => a.username === oldUname);
-                if (idx >= 0) {
-                    accounts[idx].username = newUname;
-                    accounts[idx].password = newPass;
-                    saveAccounts(accounts);
-
-                    if (oldUname !== newUname) {
-                        migrateUserAccountData(oldUname, newUname);
-                        if (state.targetUsername === oldUname) {
-                            state.targetUsername = newUname;
-                        }
-                    }
-
-                    renderDeveloperTargetAccountSelect();
-                    renderDeveloperAccountsList();
-                    showToast(`Akun "${newUname}" diperbarui!`);
-                }
-
-                document.getElementById('modal-dev-edit-account').classList.add('hidden');
-                state.editingAccountUsername = null;
-            });
-
-            // Modal Edit Badge Karyawan
             document.getElementById('btn-edit-badge-cancel').addEventListener('click', () => {
                 document.getElementById('modal-edit-emp-badge').classList.add('hidden');
                 state.editingBadgeEmpIndex = null;
@@ -2783,7 +2246,7 @@
                     list[idx].badgeColor = badgeColor;
                     list[idx].isLeader = isLdr;
 
-                    saveEmployees();
+                    persistState();
                     renderSettingEmployees();
                     renderEmployeeDropdown();
                     state.checkedCriteria.clear();
@@ -2795,17 +2258,6 @@
                 state.editingBadgeEmpIndex = null;
             });
 
-            // Tombol Salin Ulang dari Akun Abrar ke Akun Okta
-            document.getElementById('btn-sync-from-abrar').addEventListener('click', () => {
-                copyMasterDataFromAbrarToOkta(true);
-                renderSettingCriteria();
-                renderSettingEmployees();
-                renderEmployeeDropdown();
-                renderChecklist();
-                showToast('Data karyawan & poin dari Abrar berhasil disalin ke Okta!');
-            });
-
-            // Event Listener Halaman Login / Daftar
             document.getElementById('btn-auth-mode-login').addEventListener('click', () => setAuthMode('login'));
             document.getElementById('btn-auth-mode-register').addEventListener('click', () => setAuthMode('register'));
             document.getElementById('btn-auth-switch-link').addEventListener('click', () => {
@@ -2819,18 +2271,16 @@
                 applyOutletTheme('Chatting 2 S.Parman');
             });
 
-            // Event Listener Logout
             const handleLogoutPrompt = () => {
                 showConfirmModal(
                     'Keluar Akun',
-                    `Keluar dari akun "${state.currentUser ? state.currentUser.username : ''}"?`,
+                    `Keluar dari akun "${state.username}"?`,
                     logoutSession
                 );
             };
             document.getElementById('btn-header-logout').addEventListener('click', handleLogoutPrompt);
             document.getElementById('btn-setting-logout').addEventListener('click', handleLogoutPrompt);
 
-            // Toggle Mode Gelap / Terang di Dalam Aplikasi
             document.getElementById('btn-toggle-dark').addEventListener('click', () => {
                 state.isDarkMode = !state.isDarkMode;
                 saveDarkMode();
@@ -2842,7 +2292,6 @@
                 }
             });
 
-            // Ganti Outlet
             selectOutlet.addEventListener('change', () => {
                 applyOutletTheme(selectOutlet.value);
                 state.checkedCriteria.clear();
@@ -2850,20 +2299,17 @@
                 renderChecklist();
             });
 
-            // Ganti Tanggal Penilaian
             inputTanggal.addEventListener('change', () => {
                 const val = inputTanggal.value || today;
                 document.getElementById('header-date-badge').textContent = formatTanggalSingkat(val);
                 rekapTanggal.value = val;
             });
 
-            // Ganti Karyawan dari Dropdown
             document.getElementById('select-karyawan').addEventListener('change', () => {
                 state.checkedCriteria.clear();
                 renderChecklist();
             });
 
-            // Toggle Input Karyawan Manual
             document.getElementById('btn-toggle-manual-emp').addEventListener('click', (e) => {
                 state.isManualEmployee = !state.isManualEmployee;
                 const wrapSelect = document.getElementById('wrapper-select-emp');
@@ -2886,7 +2332,6 @@
                 renderChecklist();
             });
 
-            // Pilih Semua / Batal Semua Checklist
             document.getElementById('btn-check-all').addEventListener('click', () => {
                 const { isLeader } = getSelectedEmployeeInfo();
                 const criteriaList = getActiveCriteriaList(isLeader);
@@ -2898,17 +2343,14 @@
                 renderChecklist();
             });
 
-            // Simpan Hasil Tes
             document.getElementById('btn-simpan-tes').addEventListener('click', handleSaveTestResult);
 
-            // Navigasi Tab Bawah
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     switchTab(btn.getAttribute('data-tab'));
                 });
             });
 
-            // Tab Rekap
             rekapTanggal.addEventListener('change', renderRekapList);
             document.getElementById('btn-generate-image').addEventListener('click', generateDailyReportImage);
             document.getElementById('btn-clear-day').addEventListener('click', () => {
@@ -2918,20 +2360,18 @@
                     `Hapus semua hasil sertifikasi pada tanggal ${formatTanggalSingkat(targetDate)}?`,
                     () => {
                         state.results = state.results.filter(r => r.date !== targetDate);
-                        saveResults();
+                        persistState();
                         renderRekapList();
                         showToast('Data tanggal ini dibersihkan');
                     }
                 );
             });
 
-            // Modal Preview Gambar
             document.getElementById('btn-close-modal').addEventListener('click', () => {
                 document.getElementById('modal-preview').classList.add('hidden');
             });
             document.getElementById('btn-download-png').addEventListener('click', downloadGeneratedImage);
 
-            // Modal Konfirmasi
             document.getElementById('btn-confirm-cancel').addEventListener('click', () => {
                 document.getElementById('modal-confirm').classList.add('hidden');
                 confirmCallback = null;
@@ -2944,7 +2384,6 @@
                 }
             });
 
-            // Tab Setting: Sub-Tab Kriteria Reguler vs Leader Bar
             document.getElementById('btn-crit-tab-regular').addEventListener('click', () => {
                 state.settingCriteriaType = 'regular';
                 renderSettingCriteria();
@@ -2954,7 +2393,6 @@
                 renderSettingCriteria();
             });
 
-            // Tambah Kriteria Baru
             document.getElementById('form-add-criteria').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const input = document.getElementById('input-new-criteria');
@@ -2962,14 +2400,13 @@
                 if (!val) return;
                 const targetList = state.settingCriteriaType === 'leader' ? state.criteriaLeader : state.criteriaRegular;
                 targetList.push(val);
-                saveCriteria();
+                persistState();
                 input.value = '';
                 renderSettingCriteria();
                 renderChecklist();
                 showToast('Poin penilaian ditambahkan');
             });
 
-            // Modal Edit Kriteria
             document.getElementById('btn-edit-crit-cancel').addEventListener('click', () => {
                 document.getElementById('modal-edit-criteria').classList.add('hidden');
                 state.editingCriteriaIndex = null;
@@ -2979,7 +2416,7 @@
                 if (newVal && state.editingCriteriaIndex !== null) {
                     const targetList = state.settingCriteriaType === 'leader' ? state.criteriaLeader : state.criteriaRegular;
                     targetList[state.editingCriteriaIndex] = newVal;
-                    saveCriteria();
+                    persistState();
                     renderSettingCriteria();
                     renderChecklist();
                     showToast('Poin penilaian diperbarui');
@@ -2988,7 +2425,6 @@
                 state.editingCriteriaIndex = null;
             });
 
-            // Tab Setting: Kelola Karyawan + Badge
             document.getElementById('setting-select-outlet').addEventListener('change', renderSettingEmployees);
             document.getElementById('form-add-employee').addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -3013,7 +2449,7 @@
                     badge,
                     badgeColor: selectBadgeColor.value || 'amber'
                 });
-                saveEmployees();
+                persistState();
                 input.value = '';
                 inputBadge.value = '';
                 cbLeader.checked = false;
@@ -3023,17 +2459,15 @@
                 showToast(`${name} ditambahkan ke ${targetOutlet}`);
             });
 
-            // Reset Default Pengaturan
             document.getElementById('btn-reset-default').addEventListener('click', () => {
                 showConfirmModal(
                     'Reset Pengaturan Awal',
-                    `Kembalikan semua poin penilaian dan daftar karyawan akun "${getStorageOwnerUsername()}" ke bawaan awal?`,
+                    'Kembalikan semua poin penilaian dan daftar karyawan ke bawaan awal?',
                     () => {
                         state.criteriaRegular = [...DEFAULT_CRITERIA_REGULAR];
                         state.criteriaLeader = [...DEFAULT_CRITERIA_LEADER];
                         state.employees = JSON.parse(JSON.stringify(DEFAULT_EMPLOYEES));
-                        saveCriteria();
-                        saveEmployees();
+                        persistState();
                         state.checkedCriteria.clear();
                         renderSettingCriteria();
                         renderSettingEmployees();
@@ -3044,17 +2478,28 @@
                 );
             });
 
-            const savedSessionUser = localStorage.getItem(GLOBAL_STORAGE_KEYS.CURRENT_SESSION);
-            if (savedSessionUser) {
-                const accounts = getAccounts();
-                const validAcc = accounts.find(a => a.username.toLowerCase() === savedSessionUser.toLowerCase());
-                if (validAcc) {
-                    enterAppSession(validAcc.username);
-                    return;
-                }
+            window.addEventListener("focus", function() {
+                if (SESSION_TOKEN && !isDirtyRemote) pullLatestFromSupabase(false);
+            });
+            document.addEventListener("visibilitychange", function() {
+                if (!document.hidden && SESSION_TOKEN && !isDirtyRemote) pullLatestFromSupabase(false);
+            });
+
+            let savedToken = null;
+            try { savedToken = localStorage.getItem(TOKEN_KEY); } catch (e) {}
+
+            if (!savedToken) {
+                toAuthScreen("");
+                return;
             }
 
-            setAuthMode('login');
+            startSupabaseSession(savedToken).catch(function(err) {
+                if (err.status === 401) {
+                    toAuthScreen("");
+                } else {
+                    toAuthScreen("Tidak bisa terhubung ke Supabase. Muat ulang halaman.", true);
+                }
+            });
         }
 
         window.onload = initApp;
